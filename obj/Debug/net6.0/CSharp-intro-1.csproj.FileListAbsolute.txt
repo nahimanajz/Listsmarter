@@ -1,0 +1,15 @@
+/Volumes/D/Coding/Objectivity/CSharp-intro/bin/Debug/net6.0/CSharp-intro-1
+/Volumes/D/Coding/Objectivity/CSharp-intro/bin/Debug/net6.0/CSharp-intro-1.deps.json
+/Volumes/D/Coding/Objectivity/CSharp-intro/bin/Debug/net6.0/CSharp-intro-1.runtimeconfig.json
+/Volumes/D/Coding/Objectivity/CSharp-intro/bin/Debug/net6.0/CSharp-intro-1.dll
+/Volumes/D/Coding/Objectivity/CSharp-intro/bin/Debug/net6.0/CSharp-intro-1.pdb
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.csproj.AssemblyReference.cache
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.GeneratedMSBuildEditorConfig.editorconfig
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.AssemblyInfoInputs.cache
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.AssemblyInfo.cs
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.csproj.CoreCompileInputs.cache
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.dll
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/refint/CSharp-intro-1.dll
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.pdb
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/CSharp-intro-1.genruntimeconfig.cache
+/Volumes/D/Coding/Objectivity/CSharp-intro/obj/Debug/net6.0/ref/CSharp-intro-1.dll
