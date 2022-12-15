@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,11 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-
         public PersonRepository()
         {
+           
         }
+
 
         private List<Person> _people = new List<Person>
         {
@@ -60,21 +62,28 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public Person Create(Person entity)
+        public void Create(Person person)
         {
-            throw new NotImplementedException();
+            _people.Add(person);
+
         }
 
-        public Person Update(Person entity)
+        public void Update(Person person)
         {
-            throw new NotImplementedException();
+   
+           _people.Where(p => p.Id == person.Id)
+                .Select(w => {
+                w.LastName = person.FirstName;
+                w.LastName = person.LastName;
+                return w;
+                }).ToList();
+         
         }
 
-        public Person Delete(int entity)
+        public void Delete(int entity)
         {
             throw new NotImplementedException();
         }
     }
-
   
 }
