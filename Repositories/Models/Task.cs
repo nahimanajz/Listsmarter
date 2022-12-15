@@ -1,13 +1,13 @@
 ﻿
-namespace CSharp_intro_1.Repositories.Models
+namespace CSharp_intro_1.Models
 {
     internal class Task
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        private StatusEnum Status { get; set; } 
-        public int Assignee { get; set; }
-        public int Bucket { get; set; }
+        public StatusEnum Status { get; set; } 
+        public IList<PersonDto> Assignee { get; set; }
+        public IList<BucketDto> Bucket { get; set; }
     }
 }

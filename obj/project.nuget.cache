@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "/mpqjrVaMJDe4R7gXvZMWwkk1EzC7psNUQHVTs3JY6XQ74jNE09+W0w3LsvOdhJ9l5eH+2JH6kNm3n0NkEfywg==",
+  "dgSpecHash": "nbLIDGlg66sIi3ynBbWFR1mUByyp1ISmPa+M8Vp3+5yxONZJXi+X3A7QaYw2QoUOleDxgi2PjswvNu87AJbZKQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\jnahimana\\Desktop\\coding\\CSharp-intro-1\\CSharp-intro-1.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jnahimana\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
