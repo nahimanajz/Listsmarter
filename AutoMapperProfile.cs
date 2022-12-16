@@ -11,8 +11,7 @@ namespace CSharp_intro_1 {
         {
           
             CreateMap<Person, PersonDto>()
-            .ForMember(personDto => personDto.FirstName, opt => opt.MapFrom( person=> person.FirstName))
-            .ForMember(personDto => personDto.LastName, opt => opt.MapFrom( person=> person.LastName))
+            .ForMember(personDto => personDto.FullName, opt => opt.MapFrom( person=> person.FirstName +" "+person.LastName))
             .ReverseMap();
         
             

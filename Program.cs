@@ -3,14 +3,18 @@ using CSharp_intro_1.Models;
 using CSharp_intro_1.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Task = System.Threading.Tasks.Task;
 
 class Program
 {
     static Task Main(string[] args)
     {
         using IHost host = CreateHostBuilder(args).Build();
-        var controller = new Controller(host.Services.GetService<IService<PersonDto>());
+        var controller = new Controller(host.Services.GetService<IService<PersonDto>>());
+        foreach(var person in controller.GetAll())
+        {
+            Console.WriteLine(person.FullName);
+        }
         return host.RunAsync();
     }
 
@@ -29,5 +33,4 @@ class Program
 
 
         }
-    }
 }

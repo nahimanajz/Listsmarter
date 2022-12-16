@@ -19,7 +19,7 @@ namespace CSharp_intro_1
             services.AddTransient<IRepository<PersonDto>, PersonRepository>();
 
         }
-        public static void RegisterValidators(this ServiceCollection services)
+        public static void RegisterValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<PersonDto>, PersonDtoValidator>();
         }

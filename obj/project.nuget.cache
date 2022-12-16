@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "OVEIZwSgo761l8RLpoW40g52udo2dwA9Nc/vPTPuk766d5Igp1P/9YwLI8DvNre+XMzG3yUKrULAQ88N5/eTqQ==",
+  "dgSpecHash": "Ae6WXH/81wTaKDQN+jn38c3VZYOPCe+bxZNPBhu2aXnlN/vfw9mV6fxnEzmlXjIIq2uxRjvMS+DYTIEqInfUAA==",
   "success": true,
   "projectFilePath": "C:\\Users\\jnahimana\\Desktop\\coding\\CSharp-intro-1\\CSharp-intro-1.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jnahimana\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\cloudnative.cloudevents\\2.3.0\\cloudnative.cloudevents.2.3.0.nupkg.sha512",
-    "C:\\Users\\jnahimana\\.nuget\\packages\\fluentvalidation\\11.4.0\\fluentvalidation.11.4.0.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\fluentvalidation\\10.3.0\\fluentvalidation.10.3.0.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.0\\fluentvalidation.dependencyinjectionextensions.10.3.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
@@ -39,6 +41,7 @@
     "C:\\Users\\jnahimana\\.nuget\\packages\\motor.extensions.hosting.cloudevents\\0.10.5\\motor.extensions.hosting.cloudevents.0.10.5.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\system.diagnostics.eventlog\\7.0.0\\system.diagnostics.eventlog.7.0.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\jnahimana\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\jnahimana\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"

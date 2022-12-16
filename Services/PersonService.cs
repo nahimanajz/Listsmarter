@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using FluentValidation;
+using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
     public class PersonService : IService<PersonDto>
     {
         private readonly IRepository<PersonDto> _repo;
-        private readonly IValidator<PersonDto> _personValidor;
-        public PersonService(IRepository<PersonDto> repo, IValidator<PersonDto> personValidor)
+        private readonly IValidator<PersonDto> _personValidator;
+        public PersonService(IRepository<PersonDto> repo, IValidator<PersonDto> _personValidator)
         {
             _repo = repo;
-            _personValidor = personValidor ;
+            _personValidator = _personValidator ?? throw new ArgumentException();
+
         }
 
         public void Create(PersonDto entity)
@@ -24,7 +26,7 @@ namespace CSharp_intro_1.Services
             _repo.Create(entity);
         }
 
-        public void Delete(int id)
+         public void Delete(int id)
         {
             _repo.Delete(id);
         }

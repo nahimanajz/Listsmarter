@@ -23,23 +23,23 @@ namespace CSharp_intro_1.Repositories
     
 
 
-        private List<PersonDto> _people = new List<PersonDto>
+        private List<Person> _people = new List<Person>
         {
-            new PersonDto
+            new Person
             {
                 Id=1,
                 FirstName= "Nah",
                 LastName="Jan..."
 
             },
-            new PersonDto
+            new Person
             {
                 Id=2,
                 FirstName= "second person",
                 LastName="Eld..."
 
             },
-            new PersonDto
+            new Person
             {
                 Id=3,
                 FirstName= "Third",
@@ -50,31 +50,38 @@ namespace CSharp_intro_1.Repositories
         
         public List<PersonDto> GetAll()
         {
-            return _people;
+            return _mapper.Map<List<PersonDto>>(_people.ToList());
+            
         }
 
         public PersonDto GetById(int id)
         {
-            var person = _people.First(p => p.Id == id);
-            return person;
+         
+            return _mapper.Map<PersonDto>(_people.FirstOrDefault(person => person.Id == id, null)); ;
 
         }
 
         public void Create(PersonDto person)
         {
-            _people.Add(person);
-
+            var newPerson = new Person
+            {
+                Id = _people.Count + 1,
+                FirstName = person.FirstName,
+                LastName = person.LastName
+            };
+            _people.Add(newPerson);
+      
         }
 
         public void Update(PersonDto person)
         {
-   
-           _people.Where(p => p.Id == person.Id)
-                .Select(w => {
-                w.LastName = person.FirstName;
-                w.LastName = person.LastName;
-                return w;
-                }).ToList();
+            _people.Where(person => person.Id == person.Id).Select(person =>
+            {
+                person.FirstName = person.FirstName == null ? person.FirstName : person.FirstName;
+                person.LastName = person.LastName == null ? person.LastName : person.LastName;
+                return person;
+            }).ToList();
+
          
         }
 
