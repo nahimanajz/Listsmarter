@@ -13,15 +13,19 @@ namespace CSharp_intro_1
        public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IService<PersonDto>, PersonService>();
+            services.AddTransient<IService<BucketDto>, BucketService>();
+            services.AddTransient<IService<TaskDto>, TaskService>();
         }
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddTransient<IRepository<PersonDto>, PersonRepository>();
+            services.AddTransient<IRepository<BucketDto>, BucketRepository>();
 
         }
         public static void RegisterValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<PersonDto>, PersonDtoValidator>();
+            services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
         }
     }
 }

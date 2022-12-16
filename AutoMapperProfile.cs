@@ -13,6 +13,10 @@ namespace CSharp_intro_1 {
             CreateMap<Person, PersonDto>()
             .ForMember(personDto => personDto.FullName, opt => opt.MapFrom( person=> person.FirstName +" "+person.LastName))
             .ReverseMap();
+            
+            CreateMap<Bucket, BucketDto>()
+            .ForMember(bucketDto => bucketDto.Title, opt => opt.MapFrom( bucket=> bucket.Title))
+            .ReverseMap();
         
             
         }
