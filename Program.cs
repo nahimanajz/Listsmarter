@@ -1,30 +1,33 @@
-﻿
+﻿using CSharp_intro_1;
+using CSharp_intro_1.Models;
+using CSharp_intro_1.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-using CSharp_intro_1.Repositories;
-using CSharp_intro_1.Repositories.Models;
 
-
-Console.WriteLine("Hello, World!");
-var pr = new PersonRepository();
-pr.Create(new Person
+class Program
 {
-    Id = 4,
-    FirstName = "Foo",
-    LastName = "Bar",
-});
-var p = new Person
-{
-    Id = 4,
-    FirstName = "mwiriwe",
-    LastName = "dlaksdj",
-};
+    static Task Main(string[] args)
+    {
+        using IHost host = CreateHostBuilder(args).Build();
+        var controller = new Controller(host.Services.GetService<IService<PersonDto>());
+        return host.RunAsync();
+    }
 
-pr.Update(p);
+    private static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args).ConfigureServices((_, services) =>
+        {
+            services.RegisterRepositories();
+            services.RegisterServices();
+            services.RegisterValidators();
+            services.AddAutoMapper((config) =>
+            {
 
-var items = pr.GetAll();
-foreach (var item in items)
-{
-    Console.WriteLine(item.FirstName);
+            }, AppDomain.CurrentDomain.GetAssemblies());
+        });
+
+
+        }
+    }
 }
-var person = pr.GetById(1);
-Console.WriteLine($"id: {person.Id} FirstName: {person.LastName}");

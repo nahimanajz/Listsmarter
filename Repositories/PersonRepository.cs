@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,7 +12,7 @@ using CSharp_intro_1.Repositories.Models;
 
 namespace CSharp_intro_1.Repositories
 {
-    public class PersonRepository: IRepository<Person>
+    public class PersonRepository: IRepository<PersonDto>
     {
         private readonly IMapper _mapper;
 
@@ -19,29 +20,26 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-        public PersonRepository()
-        {
-           
-        }
+    
 
 
-        private List<Person> _people = new List<Person>
+        private List<PersonDto> _people = new List<PersonDto>
         {
-            new Person
+            new PersonDto
             {
                 Id=1,
                 FirstName= "Nah",
                 LastName="Jan..."
 
             },
-            new Person
+            new PersonDto
             {
                 Id=2,
                 FirstName= "second person",
                 LastName="Eld..."
 
             },
-            new Person
+            new PersonDto
             {
                 Id=3,
                 FirstName= "Third",
@@ -50,25 +48,25 @@ namespace CSharp_intro_1.Repositories
             }
         };
         
-        public List<Person> GetAll()
+        public List<PersonDto> GetAll()
         {
             return _people;
         }
 
-        public Person GetById(int id)
+        public PersonDto GetById(int id)
         {
             var person = _people.First(p => p.Id == id);
             return person;
 
         }
 
-        public void Create(Person person)
+        public void Create(PersonDto person)
         {
             _people.Add(person);
 
         }
 
-        public void Update(Person person)
+        public void Update(PersonDto person)
         {
    
            _people.Where(p => p.Id == person.Id)
@@ -80,10 +78,12 @@ namespace CSharp_intro_1.Repositories
          
         }
 
-        public void Delete(int entity)
+        public void Delete(int personId)
         {
-            throw new NotImplementedException();
+            var deleteRecord = _people.RemoveAll(person => person.Id == personId);
         }
+
+
     }
   
 }
