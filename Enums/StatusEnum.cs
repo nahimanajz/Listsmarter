@@ -1,5 +1,5 @@
 ﻿
-     enum StatusEnum
+    enum StatusEnum
     {
         Open,
         InProgress,

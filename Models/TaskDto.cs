@@ -8,8 +8,8 @@ namespace CSharp_intro_1.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Status {get; set;} 
+        public int Status {get; set;} //TODO: Has to be changed to enum
         public PersonDto Assignee { get; set; } 
-        public Bucket Bucket { get; set; }
+        public BucketDto Bucket { get; set; }
     }
 }

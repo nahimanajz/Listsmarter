@@ -20,12 +20,14 @@ namespace CSharp_intro_1
         {
             services.AddTransient<IRepository<PersonDto>, PersonRepository>();
             services.AddTransient<IRepository<BucketDto>, BucketRepository>();
+            services.AddTransient<IRepository<TaskDto>, TaskRepository>();
 
         }
         public static void RegisterValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<PersonDto>, PersonDtoValidator>();
             services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
+            services.AddScoped<IValidator<TaskDto>, TaskValidator>();
         }
     }
 }

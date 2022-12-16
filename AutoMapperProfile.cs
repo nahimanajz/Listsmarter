@@ -17,8 +17,14 @@ namespace CSharp_intro_1 {
             CreateMap<Bucket, BucketDto>()
             .ForMember(bucketDto => bucketDto.Title, opt => opt.MapFrom( bucket=> bucket.Title))
             .ReverseMap();
-        
-            
+
+            CreateMap<Task, TaskDto>()
+           .ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title))
+           //.ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title))
+
+           .ReverseMap();
+
+
         }
     }
 }
