@@ -14,18 +14,32 @@ class Program
        var bucketController = new BucketController(host.Services.GetService<BucketService>());
         var taskController = new TaskController(host.Services.GetService<TaskService>());
         
+        var Id = Guid.NewGuid();
+        personController.Create(new PersonDto{
+            FirstName="Felix",
+            LastName="Niyo",
+            Id=Id
+
+        });
+        var bucketId = Guid.NewGuid();
+        bucketController.Create(new BucketDto{
+            Title= " Calling a friend"
+        });
+
         //TODO: Get bucket, and Get Person to fill bucket and assignee as an object
         taskController.Create(new TaskDto {
             Title = "SOME CHANGED TASK",
                 Description = "SOME OTHER CHANGED TASK",
                 Status = (int) StatusEnum.Open,
-                Assignee = new PersonDto{Id =1, FirstName="Nahi..", LastName="Nah.."},
-                Bucket =  new BucketDto{Id =1, Title="Doing something new"}
+                Assignee = personController.GetById(Id),
+                Bucket = bucketController.GetById(bucketId)
         });
-       /* foreach(var person in personController.GetAll())  Console.WriteLine(person.FullName);
-        foreach(var bucket in bucketController.GetAll()) Console.WriteLine($"BUCKET TITLE: {bucket.Title}");
-        foreach(var task in taskController.GetAll()) Console.WriteLine($"Task : {task.Title}=> {task.Assignee.FirstName}");
-        */
+        foreach(var person in personController.GetAll())  Console.WriteLine(person.FullName+"ID:"+person.Id);
+       Console.WriteLine($"Get person by id: {personController.GetById(Id).FullName}");
+
+       /* foreach(var bucket in bucketController.GetAll()) Console.WriteLine($"BUCKET TITLE: {bucket.Title}");  */
+        foreach(var task in taskController.GetAll()) Console.WriteLine($"Task : {task.Title} Assignee=> {task.Assignee.FirstName} Bucket=> {task.Bucket.Title}");
+       
        
         return host.RunAsync();
     }

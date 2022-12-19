@@ -16,7 +16,7 @@ namespace CSharp_intro_1
            
             return _service.GetAll();
         }
-        public PersonDto GetById(int id)
+        public PersonDto GetById(Guid id)
         {
 
             return _service.GetById(id); 
@@ -25,7 +25,7 @@ namespace CSharp_intro_1
         {
             _service.Create(person);
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             _service.Delete(id);
         }

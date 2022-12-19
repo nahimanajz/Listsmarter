@@ -16,7 +16,7 @@ namespace CSharp_intro_1
            
             return _service.GetAll();
         }
-        public TaskDto GetById(int id)
+        public TaskDto GetById(Guid id)
         {
 
             return _service.GetById(id); 
@@ -26,7 +26,7 @@ namespace CSharp_intro_1
             
             _service.Create(task);
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             _service.Delete(id);
         }

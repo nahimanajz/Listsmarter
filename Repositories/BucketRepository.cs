@@ -24,22 +24,22 @@ namespace CSharp_intro_1.Repositories
         {
             new Bucket
             {
-                Id=1,
+                Id=Guid.Parse("9D2B0228-4D0D-4C23-8B49-01A698857709"),
                 Title= "Washing stuff",
             },
             new Bucket
             {
-                Id=2,
+                Id= Guid.Parse("9D3B0228-4D0D-4C23-8B49-01A698857709"),
                 Title= "Meeting a friend",
             },
              new Bucket
             {
-                Id=3,
+                Id= Guid.Parse("9C2B0228-4D0D-4C23-8B49-01A698857709"),
                 Title= " Calling a friend",
             },
              new Bucket
             {
-                Id=4,
+                Id= Guid.Parse("1D2B0228-4D0D-4C23-8B49-01A698851109"),
                 Title= "Having a stuff",
             }
 
@@ -51,7 +51,7 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public BucketDto GetById(int id)
+        public BucketDto GetById(Guid id)
         {
 
             return _mapper.Map<BucketDto>(_buckets.FirstOrDefault(bucket => bucket.Id == id, null)); ;
@@ -60,8 +60,9 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(BucketDto bucket)
         {
-            _buckets.Add(new Bucket { Id = _buckets.Count + 1, Title = bucket.Title});
-            
+           // _buckets.Add(new Bucket { Id = _buckets.Count + 1, Title = bucket.Title});
+            _buckets.Add(_mapper.Map<Bucket>(bucket));
+                        
 
         }
 
@@ -76,7 +77,7 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public void Delete(int bucketId)
+        public void Delete(Guid bucketId)
         {
             var deleteRecord = _buckets.RemoveAll(bucket => bucket.Id == bucketId);
         }

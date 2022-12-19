@@ -26,7 +26,7 @@ namespace CSharp_intro_1.Services
             _repo.Create(entity);
         }
 
-         public void Delete(int id)
+         public void Delete(Guid id)
         {
             _repo.Delete(id);
         }
@@ -36,7 +36,7 @@ namespace CSharp_intro_1.Services
             return _repo.GetAll();
         }
 
-        public PersonDto GetById(int id)
+        public PersonDto GetById(Guid id)
         {
            return _repo.GetById(id);
 

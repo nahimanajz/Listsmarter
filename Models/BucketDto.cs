@@ -8,7 +8,7 @@ namespace CSharp_intro_1.Models
 {
     public class BucketDto
     {
-        public int Id { get; set; }
+       public Guid Id { get; set; }
         public string Title { get; set; }
     }
 }

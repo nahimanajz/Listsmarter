@@ -21,27 +21,26 @@ namespace CSharp_intro_1.Repositories
             _mapper = mapper;
         }
     
-
-
         private List<Person> _people = new List<Person>
         {
             new Person
             {
-                Id=1,
+                Id=Guid.Parse("84c5e37c-23a6-41cb-b023-a1ed089f728e"),
                 FirstName= "Nah",
                 LastName="Jan..."
 
             },
             new Person
             {
-                Id=2,
+                Id= Guid.Parse("9D2B0228-4D0D-4C23-8B49-01A698851109")
+,
                 FirstName= "second person",
                 LastName="Eld..."
 
             },
             new Person
             {
-                Id=3,
+                Id= Guid.Parse("9D2B0728-4D0D-4C43-8B49-01A698857709"),
                 FirstName= "Third",
                 LastName="Ale..."
 
@@ -54,7 +53,7 @@ namespace CSharp_intro_1.Repositories
             
         }
 
-        public PersonDto GetById(int id)
+        public PersonDto GetById(Guid id)
         {
          
             return _mapper.Map<PersonDto>(_people.FirstOrDefault(person => person.Id == id, null)); ;
@@ -63,13 +62,8 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(PersonDto person)
         {
-            var newPerson = new Person
-            {
-                Id = _people.Count + 1,
-                FirstName = person.FirstName,
-                LastName = person.LastName
-            };
-            _people.Add(newPerson);
+          
+            _people.Add(_mapper.Map<Person>(person));
       
         }
 
@@ -85,7 +79,7 @@ namespace CSharp_intro_1.Repositories
          
         }
 
-        public void Delete(int personId)
+        public void Delete(Guid personId)
         {
             var deleteRecord = _people.RemoveAll(person => person.Id == personId);
         }

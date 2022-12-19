@@ -12,6 +12,7 @@ namespace CSharp_intro_1 {
            
             CreateMap<Person, PersonDto>()
             .ForMember(personDto => personDto.FullName, opt => opt.MapFrom( person=> person.FirstName +" "+person.LastName))
+           // .AfterMap((source, destination)=> destination.Id = Guid.NewGuid())
             .ReverseMap();
             
             CreateMap<Bucket, BucketDto>()

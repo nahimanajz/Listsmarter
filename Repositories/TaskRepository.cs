@@ -15,33 +15,39 @@ namespace CSharp_intro_1.Repositories
             _mapper = mapper;
         }
  // TODO: HOW TO ACCES ALREADY CREATED PEOPLE TO ASSING TO A SPECIFIC TASK
+       // private Bucket _buckets =
         private List<Task> _tasks = new List<Task>
         {
             new Task
             {
+                Id= Guid.Parse("9D2B0228-5D0D-4C23-8B49-01A698851109"),
                 Title = "Wake up",
                 Description = "Remove bed cover",
                 Status = (int) StatusEnum.Open,
-                Assignee = new Person{Id =1, FirstName="George", LastName="Nah.."},
-                Bucket =  new Bucket{Id =1, Title="Doing something new"}
+                Assignee = new Person{Id =Guid.NewGuid(), FirstName="George", LastName="Nah.."},
+                Bucket =  new Bucket{Id =Guid.NewGuid(), Title="Doing something new"}
 
             },
             new Task
            {
+                Id= Guid.Parse("4D2B0228-5D0D-4C23-8B49-01A698851104"),
+
                 Title = "Brush my teeth ",
                 Description = "Put toothpaste on my tooth brush",
                 Status = (int) StatusEnum.Closed,
-                Assignee = new Person{Id =1, FirstName="John", LastName="Doe.."},
-                Bucket =  new Bucket{Id =1, Title="Doing something new"}
+                Assignee = new Person{Id =Guid.NewGuid(), FirstName="John", LastName="Doe.."},
+                Bucket =  new Bucket{Id =Guid.NewGuid(), Title="Doing something new"}
 
             },
              new Task
             {
+                Id= Guid.Parse("8D2B0228-5D0D-4C23-9B49-01A698851109"),
+
                 Title = "Some given task",
                 Description = "Put toothpaste on my tooth brush",
                 Status = (int) StatusEnum.InProgress,
-                Assignee = new Person{Id =1, FirstName="Dom..", LastName="Ndah.."},
-                Bucket =  new Bucket{Id =1, Title="Doing something new"}
+                Assignee = new Person{Id =Guid.NewGuid(), FirstName="Dom..", LastName="Ndah.."},
+                Bucket =  new Bucket{Id =Guid.NewGuid(), Title="Doing something new"}
 
             }
         };
@@ -54,7 +60,7 @@ namespace CSharp_intro_1.Repositories
             
         }
 
-        public TaskDto GetById(int id)
+        public TaskDto GetById(Guid id)
         {
          
             return _mapper.Map<TaskDto>(Tasks.FirstOrDefault(task => task.Id == id, null)); ;
@@ -63,9 +69,10 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(TaskDto task)
         {
+            
             Console.WriteLine(task.Assignee);
            
-            Tasks.Add(task);
+           // Tasks.Add(task);
             
         }
 
@@ -83,7 +90,7 @@ namespace CSharp_intro_1.Repositories
             }).ToList();
         }
 
-        public void Delete(int taskId)
+        public void Delete(Guid taskId)
         {
             var deleteRecord = Tasks.RemoveAll(task => task.Id == taskId);
         }

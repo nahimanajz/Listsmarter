@@ -19,7 +19,7 @@ namespace CSharp_intro_1
 
             return _service.GetAll();
         }
-        public BucketDto GetById(int id)
+        public BucketDto GetById(Guid id)
         {
 
             return _service.GetById(id);
@@ -28,7 +28,7 @@ namespace CSharp_intro_1
         {
             _service.Create(bucket);
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             _service.Delete(id);
         }
