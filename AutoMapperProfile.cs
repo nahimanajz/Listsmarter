@@ -9,7 +9,7 @@ namespace CSharp_intro_1 {
     public class AutoMapperProfile: Profile{
         public AutoMapperProfile()
         {
-          
+           
             CreateMap<Person, PersonDto>()
             .ForMember(personDto => personDto.FullName, opt => opt.MapFrom( person=> person.FirstName +" "+person.LastName))
             .ReverseMap();
@@ -22,7 +22,6 @@ namespace CSharp_intro_1 {
            .ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title))
           
            .ReverseMap();
-
 
         }
     }

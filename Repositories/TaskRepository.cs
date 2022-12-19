@@ -14,7 +14,7 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-
+ // TODO: HOW TO ACCES ALREADY CREATED PEOPLE TO ASSING TO A SPECIFIC TASK
         private List<Task> _tasks = new List<Task>
         {
             new Task
@@ -22,7 +22,7 @@ namespace CSharp_intro_1.Repositories
                 Title = "Wake up",
                 Description = "Remove bed cover",
                 Status = (int) StatusEnum.Open,
-                Assignee = new Person{Id =1, FirstName="Janvier", LastName="Nah.."},
+                Assignee = new Person{Id =1, FirstName="George", LastName="Nah.."},
                 Bucket =  new Bucket{Id =1, Title="Doing something new"}
 
             },
@@ -63,17 +63,10 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(TaskDto task)
         {
-            var newtask = new Task
-            {
-                Id = Tasks.Count + 1,
-                Title = task.Title,
-                Description = task.Description,
-                Status = 1,
-                Assignee = new Person { Id = 1, FirstName = "Janvier", LastName = "Nah.." },
-               Bucket = new Bucket { Id = 1, Title = "Doing something new" }
-            };
-            Tasks.Add(newtask);
-      
+            Console.WriteLine(task.Assignee);
+           
+            Tasks.Add(task);
+            
         }
 
         public void Update(TaskDto task)

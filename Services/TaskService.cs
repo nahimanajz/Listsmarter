@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
+    // TODO: WE IMPORT REPOSITORIES TO ACCESS PERSON, BUCKETS MODAL
     public class TaskService 
     {
         private readonly IRepository<TaskDto> _repo;
