@@ -20,8 +20,7 @@ namespace CSharp_intro_1 {
 
             CreateMap<Task, TaskDto>()
            .ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title))
-           //.ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title))
-
+          
            .ReverseMap();
 
 

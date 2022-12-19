@@ -64,3 +64,9 @@ If anything is not clear please let me know.
                 .ForMember(dest=> dest.Status, opt => opt.MapFrom(src=> src.Status))
                 .ReverseMap();
 ```
+
+Questions
+------------
+- How to use dto references and still insert record
+- Reading about dependency injections
+- Implementing business logic

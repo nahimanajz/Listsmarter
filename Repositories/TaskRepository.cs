@@ -21,7 +21,7 @@ namespace CSharp_intro_1.Repositories
             {
                 Title = "Wake up",
                 Description = "Remove bed cover",
-                Status = 0,
+                Status = (int) StatusEnum.Open,
                 Assignee = new Person{Id =1, FirstName="Janvier", LastName="Nah.."},
                 Bucket =  new Bucket{Id =1, Title="Doing something new"}
 
@@ -30,7 +30,7 @@ namespace CSharp_intro_1.Repositories
            {
                 Title = "Brush my teeth ",
                 Description = "Put toothpaste on my tooth brush",
-                Status = 1,
+                Status = (int) StatusEnum.Closed,
                 Assignee = new Person{Id =1, FirstName="Hugues", LastName="Ntwali.."},
                 Bucket =  new Bucket{Id =1, Title="Doing something new"}
 
@@ -39,23 +39,25 @@ namespace CSharp_intro_1.Repositories
             {
                 Title = "Some give task",
                 Description = "Put toothpaste on my tooth brush",
-                Status = 2,
+                Status = (int) StatusEnum.InProgress,
                 Assignee = new Person{Id =1, FirstName="Dom..", LastName="Ndah.."},
                 Bucket =  new Bucket{Id =1, Title="Doing something new"}
 
             }
         };
-        
+
+        public List<Task> Tasks { get => _tasks; set => _tasks = value; }
+
         public List<TaskDto> GetAll()
         {
-            return _mapper.Map<List<TaskDto>>(_tasks.ToList());
+            return _mapper.Map<List<TaskDto>>(Tasks.ToList());
             
         }
 
         public TaskDto GetById(int id)
         {
          
-            return _mapper.Map<TaskDto>(_tasks.FirstOrDefault(task => task.Id == id, null)); ;
+            return _mapper.Map<TaskDto>(Tasks.FirstOrDefault(task => task.Id == id, null)); ;
 
         }
 
@@ -63,20 +65,20 @@ namespace CSharp_intro_1.Repositories
         {
             var newtask = new Task
             {
-                Id = _tasks.Count + 1,
+                Id = Tasks.Count + 1,
                 Title = task.Title,
                 Description = task.Description,
                 Status = 1,
                 Assignee = new Person { Id = 1, FirstName = "Janvier", LastName = "Nah.." },
                Bucket = new Bucket { Id = 1, Title = "Doing something new" }
             };
-            _tasks.Add(newtask);
+            Tasks.Add(newtask);
       
         }
 
         public void Update(TaskDto task)
         {
-            _tasks.Where(task => task.Id == task.Id).Select(task =>
+            Tasks.Where(task => task.Id == task.Id).Select(task =>
             {
                 task.Title = task.Title == null ? task.Title : task.Title;
                 task.Description = task.Description == null ? task.Description : task.Description;
@@ -90,7 +92,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(int taskId)
         {
-            var deleteRecord = _tasks.RemoveAll(task => task.Id == taskId);
+            var deleteRecord = Tasks.RemoveAll(task => task.Id == taskId);
         }
 
 
