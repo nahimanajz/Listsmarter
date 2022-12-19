@@ -6,8 +6,8 @@ namespace CSharp_intro_1
 {
     public class PersonController
     {
-        private readonly IService<PersonDto> _service;
-        public PersonController(IService<PersonDto> service)
+        private readonly PersonService _service;
+        public PersonController(PersonService service)
         {
             _service = service;
         }

@@ -31,13 +31,13 @@ namespace CSharp_intro_1.Repositories
                 Title = "Brush my teeth ",
                 Description = "Put toothpaste on my tooth brush",
                 Status = (int) StatusEnum.Closed,
-                Assignee = new Person{Id =1, FirstName="Hugues", LastName="Ntwali.."},
+                Assignee = new Person{Id =1, FirstName="John", LastName="Doe.."},
                 Bucket =  new Bucket{Id =1, Title="Doing something new"}
 
             },
              new Task
             {
-                Title = "Some give task",
+                Title = "Some given task",
                 Description = "Put toothpaste on my tooth brush",
                 Status = (int) StatusEnum.InProgress,
                 Assignee = new Person{Id =1, FirstName="Dom..", LastName="Ndah.."},

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
-    public class BucketService : IService<BucketDto>
+    public class BucketService 
     {
         private readonly IRepository<BucketDto> _repo;
         private readonly IValidator<BucketDto> _personValidator;

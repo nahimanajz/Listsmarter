@@ -6,8 +6,8 @@ namespace CSharp_intro_1
 {
     public class TaskController
     {
-        private readonly IService<TaskDto> _service;
-        public TaskController(IService<TaskDto> service)
+        private readonly TaskService _service;
+        public TaskController(TaskService service)
         {
             _service = service;
         }

@@ -5,10 +5,10 @@ namespace CSharp_intro_1
 {
     public class BucketController
     {
-        private readonly IService<BucketDto> _service;
+        private readonly BucketService _service;
 
 
-        public BucketController(IService<BucketDto> service)
+        public BucketController(BucketService service)
         {
             _service = service;
         }

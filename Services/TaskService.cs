@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
-    public class TaskService : IService<TaskDto>
+    public class TaskService 
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly IValidator<TaskDto> _personValidator;

@@ -12,9 +12,9 @@ namespace CSharp_intro_1
     {
        public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddTransient<IService<PersonDto>, PersonService>();
-            services.AddTransient<IService<BucketDto>, BucketService>();
-            services.AddTransient<IService<TaskDto>, TaskService>();
+            services.AddTransient<PersonService>();
+            services.AddTransient<BucketService>();
+            services.AddTransient<TaskService>();
         }
         public static void RegisterRepositories(this IServiceCollection services)
         {

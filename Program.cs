@@ -10,9 +10,9 @@ class Program
     static Task Main(string[] args)
     {
         using IHost host = CreateHostBuilder(args).Build();
-        var personController = new PersonController(host.Services.GetService<IService<PersonDto>>());
-        var bucketController = new BucketController(host.Services.GetService<IService<BucketDto>>());
-        var taskController = new TaskController(host.Services.GetService<IService<TaskDto>>());
+        var personController = new PersonController(host.Services.GetService<PersonService>());
+       var bucketController = new BucketController(host.Services.GetService<BucketService>());
+        var taskController = new TaskController(host.Services.GetService<TaskService>());
 
         foreach(var person in personController.GetAll())  Console.WriteLine(person.FullName);
         foreach(var bucket in bucketController.GetAll()) Console.WriteLine($"BUCKET TITLE: {bucket.Title}");
