@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Services.interfaces;
 using FluentValidation;
 using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
     // TODO: WE IMPORT REPOSITORIES TO ACCESS PERSON, BUCKETS MODAL
-    public class TaskService 
+    public class TaskService :ITaskService
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly IValidator<TaskDto> _personValidator;
@@ -21,6 +22,7 @@ namespace CSharp_intro_1.Services
             _personValidator = _personValidator ?? throw new ArgumentException();
 
         }
+       
 
         public void Create(TaskDto entity)
         {
@@ -46,6 +48,11 @@ namespace CSharp_intro_1.Services
         public void Update(TaskDto entity)
         {
            _repo.Update(entity);
+        }
+
+        public void UpdateByStatus(int status, int newStatus)
+        {
+            _repo.UpdateByStatus(status, newStatus);
         }
     }
 }

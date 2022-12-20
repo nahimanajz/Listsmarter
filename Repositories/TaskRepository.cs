@@ -6,7 +6,7 @@ using Task = CSharp_intro_1.Models.Task;
 
 namespace CSharp_intro_1.Repositories
 {
-    public class TaskRepository: IRepository<TaskDto>
+    public class TaskRepository : IRepository<TaskDto>
     {
         private readonly IMapper _mapper;
 
@@ -14,32 +14,10 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
- // TODO: HOW TO ACCES ALREADY CREATED PEOPLE TO ASSING TO A SPECIFIC TASK
-       // private Bucket _buckets =
-        private List<Task> _tasks = new List<Task>
-        {
+        // TODO: HOW TO ACCES ALREADY CREATED PEOPLE TO ASSING TO A SPECIFIC TASK
+
+        private List<Task> _tasks = new List<Task>{
             new Task
-            {
-                Id= Guid.Parse("9D2B0228-5D0D-4C23-8B49-01A698851109"),
-                Title = "Wake up",
-                Description = "Remove bed cover",
-                Status = (int) StatusEnum.Open,
-                Assignee = new Person{Id =Guid.NewGuid(), FirstName="George", LastName="Nah.."},
-                Bucket =  new Bucket{Id =Guid.NewGuid(), Title="Doing something new"}
-
-            },
-            new Task
-           {
-                Id= Guid.Parse("4D2B0228-5D0D-4C23-8B49-01A698851104"),
-
-                Title = "Brush my teeth ",
-                Description = "Put toothpaste on my tooth brush",
-                Status = (int) StatusEnum.Closed,
-                Assignee = new Person{Id =Guid.NewGuid(), FirstName="John", LastName="Doe.."},
-                Bucket =  new Bucket{Id =Guid.NewGuid(), Title="Doing something new"}
-
-            },
-             new Task
             {
                 Id= Guid.Parse("8D2B0228-5D0D-4C23-9B49-01A698851109"),
 
@@ -52,40 +30,41 @@ namespace CSharp_intro_1.Repositories
             }
         };
 
+
         public List<Task> Tasks { get => _tasks; set => _tasks = value; }
 
         public List<TaskDto> GetAll()
         {
             return _mapper.Map<List<TaskDto>>(Tasks.ToList());
-            
+
         }
 
         public TaskDto GetById(Guid id)
         {
-         
+
             return _mapper.Map<TaskDto>(Tasks.FirstOrDefault(task => task.Id == id, null)); ;
 
         }
 
         public void Create(TaskDto task)
         {
-            
-            Console.WriteLine(task.Assignee);
-           
-           // Tasks.Add(task);
-            
+            var mappedObject = _mapper.Map<Task>(task);
+            Tasks.Add(mappedObject);
+
+
+
         }
 
-        public void Update(TaskDto task)
+        public void Update(TaskDto tsk)
         {
-            Tasks.Where(task => task.Id == task.Id).Select(task =>
+            Tasks.Where(task => task.Id == tsk.Id).Select(task =>
             {
-                task.Title = task.Title == null ? task.Title : task.Title;
-                task.Description = task.Description == null ? task.Description : task.Description;
-                task.Assignee = task.Assignee == null ? task.Assignee : task.Assignee;
-                task.Status = task.Status == null ? task.Status : task.Status;
-                task.Bucket = task.Bucket == null ? task.Bucket : task.Bucket;
-          
+                task.Title = tsk.Title == null ? task.Title : tsk.Title;
+                task.Description = task.Description == null ? task.Description : tsk.Description;
+
+                task.Status = tsk.Status == null ? task.Status : (int)tsk.Status;
+
+
                 return task;
             }).ToList();
         }
@@ -94,8 +73,18 @@ namespace CSharp_intro_1.Repositories
         {
             var deleteRecord = Tasks.RemoveAll(task => task.Id == taskId);
         }
+        public void UpdateByStatus(int status, int value)
+        {
+            var taskByStatus = Tasks.Where(task => task.Status == status).Select(tsk =>
+            {
+                tsk.Status = value;
+                return tsk;
+            }).ToList();
+           
+        }
+
 
 
     }
-  
+
 }

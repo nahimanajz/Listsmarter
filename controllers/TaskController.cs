@@ -34,6 +34,10 @@ namespace CSharp_intro_1
         {
             _service.Update(task);
         }
+         public void Update(TaskDto task)
+        {
+            _service.Update(task);
+        }
        
 
     }

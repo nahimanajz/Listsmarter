@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
-
+using CSharp_intro_1.Services;
 
 namespace CSharp_intro_1.Repositories
 {
@@ -21,31 +21,8 @@ namespace CSharp_intro_1.Repositories
             _mapper = mapper;
         }
     
-        private List<Person> _people = new List<Person>
-        {
-            new Person
-            {
-                Id=Guid.Parse("84c5e37c-23a6-41cb-b023-a1ed089f728e"),
-                FirstName= "Nah",
-                LastName="Jan..."
-
-            },
-            new Person
-            {
-                Id= Guid.Parse("9D2B0228-4D0D-4C23-8B49-01A698851109")
-,
-                FirstName= "second person",
-                LastName="Eld..."
-
-            },
-            new Person
-            {
-                Id= Guid.Parse("9D2B0728-4D0D-4C43-8B49-01A698857709"),
-                FirstName= "Third",
-                LastName="Ale..."
-
-            }
-        };
+        private List<Person> _people = new List<Person>();
+        
         
         public List<PersonDto> GetAll()
         {
@@ -62,8 +39,10 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(PersonDto person)
         {
-          
-            _people.Add(_mapper.Map<Person>(person));
+          var mappedObject = _mapper.Map<Person>(person);
+          _people.Add(mappedObject);
+
+           // _people.Add(_mapper.Map<Person>(person));
       
         }
 
@@ -81,10 +60,14 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid personId)
         {
+    
             var deleteRecord = _people.RemoveAll(person => person.Id == personId);
         }
 
-
+        public void UpdateByStatus(int currentStatus, int newStatus)
+        {
+            throw new NotImplementedException();
+        }
     }
   
 }

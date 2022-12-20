@@ -20,30 +20,8 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-        private List<Bucket> _buckets = new List<Bucket>
-        {
-            new Bucket
-            {
-                Id=Guid.Parse("9D2B0228-4D0D-4C23-8B49-01A698857709"),
-                Title= "Washing stuff",
-            },
-            new Bucket
-            {
-                Id= Guid.Parse("9D3B0228-4D0D-4C23-8B49-01A698857709"),
-                Title= "Meeting a friend",
-            },
-             new Bucket
-            {
-                Id= Guid.Parse("9C2B0228-4D0D-4C23-8B49-01A698857709"),
-                Title= " Calling a friend",
-            },
-             new Bucket
-            {
-                Id= Guid.Parse("1D2B0228-4D0D-4C23-8B49-01A698851109"),
-                Title= "Having a stuff",
-            }
-
-        };
+        private List<Bucket> _buckets = new List<Bucket>();
+        
 
         public List<BucketDto> GetAll()
         {
@@ -60,8 +38,12 @@ namespace CSharp_intro_1.Repositories
 
         public void Create(BucketDto bucket)
         {
-           // _buckets.Add(new Bucket { Id = _buckets.Count + 1, Title = bucket.Title});
-            _buckets.Add(_mapper.Map<Bucket>(bucket));
+         
+           // _buckets.Add(_mapper.Map<Bucket>(bucket));
+            var mappedObject = _mapper.Map<Bucket>(bucket);
+          _buckets.Add(mappedObject);
+
+
                         
 
         }
@@ -80,6 +62,11 @@ namespace CSharp_intro_1.Repositories
         public void Delete(Guid bucketId)
         {
             var deleteRecord = _buckets.RemoveAll(bucket => bucket.Id == bucketId);
+        }
+
+        public void UpdateByStatus(int currentStatus, int newStatus)
+        {
+            throw new NotImplementedException();
         }
     }
 }

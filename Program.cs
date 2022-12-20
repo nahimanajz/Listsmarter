@@ -14,31 +14,49 @@ class Program
        var bucketController = new BucketController(host.Services.GetService<BucketService>());
         var taskController = new TaskController(host.Services.GetService<TaskService>());
         
-        var Id = Guid.NewGuid();
+
         personController.Create(new PersonDto{
             FirstName="Felix",
             LastName="Niyo",
-            Id=Id
-
         });
-        var bucketId = Guid.NewGuid();
+        
+
         bucketController.Create(new BucketDto{
             Title= " Calling a friend"
         });
 
         //TODO: Get bucket, and Get Person to fill bucket and assignee as an object
-        taskController.Create(new TaskDto {
-            Title = "SOME CHANGED TASK",
+       taskController.Create(new TaskDto {
+            Title = "Some given TASK",
                 Description = "SOME OTHER CHANGED TASK",
                 Status = (int) StatusEnum.Open,
-                Assignee = personController.GetById(Id),
-                Bucket = bucketController.GetById(bucketId)
+                Assignee = personController.GetAll()[0],
+                Bucket = bucketController.GetAll()[0]
         });
-        foreach(var person in personController.GetAll())  Console.WriteLine(person.FullName+"ID:"+person.Id);
-       Console.WriteLine($"Get person by id: {personController.GetById(Id).FullName}");
+         taskController.Create(new TaskDto {
+            Title = "Second task",
+                Description = "Second",
+                Status = (int) StatusEnum.Open,
+                Assignee = personController.GetAll()[0],
+                Bucket = bucketController.GetAll()[0]
+        });
+        var tsk = new TaskDto {
+            Id=personController.GetAll()[0].Id,
+            Title = "Third task",
+                Description = "Third",
+                Status = (int) StatusEnum.Open,
+               
+        };
+        taskController.Update(tsk);
+        
+        
+      //  foreach(var person in personController.GetAll())  Console.WriteLine(person.FullName+"ID:"+person.Id);
+      // Console.WriteLine($"Get person by id: {personController.GetById(Id).FullName}");
+
 
        /* foreach(var bucket in bucketController.GetAll()) Console.WriteLine($"BUCKET TITLE: {bucket.Title}");  */
         foreach(var task in taskController.GetAll()) Console.WriteLine($"Task : {task.Title} Assignee=> {task.Assignee.FirstName} Bucket=> {task.Bucket.Title}");
+        personController.Delete(personController.GetAll()[0].Id);
        
        
         return host.RunAsync();

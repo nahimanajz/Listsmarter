@@ -5,18 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Services.interfaces;
 using FluentValidation;
 using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
-    public class BucketService 
+    public class BucketService : IBucketService
     {
         private readonly IRepository<BucketDto> _repo;
+        private readonly IRepository<TaskDto> _taskRepo;
+
         private readonly IValidator<BucketDto> _personValidator;
-        public BucketService(IRepository<BucketDto> repo, IValidator<BucketDto> _personValidator)
+        public BucketService(IRepository<BucketDto> repo, IRepository<TaskDto> taskRepo, IValidator<BucketDto> _personValidator)
         {
             _repo = repo;
+            _taskRepo = taskRepo;
+
             _personValidator = _personValidator ?? throw new ArgumentException();
 
         }
@@ -26,10 +31,6 @@ namespace CSharp_intro_1.Services
             _repo.Create(entity);
         }
 
-         public void Delete(Guid id)
-        {
-            _repo.Delete(id);
-        }
 
         public List<BucketDto> GetAll()
         {
@@ -38,13 +39,32 @@ namespace CSharp_intro_1.Services
 
         public BucketDto GetById(Guid id)
         {
-           return _repo.GetById(id);
+            return _repo.GetById(id);
 
         }
 
         public void Update(BucketDto entity)
         {
-           _repo.Update(entity);
+            _repo.Update(entity);
+        }
+        public void Delete(Guid id)
+        {
+            
+            bool isBucketEmpty = _taskRepo.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
+            if (isBucketEmpty == false)
+            {
+                _repo.Delete(id);
+            }
+            else
+            {
+                Console.WriteLine("Bucket is not empty");
+            }
+
+        }
+
+        public BucketDto GetByStatus(int status)
+        {
+            throw new NotImplementedException();
         }
     }
 }
