@@ -51,8 +51,10 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
-            
-            bool hasTask = _taskRepo.GetAll().Any<TaskDto>(task => task.Assignee.Id == id);
+            System.Console.WriteLine($"You are trying to delete {id}");
+            bool hasTask = _taskRepo.GetAll().All(task => task.Assignee.Id == id);
+            System.Console.WriteLine($"You are trying to delete {id} hasId{hasTask}");
+
             if(hasTask){
                 Console.WriteLine($"Can not delete because ther is a task assinged to this person");
                 return;

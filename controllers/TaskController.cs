@@ -34,11 +34,12 @@ namespace CSharp_intro_1
         {
             _service.Update(task);
         }
-         public void Update(TaskDto task)
+         public void UpdateByStatus(int status, int newStatus)
         {
-            _service.Update(task);
+            _service.UpdateByStatus(status, newStatus);
         }
        
 
     }
+
 }

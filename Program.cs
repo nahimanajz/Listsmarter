@@ -55,8 +55,12 @@ class Program
 
 
        /* foreach(var bucket in bucketController.GetAll()) Console.WriteLine($"BUCKET TITLE: {bucket.Title}");  */
-        foreach(var task in taskController.GetAll()) Console.WriteLine($"Task : {task.Title} Assignee=> {task.Assignee.FirstName} Bucket=> {task.Bucket.Title}");
-        personController.Delete(personController.GetAll()[0].Id);
+        foreach(var task in taskController.GetAll()) Console.WriteLine($"Task : {task.Title} Assignee=> {task.Assignee.FirstName} Bucket=> {task.Bucket.Title} Status: {task.Status} Assignee=>{task.Assignee.Id}");
+        
+        var people = personController.GetAll();
+        personController.Delete(people[0].Id);
+        //personController.Delete(people[0].Id);
+        foreach(var person in people)  System.Console.WriteLine($"ID=>{person.Id} Names=> {person.FullName} Total people:{people.Count}");
        
        
         return host.RunAsync();

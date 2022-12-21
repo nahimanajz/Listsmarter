@@ -73,11 +73,11 @@ namespace CSharp_intro_1.Repositories
         {
             var deleteRecord = Tasks.RemoveAll(task => task.Id == taskId);
         }
-        public void UpdateByStatus(int status, int value)
+        public void UpdateByStatus(int status, int newStatus)
         {
             var taskByStatus = Tasks.Where(task => task.Status == status).Select(tsk =>
             {
-                tsk.Status = value;
+                tsk.Status = newStatus;
                 return tsk;
             }).ToList();
            

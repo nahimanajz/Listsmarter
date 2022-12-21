@@ -21,7 +21,13 @@ namespace CSharp_intro_1.Repositories
             _mapper = mapper;
         }
     
-        private List<Person> _people = new List<Person>();
+        private List<Person> _people = new List<Person>{
+            new Person {
+                FirstName="Eli...",
+                LastName="T..",
+                Id= Guid.Parse("8D2B0228-5D0D-4C23-9B49-01A698851109")
+            }
+        };
         
         
         public List<PersonDto> GetAll()
