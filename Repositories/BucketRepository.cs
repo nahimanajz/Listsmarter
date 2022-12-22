@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
 
@@ -20,19 +21,19 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-        private List<Bucket> _buckets = new List<Bucket>();
+      
         
 
         public List<BucketDto> GetAll()
         {
-            return _mapper.Map<List<BucketDto>>(_buckets.ToList());
+            return _mapper.Map<List<BucketDto>>(TempDb.buckets.ToList());
 
         }
 
         public BucketDto GetById(Guid id)
         {
 
-            return _mapper.Map<BucketDto>(_buckets.FirstOrDefault(bucket => bucket.Id == id, null)); ;
+            return _mapper.Map<BucketDto>(TempDb.buckets.FirstOrDefault(bucket => bucket.Id == id, null)); ;
 
         }
 
@@ -41,7 +42,7 @@ namespace CSharp_intro_1.Repositories
          
            // _buckets.Add(_mapper.Map<Bucket>(bucket));
             var mappedObject = _mapper.Map<Bucket>(bucket);
-          _buckets.Add(mappedObject);
+          TempDb.buckets.Add(mappedObject);
 
 
                         
@@ -50,7 +51,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Update(BucketDto bucket)
         {
-            _buckets.Where(bucket => bucket.Id == bucket.Id).Select(bucket =>
+            TempDb.buckets.Where(bucket => bucket.Id == bucket.Id).Select(bucket =>
             {
                 bucket.Title = bucket.Title == null ? bucket.Title : bucket.Title;
                 return bucket;
@@ -61,7 +62,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid bucketId)
         {
-            var deleteRecord = _buckets.RemoveAll(bucket => bucket.Id == bucketId);
+            var deleteRecord = TempDb.buckets.RemoveAll(bucket => bucket.Id == bucketId);
         }
 
         public void UpdateByStatus(int currentStatus, int newStatus)

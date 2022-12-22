@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services;
@@ -23,37 +24,30 @@ namespace CSharp_intro_1.Repositories
             _mapper = mapper;
         }
     
-        private List<Person> _people = new List<Person>{
-            new Person {
-                FirstName="Eli...",
-                LastName="T..",
-                Id= Guid.Parse("8D2B0228-5D0D-4C23-9B49-01A698851109")
-            }
-        };
-        
+       
         
         public  List<PersonDto> GetAll()
         {
-            return _mapper.Map<List<PersonDto>>(_people.ToList());
+            return _mapper.Map<List<PersonDto>>(TempDb.people.ToList());
             
         }
 
         public PersonDto GetById(Guid id)
         {
-            var person = _people.FirstOrDefault(person => person.Id == id, null);
+            var person = TempDb.people.FirstOrDefault(person => person.Id == id, null);
             var mappedData = _mapper.Map<PersonDto>(person);
             return mappedData;
         }
 
         public void Create(PersonDto person)
         {
-            _people.Add(_mapper.Map<Person>(person));
+            TempDb.people.Add(_mapper.Map<Person>(person));
       
         }
 
         public void Update(PersonDto person)
         {
-            _people.Where(person => person.Id == person.Id).Select(person =>
+            TempDb.people.Where(person => person.Id == person.Id).Select(person =>
             {
                 person.FirstName = person.FirstName == null ? person.FirstName : person.FirstName;
                 person.LastName = person.LastName == null ? person.LastName : person.LastName;
@@ -66,7 +60,7 @@ namespace CSharp_intro_1.Repositories
         public void Delete(Guid personId)
         {
     
-            var deleteRecord = _people.RemoveAll(person => person.Id == personId);
+            var deleteRecord = TempDb.people.RemoveAll(person => person.Id == personId);
         }
 
         public void UpdateByStatus(int currentStatus, int newStatus)
