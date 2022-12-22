@@ -7,7 +7,7 @@ using CSharp_intro_1.Models;
 
 namespace CSharp_intro_1.Services.interfaces
 {
-    internal interface IBucketService
+    public interface IBucketService
     {
         List<BucketDto> GetAll();
         BucketDto GetById(Guid id);

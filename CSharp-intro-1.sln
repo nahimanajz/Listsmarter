@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharp-intro-1", "CSharp-intro-1.csproj", "{AA070F47-9622-4606-BF1D-3B9A1E287B0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApis", "..\RestApis\RestApis.csproj", "{0C93E6B8-8CD5-40B2-B3DE-E0EEDA6DAF24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AA070F47-9622-4606-BF1D-3B9A1E287B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA070F47-9622-4606-BF1D-3B9A1E287B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA070F47-9622-4606-BF1D-3B9A1E287B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C93E6B8-8CD5-40B2-B3DE-E0EEDA6DAF24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C93E6B8-8CD5-40B2-B3DE-E0EEDA6DAF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C93E6B8-8CD5-40B2-B3DE-E0EEDA6DAF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C93E6B8-8CD5-40B2-B3DE-E0EEDA6DAF24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

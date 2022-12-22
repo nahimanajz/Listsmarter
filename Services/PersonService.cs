@@ -14,7 +14,7 @@ namespace CSharp_intro_1.Services
     public class PersonService : IPersonService
     {
         private readonly IRepository<PersonDto> _repo;
-          private readonly IRepository<TaskDto> _taskRepo;
+        private readonly IRepository<TaskDto> _taskRepo;
         private readonly IValidator<PersonDto> _personValidator;
         public PersonService(IRepository<PersonDto> repo, IRepository<TaskDto> taskRepo, IValidator<PersonDto> _personValidator)
         {

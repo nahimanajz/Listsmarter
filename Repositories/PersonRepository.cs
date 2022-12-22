@@ -9,6 +9,8 @@ using AutoMapper;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services;
+using Microsoft.AspNetCore.Mvc;
+using Task = System.Threading.Tasks.Task;
 
 namespace CSharp_intro_1.Repositories
 {
@@ -30,7 +32,7 @@ namespace CSharp_intro_1.Repositories
         };
         
         
-        public List<PersonDto> GetAll()
+        public  List<PersonDto> GetAll()
         {
             return _mapper.Map<List<PersonDto>>(_people.ToList());
             
@@ -38,17 +40,14 @@ namespace CSharp_intro_1.Repositories
 
         public PersonDto GetById(Guid id)
         {
-         
-            return _mapper.Map<PersonDto>(_people.FirstOrDefault(person => person.Id == id, null)); ;
-
+            var person = _people.FirstOrDefault(person => person.Id == id, null);
+            var mappedData = _mapper.Map<PersonDto>(person);
+            return mappedData;
         }
 
         public void Create(PersonDto person)
         {
-          var mappedObject = _mapper.Map<Person>(person);
-          _people.Add(mappedObject);
-
-           // _people.Add(_mapper.Map<Person>(person));
+            _people.Add(_mapper.Map<Person>(person));
       
         }
 
@@ -74,6 +73,8 @@ namespace CSharp_intro_1.Repositories
         {
             throw new NotImplementedException();
         }
+
+       
     }
   
 }

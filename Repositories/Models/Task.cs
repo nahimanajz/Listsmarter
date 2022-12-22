@@ -1,7 +1,7 @@
 ﻿
 using CSharp_intro_1.Repositories.Models;
 
-namespace CSharp_intro_1.Models
+namespace CSharp_intro_1.Repositories.Models
 {
     public class Task
     {

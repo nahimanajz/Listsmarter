@@ -2,7 +2,7 @@
 using AutoMapper;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
-using Task = CSharp_intro_1.Models.Task;
+using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Repositories
 {
