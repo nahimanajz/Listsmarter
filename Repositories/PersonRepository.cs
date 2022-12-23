@@ -47,11 +47,11 @@ namespace CSharp_intro_1.Repositories
 
         public void Update(PersonDto person)
         {
-            TempDb.people.Where(person => person.Id == person.Id).Select(person =>
+            TempDb.people.Where(psn => psn.Id == person.Id).Select(psn =>
             {
-                person.FirstName = person.FirstName == null ? person.FirstName : person.FirstName;
-                person.LastName = person.LastName == null ? person.LastName : person.LastName;
-                return person;
+                psn.FirstName = person.FirstName != null ? person.FirstName : psn.FirstName;
+                psn.LastName = person.LastName != null ? person.LastName : psn.LastName;
+                return psn;
             }).ToList();
 
          
