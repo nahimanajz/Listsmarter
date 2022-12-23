@@ -51,9 +51,9 @@ namespace CSharp_intro_1.Repositories
 
         public void Update(BucketDto bucket)
         {
-            TempDb.buckets.Where(bucket => bucket.Id == bucket.Id).Select(bucket =>
+            TempDb.buckets.Where(bkt => bkt.Id == bucket.Id).Select(bkt =>
             {
-                bucket.Title = bucket.Title == null ? bucket.Title : bucket.Title;
+                bkt.Title = bucket.Title == null ? bkt.Title : bucket.Title;
                 return bucket;
             }).ToList();
 
