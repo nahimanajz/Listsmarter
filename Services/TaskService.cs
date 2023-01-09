@@ -26,6 +26,22 @@ namespace CSharp_intro_1.Services
 
         public void Create(TaskDto entity)
         {
+            //check if bucket exists on buckets list
+            //if not -> add the bucket
+            //assign newly created bucket to task
+            //if exits
+            //assign bucket to task
+            var bucket = _bucketRepo.GetById(entity.Bucket.Id);
+            if (bucket == null)
+            {
+                bucket = _bucketRepo.Create(entity.Bucket);
+                entity.Bucket = bucket;
+            }
+            else
+            {
+                entity.Bucket = bucket;
+            }
+            
             _repo.Create(entity);
         }
 
