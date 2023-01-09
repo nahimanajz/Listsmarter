@@ -11,9 +11,9 @@ namespace CSharp_intro_1.Repositories
     {
         List<T> GetAll();
         T GetById(Guid id); 
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(Guid id);
+        T Create(T entity);
+        T Update(T entity);
+        T Delete(Guid id);
         void UpdateByStatus(int currentStatus, int newStatus);
     }
 }
