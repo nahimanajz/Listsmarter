@@ -26,9 +26,9 @@ namespace CSharp_intro_1.Services
 
         }
 
-        public void Create(BucketDto entity)
+        public BucketDto Create(BucketDto entity)
         {
-            _repo.Create(entity);
+           reuturn _repo.Create(entity);
         }
 
 
