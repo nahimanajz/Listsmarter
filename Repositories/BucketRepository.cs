@@ -37,13 +37,13 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public void Create(BucketDto bucket)
+        public BucketDto Create(BucketDto bucket)
         {
          
            // _buckets.Add(_mapper.Map<Bucket>(bucket));
             var mappedObject = _mapper.Map<Bucket>(bucket);
           TempDb.buckets.Add(mappedObject);
-
+           return _mapper.Map<BucketDto>(mappedObject);
 
                         
 
