@@ -13,6 +13,6 @@ namespace CSharp_intro_1.Services.interfaces
         PersonDto GetById(Guid id);
         void Create(PersonDto personDto);
         void Update(PersonDto personDto);
-        void Delete(Guid id);
+        bool Delete(Guid id);
     }
 }

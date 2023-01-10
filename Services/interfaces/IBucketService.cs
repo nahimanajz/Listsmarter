@@ -12,9 +12,9 @@ namespace CSharp_intro_1.Services.interfaces
         List<BucketDto> GetAll();
         BucketDto GetById(Guid id);
         void Create(BucketDto record);
-        void Delete(Guid id);
+        bool Delete(Guid id);
         void Update(BucketDto record);
-        //TODO: Get all tasks in a bucket with a specific status
+        
         BucketDto GetByStatus(int status);
     }
 }

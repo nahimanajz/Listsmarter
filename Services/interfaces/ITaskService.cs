@@ -8,6 +8,8 @@ namespace CSharp_intro_1.Services.interfaces
     public interface ITaskService
     {
         List<TaskDto> GetAll();
+        List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
+
         TaskDto GetById(Guid id);
         void Create(TaskDto TaskDto);
         void Update(TaskDto TaskDto);

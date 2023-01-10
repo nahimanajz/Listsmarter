@@ -30,25 +30,21 @@ Create - creates new instance of the object
 Update - updates an object
 Delete - removes an object
 **Business rules:**
-Person cannot be removed if there is a task assigned to them
-Bucket cannot be removed if there is a task assigned to it
-Instances in each repository should properly reference instances in other repository (for example all tasks in the same bucket, should reference the same bucket in the BucketRepository)
+Person cannot be removed if there is a task assigned to them ✔
+Bucket cannot be removed if there is a task assigned to it ✔
+Instances in each repository should properly reference instances in other repository (for example all tasks in the same bucket, should reference the same bucket in the BucketRepository) `I don't get it`
 
 Services should have methods to:
-assign a user to task
-update task status to desired value
-get all tasks in a bucket with a specific status
-create/update/delete user
-create/update/delete task
-delete bucket (only if it's empty)
+assign a user to task `I am using create task to assign task`
+update task status to desired value ✔ [refactor needed] //suggestion using id to update it
+  ✔ 
+create/update/delete user ✔
+create/update/delete task ✔
+delete bucket (only if it's empty) ✔
 
 - Controllers should give the possibility to call relevant service methods to:
 assign a user to task
-- update task status to desired value
-- get all tasks in a bucket with a specific status
-- create/update/delete user
-- create/update/delete task
-- delete bucket (only if it's empty)
+
 
 Controllers and Services should operate on DTO entites, Automapper should be used in repositories to map between DTO objects and Repository models
 Use dependency injection for all services and repositories.
@@ -70,3 +66,21 @@ Questions
 - How to use dto references and still insert record
 - Reading about dependency injections
 - Implementing business logic
+
+// unhandled logic
+- Delete bucket, person returns message but record is not really deleted
+- Person who has task assigned can be deleted ✔
+same on bucket
+
+# bugs detected
+- Connecting models like bucket to task while creating new task is not done`I.E: Entity relationship `
+- Baltmieh suggested from 
+- suggested to close and end `if statement`
+- 20 min personal call for project instructions
+- Commit final changes at the end of the day[it will be great to connect task to bucket and person]
+# Soluion I provided and result
+- Adding `List<Task>` in `Person and Bucket model`
+## Blocker
+Adding new bucket or person isn't working due to adding this line in codes `List<Task> Tasks`
+## Resource
+https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration

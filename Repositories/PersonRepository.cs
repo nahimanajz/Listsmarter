@@ -62,13 +62,6 @@ namespace CSharp_intro_1.Repositories
     
             var deleteRecord = TempDb.people.RemoveAll(person => person.Id == personId);
         }
-
-        public void UpdateByStatus(int currentStatus, int newStatus)
-        {
-            throw new NotImplementedException();
-        }
-
-       
     }
   
 }

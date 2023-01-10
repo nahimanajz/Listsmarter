@@ -47,18 +47,17 @@ namespace CSharp_intro_1.Services
         {
             _repo.Update(entity);
         }
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             
             bool isBucketEmpty = _taskRepo.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
             if (isBucketEmpty == false)
             {
                 _repo.Delete(id);
+                return true;
             }
-            else
-            {
-                Console.WriteLine("Bucket is not empty");
-            }
+            else return false;
+           
 
         }
 

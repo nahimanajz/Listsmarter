@@ -21,6 +21,7 @@ namespace CSharp_intro_1
             services.AddTransient<IRepository<PersonDto>, PersonRepository>();
             services.AddTransient<IRepository<BucketDto>, BucketRepository>();
             services.AddTransient<IRepository<TaskDto>, TaskRepository>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
 
         }
         public static void RegisterValidators(this IServiceCollection services)

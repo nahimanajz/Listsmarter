@@ -7,7 +7,7 @@ using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Repositories
 {
-    public class TaskRepository : IRepository<TaskDto>
+    public class TaskRepository : IRepository<TaskDto>, ITaskRepository
     {
         private readonly IMapper _mapper;
 
@@ -19,6 +19,13 @@ namespace CSharp_intro_1.Repositories
         public List<TaskDto> GetAll()
         {
             return _mapper.Map<List<TaskDto>>(TempDb.tasks.ToList());
+
+        }
+
+        public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
+        {
+            var tasks = TempDb.tasks.Where(task=> task.Bucket.Id == bucketId && task.Status == status).Select(task=> task);
+            return _mapper.Map<List<TaskDto>>(tasks);
 
         }
 
@@ -63,11 +70,18 @@ namespace CSharp_intro_1.Repositories
                 tsk.Status = newStatus;
                 return tsk;
             }).ToList();
-           
+
         }
 
-
-
+        public void AssignTask(Guid taskId, Guid personId)
+        {
+           Person person = TempDb.people.Where(psn => psn.Id == personId).First();
+            var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(tsk =>
+            {
+                tsk.Assignee =  person;
+                return tsk;
+            }).ToList();
+        }
     }
 
 }

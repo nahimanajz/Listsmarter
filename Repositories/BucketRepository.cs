@@ -65,9 +65,6 @@ namespace CSharp_intro_1.Repositories
             var deleteRecord = TempDb.buckets.RemoveAll(bucket => bucket.Id == bucketId);
         }
 
-        public void UpdateByStatus(int currentStatus, int newStatus)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
