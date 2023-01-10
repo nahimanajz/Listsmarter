@@ -26,9 +26,9 @@ namespace CSharp_intro_1.Services
 
         }
 
-        public void Create(BucketDto entity)
+        public BucketDto Create(BucketDto entity)
         {
-            _repo.Create(entity);
+           return _repo.Create(entity);
         }
 
 
@@ -56,8 +56,11 @@ namespace CSharp_intro_1.Services
                 _repo.Delete(id);
                 return true;
             }
-            else return false;
-           
+            else
+            {
+                Console.WriteLine("Bucket is not empty");
+                return false;
+            }
 
         }
 

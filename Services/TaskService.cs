@@ -17,11 +17,13 @@ namespace CSharp_intro_1.Services
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly ITaskRepository _taskRepo;
+        private readonly ITaskRepository _bucketRepo;
         private readonly IValidator<TaskDto> _personValidator;
         public TaskService(IRepository<TaskDto> repo,  ITaskRepository taskRepo, IValidator<TaskDto> _personValidator)
         {
             _repo = repo;
             _taskRepo= taskRepo;
+            _bucketRepo= bucketRepo;
             _personValidator = _personValidator ?? throw new ArgumentException();
 
         }
@@ -29,6 +31,22 @@ namespace CSharp_intro_1.Services
 
         public void Create(TaskDto entity)
         {
+            //check if bucket exists on buckets list
+            //if not -> add the bucket
+            //assign newly created bucket to task
+            //if exits
+            //assign bucket to task
+            var bucket = _bucketRepo.GetById(entity.Bucket.Id);
+            if (bucket == null)
+            {
+                bucket = _bucketRepo.Create(entity.Bucket);
+                entity.Bucket = bucket;
+            }
+            else
+            {
+                entity.Bucket = bucket;
+            }
+            
             _repo.Create(entity);
         }
 
