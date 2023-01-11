@@ -11,9 +11,9 @@ namespace CSharp_intro_1.Services.interfaces
     {
         List<BucketDto> GetAll();
         BucketDto GetById(Guid id);
-        void Create(BucketDto record);
+        BucketDto Create(BucketDto record);
         bool Delete(Guid id);
-        void Update(BucketDto record);
+        BucketDto Update(BucketDto record);
         
         BucketDto GetByStatus(int status);
     }

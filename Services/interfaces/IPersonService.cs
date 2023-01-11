@@ -11,8 +11,8 @@ namespace CSharp_intro_1.Services.interfaces
     {
         List<PersonDto> GetAll();
         PersonDto GetById(Guid id);
-        void Create(PersonDto personDto);
-        void Update(PersonDto personDto);
+        PersonDto Create(PersonDto personDto);
+        PersonDto Update(PersonDto personDto);
         bool Delete(Guid id);
     }
 }

@@ -24,7 +24,7 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            var tasks = TempDb.tasks.Where(task=> task.Bucket.Id == bucketId && task.Status == status).Select(task=> task);
+            var tasks = TempDb.tasks.Where(task => task.Bucket == bucketId && task.Status == status).Select(task => task);
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }
@@ -36,27 +36,25 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public void Create(TaskDto task)
+        public TaskDto Create(TaskDto newTask)
         {
-            var mappedObject = _mapper.Map<Task>(task);
-            TempDb.tasks.Add(mappedObject);
-
-
-
+            TempDb.tasks.Add(_mapper.Map<Task>(newTask));
+            return _mapper.Map<TaskDto>(TempDb.tasks.Last());
         }
 
-        public void Update(TaskDto tsk)
+        public TaskDto Update(TaskDto registeredTask)
         {
-            TempDb.tasks.Where(task => task.Id == tsk.Id).Select(task =>
-            {
-                task.Title = tsk.Title == null ? task.Title : tsk.Title;
-                task.Description = task.Description == null ? task.Description : tsk.Description;
+            var updatedTask = TempDb.tasks.Where(task => task.Id == registeredTask.Id).Select(task =>
+             {
+                 task.Title = registeredTask.Title == null ? task.Title : registeredTask.Title;
+                 task.Description = task.Description == null ? task.Description : registeredTask.Description;
 
-                task.Status = tsk.Status == null ? task.Status : (int)tsk.Status;
+                 task.Status = registeredTask.Status == null ? task.Status : (int)registeredTask.Status;
 
 
-                return task;
-            }).ToList();
+                 return task;
+             }).ToList();
+            return GetById(registeredTask.Id);
         }
 
         public void Delete(Guid taskId)
@@ -65,21 +63,21 @@ namespace CSharp_intro_1.Repositories
         }
         public void UpdateByStatus(int status, int newStatus)
         {
-            var taskByStatus = TempDb.tasks.Where(task => task.Status == status).Select(tsk =>
+            var taskByStatus = TempDb.tasks.Where(task => task.Status == status).Select(registeredTask =>
             {
-                tsk.Status = newStatus;
-                return tsk;
+                registeredTask.Status = newStatus;
+                return registeredTask;
             }).ToList();
 
         }
 
         public void AssignTask(Guid taskId, Guid personId)
         {
-           Person person = TempDb.people.Where(psn => psn.Id == personId).First();
-            var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(tsk =>
+            Person person = TempDb.people.Where(currentPerson => currentPerson.Id == personId).First();
+            var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
             {
-                tsk.Assignee =  person;
-                return tsk;
+                registeredTask.Assignee = person.Id;
+                return registeredTask;
             }).ToList();
         }
     }

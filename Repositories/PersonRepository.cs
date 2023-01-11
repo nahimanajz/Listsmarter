@@ -25,28 +25,26 @@ namespace CSharp_intro_1.Repositories
             var mappedData = _mapper.Map<PersonDto>(person);
             return mappedData;
         }
-        public PersonDto Create(PersonDto person)
+        public PersonDto Create(PersonDto newPerson)
         {
-            TempDb.people.Add(_mapper.Map<Person>(person));
-            var createdPerson = TempDb.people.LastOrDefault(p => p.Id == person.Id, null);
-            return _mapper.Map<PersonDto>(createdPerson);
+            TempDb.people.Add(_mapper.Map<Person>(newPerson));
+            return _mapper.Map<PersonDto>(TempDb.people.Last());
 
         }
         public PersonDto Update(PersonDto person)
         {
-            var upatedPerson = TempDb.people.Where(psn => psn.Id == person.Id).Select(psn =>
+            var upatedPerson = TempDb.people.Where(currentPerson => currentPerson.Id == person.Id).Select(currentPerson =>
              {
-                 psn.FirstName = person.FirstName != null ? person.FirstName : psn.FirstName;
-                 psn.LastName = person.LastName != null ? person.LastName : psn.LastName;
-                 return psn;
+                 currentPerson.FirstName = person.FirstName != null ? person.FirstName : currentPerson.FirstName;
+                 currentPerson.LastName = person.LastName != null ? person.LastName : currentPerson.LastName;
+                 return currentPerson;
              }).ToList();
-            return _mapper.Map<PersonDto>(upatedPerson);
+            return GetById(person.Id);
 
         }
 
         public void Delete(Guid personId)
         {
-
             var deleteRecord = TempDb.people.RemoveAll(person => person.Id == personId);
         }
     }

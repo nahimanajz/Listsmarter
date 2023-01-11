@@ -14,7 +14,7 @@ namespace CSharp_intro_1.Services
     public class PersonService : IPersonService
     {
         private readonly IRepository<PersonDto> _repo;
-        private readonly IRepository<TaskDto> _taskRepo;// to call all methods from task repository
+        private readonly IRepository<TaskDto> _taskRepo;
         private readonly IValidator<PersonDto> _personValidator;
         public PersonService(IRepository<PersonDto> repo, IRepository<TaskDto> taskRepo, IValidator<PersonDto> _personValidator)
         {
@@ -24,35 +24,28 @@ namespace CSharp_intro_1.Services
 
         }
 
-        public void Create(PersonDto entity)
+        public PersonDto Create(PersonDto entity)
         {
-            _repo.Create(entity);
+            return _repo.Create(entity);
         }
-
-
         public List<PersonDto> GetAll()
         {
-            
             return _repo.GetAll();
         }
 
         public PersonDto GetById(Guid id)
         {
-
-
-
             return _repo.GetById(id);
-
         }
 
-        public void Update(PersonDto entity)
+        public PersonDto Update(PersonDto entity)
         {
-            _repo.Update(entity);
+            return _repo.Update(entity);
         }
         public bool Delete(Guid id)
         {
-            
-            bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee.Id == id);
+
+            bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee == id);
 
             if (!hasTask)
             {
@@ -63,5 +56,5 @@ namespace CSharp_intro_1.Services
 
 
         }
-}
+    }
 }

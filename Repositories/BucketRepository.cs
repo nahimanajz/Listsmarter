@@ -21,43 +21,33 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-      
-        
 
         public List<BucketDto> GetAll()
         {
-            return _mapper.Map<List<BucketDto>>(TempDb.buckets.ToList());
-
+            return _mapper.Map<List<BucketDto>>(TempDb.buckets);
         }
 
         public BucketDto GetById(Guid id)
         {
-
-            return _mapper.Map<BucketDto>(TempDb.buckets.FirstOrDefault(bucket => bucket.Id == id, null)); ;
-
+            //TODO: SEARCH IN TASK, GET ALL WHERE BUCKET ID IS THIS SET ONE
+            return _mapper.Map<BucketDto>(TempDb.buckets.FirstOrDefault(bucket => bucket.Id == id, null));
         }
 
-        public BucketDto Create(BucketDto bucket)
+        public BucketDto Create(BucketDto newBucket)
         {
-         
-           // _buckets.Add(_mapper.Map<Bucket>(bucket));
-            var mappedObject = _mapper.Map<Bucket>(bucket);
-          TempDb.buckets.Add(mappedObject);
-           return _mapper.Map<BucketDto>(mappedObject);
-
-                        
-
+          TempDb.buckets.Add(_mapper.Map<Bucket>(newBucket));
+          return _mapper.Map<BucketDto>(TempDb.buckets.Last());
         }
 
-        public void Update(BucketDto bucket)
+        public BucketDto Update(BucketDto bucket)
         {
-            TempDb.buckets.Where(bkt => bkt.Id == bucket.Id).Select(bkt =>
+           var updatedBucket =  TempDb.buckets.Where(registeredbucket => registeredbucket.Id == bucket.Id).Select(registeredbucket =>
             {
-                bkt.Title = bucket.Title == null ? bkt.Title : bucket.Title;
+                registeredbucket.Title = bucket.Title == null ? registeredbucket.Title : bucket.Title;
                 return bucket;
             }).ToList();
 
-
+            return GetById(bucket.Id);
         }
 
         public void Delete(Guid bucketId)

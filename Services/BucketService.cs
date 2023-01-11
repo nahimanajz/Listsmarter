@@ -28,10 +28,9 @@ namespace CSharp_intro_1.Services
 
         public BucketDto Create(BucketDto entity)
         {
+           
            return _repo.Create(entity);
         }
-
-
         public List<BucketDto> GetAll()
         {
             return _repo.GetAll();
@@ -43,14 +42,14 @@ namespace CSharp_intro_1.Services
 
         }
 
-        public void Update(BucketDto entity)
+        public BucketDto Update(BucketDto entity)
         {
-            _repo.Update(entity);
+            return _repo.Update(entity);
         }
         public bool Delete(Guid id)
         {
             
-            bool isBucketEmpty = _taskRepo.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
+            bool isBucketEmpty = _taskRepo.GetAll().Any<TaskDto>(task => task.Bucket == id);
             if (isBucketEmpty == false)
             {
                 _repo.Delete(id);
@@ -58,7 +57,6 @@ namespace CSharp_intro_1.Services
             }
             else
             {
-                Console.WriteLine("Bucket is not empty");
                 return false;
             }
 
@@ -68,5 +66,7 @@ namespace CSharp_intro_1.Services
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

@@ -1,3 +1,6 @@
+using System.Xml;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,37 +20,52 @@ namespace CSharp_intro_1.Services
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly ITaskRepository _taskRepo;
-        private readonly ITaskRepository _bucketRepo;
+        private readonly IRepository<BucketDto> _bucketRepo;
+        private readonly IRepository<PersonDto> _personRepo;
         private readonly IValidator<TaskDto> _personValidator;
-        public TaskService(IRepository<TaskDto> repo,  ITaskRepository taskRepo, IValidator<TaskDto> _personValidator)
+        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IRepository<PersonDto> personRepo, IRepository<BucketDto> bucketRepo, IValidator<TaskDto> _personValidator)
         {
             _repo = repo;
-            _taskRepo= taskRepo;
-            _bucketRepo= bucketRepo;
+            _taskRepo = taskRepo;
+            _bucketRepo = bucketRepo;
+            _personRepo = personRepo;
             _personValidator = _personValidator ?? throw new ArgumentException();
 
         }
 
 
-        public void Create(TaskDto entity)
+        public TaskDto Create(TaskDto entity)
         {
             //check if bucket exists on buckets list
             //if not -> add the bucket
             //assign newly created bucket to task
             //if exits
             //assign bucket to task
-            var bucket = _bucketRepo.GetById(entity.Bucket.Id);
+            var bucket = _bucketRepo.GetById(entity.Bucket);
             if (bucket == null)
             {
-                bucket = _bucketRepo.Create(entity.Bucket);
-                entity.Bucket = bucket;
+                bucket = new BucketDto {Id= entity.Bucket, Title= "Default created Bucket" };
+                bucket = _bucketRepo.Create(bucket);
+                entity.Bucket = bucket.Id;
             }
             else
             {
-                entity.Bucket = bucket;
+                entity.Bucket = bucket.Id;
             }
-            
-            _repo.Create(entity);
+
+            var person = _personRepo.GetById(entity.Assignee);
+            if (person == null)
+            {
+                person = new PersonDto {Id= entity.Assignee, FirstName= "Janvier", LastName="Nahimana"};
+                person = _personRepo.Create(person);
+                entity.Assignee = person.Id;
+            }
+            else
+            {
+                entity.Assignee = person.Id;
+            }
+      
+           return _repo.Create(entity);
         }
 
         public void Delete(Guid id)
@@ -72,9 +90,9 @@ namespace CSharp_intro_1.Services
 
         }
 
-        public void Update(TaskDto entity)
+        public TaskDto Update(TaskDto entity)
         {
-            _repo.Update(entity);
+            return _repo.Update(entity);
         }
 
         public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
