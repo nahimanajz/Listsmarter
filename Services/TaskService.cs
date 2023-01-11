@@ -1,11 +1,7 @@
 using System.Xml;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
@@ -36,11 +32,7 @@ namespace CSharp_intro_1.Services
 
         public TaskDto Create(TaskDto entity)
         {
-            //check if bucket exists on buckets list
-            //if not -> add the bucket
-            //assign newly created bucket to task
-            //if exits
-            //assign bucket to task
+      
             var bucket = _bucketRepo.GetById(entity.Bucket);
             if (bucket == null)
             {
