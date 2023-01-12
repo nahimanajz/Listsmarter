@@ -1,10 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
@@ -29,7 +22,7 @@ namespace CSharp_intro_1.Repositories
 
         public BucketDto GetById(Guid id)
         {
-            //TODO: SEARCH IN TASK, GET ALL WHERE BUCKET ID IS THIS SET ONE
+            
             return _mapper.Map<BucketDto>(TempDb.buckets.FirstOrDefault(bucket => bucket.Id == id, null));
         }
 

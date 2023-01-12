@@ -27,7 +27,6 @@ class Program
             Title = " Calling a friend"
         });
 
-        //TODO: Get bucket, and Get Person to fill bucket and assignee as an object
         taskController.Create(new TaskDto
         {
             Title = "Some given TASK",
@@ -79,4 +78,3 @@ class Program
 
     }
 }
-// create new user

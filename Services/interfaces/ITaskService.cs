@@ -14,8 +14,7 @@ namespace CSharp_intro_1.Services.interfaces
         TaskDto Create(TaskDto TaskDto);
         TaskDto Update(TaskDto TaskDto);
         void Delete(Guid id);
-       // TODO: Update task status to desired value
-      // void UpdateByStatus(int status, int value);
+
       
     }
 }
