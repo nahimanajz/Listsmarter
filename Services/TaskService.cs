@@ -1,13 +1,8 @@
-using System.Xml;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
 
-using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
 using FluentValidation;
-using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
@@ -18,46 +13,53 @@ namespace CSharp_intro_1.Services
         private readonly ITaskRepository _taskRepo;
         private readonly IRepository<BucketDto> _bucketRepo;
         private readonly IRepository<PersonDto> _personRepo;
-        private readonly IValidator<TaskDto> _personValidator;
-        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IRepository<PersonDto> personRepo, IRepository<BucketDto> bucketRepo, IValidator<TaskDto> _personValidator)
+
+        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IRepository<PersonDto> personRepo, IRepository<BucketDto> bucketRepo)
         {
             _repo = repo;
             _taskRepo = taskRepo;
             _bucketRepo = bucketRepo;
             _personRepo = personRepo;
-            _personValidator = _personValidator ?? throw new ArgumentException();
+
 
         }
 
 
-        public TaskDto Create(TaskDto entity)
+        public TaskDto Create(CreateTaskDto task)
         {
-      
-            var bucket = _bucketRepo.GetById(entity.Bucket);
+            // TODO: BUCKET SHOULD HAVE FIXED NUMBER OF TASKS   
+
+            var newTask = new TaskDto
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status
+            };
+
+            var bucket = _bucketRepo.GetById(task.Bucket); // TODO: call service rather than repository
             if (bucket == null)
             {
-                bucket = new BucketDto {Id= entity.Bucket, Title= "Default created Bucket" };
+                bucket = new BucketDto { Id = task.Bucket, Title = "Default created Bucket" };
                 bucket = _bucketRepo.Create(bucket);
-                entity.Bucket = bucket.Id;
+                newTask.Bucket = bucket;
             }
             else
             {
-                entity.Bucket = bucket.Id;
+                newTask.Bucket = bucket;
             }
 
-            var person = _personRepo.GetById(entity.Assignee);
+            var person = _personRepo.GetById(task.Assignee); // TODO: call service rather than repository
             if (person == null)
             {
-                person = new PersonDto {Id= entity.Assignee, FirstName= "Janvier", LastName="Nahimana"};
+                person = new PersonDto { Id = task.Assignee, FirstName = "Janvier", LastName = "Nahimana" };
                 person = _personRepo.Create(person);
-                entity.Assignee = person.Id;
+                newTask.Assignee = person;
             }
             else
             {
-                entity.Assignee = person.Id;
+                newTask.Assignee = person;
             }
-      
-           return _repo.Create(entity);
+            return _repo.Create(newTask);
         }
 
         public void Delete(Guid id)

@@ -6,6 +6,7 @@ namespace CSharp_intro_1.Models
     {
        public Guid Id { get; set; }
         public string Title { get; set; }
+        public int MaxTasks { get; set; }
         public List<TaskDto> Tasks { get; set; }
     }
 }

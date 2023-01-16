@@ -84,3 +84,5 @@ same on bucket
 Adding new bucket or person isn't working due to adding this line in codes `List<Task> Tasks`
 ## Resource
 https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration
+
+Auto reload: `dotnet watch run` 

@@ -24,7 +24,7 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            var tasks = TempDb.tasks.Where(task => task.Bucket == bucketId && task.Status == status).Select(task => task);
+            var tasks = TempDb.tasks.Where(task => task.Bucket.Id == bucketId && task.Status == status).Select(task => task);
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }
@@ -76,7 +76,7 @@ namespace CSharp_intro_1.Repositories
             Person person = TempDb.people.Where(currentPerson => currentPerson.Id == personId).First();
             var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
             {
-                registeredTask.Assignee = person.Id;
+                registeredTask.Assignee = person;
                 return registeredTask;
             }).ToList();
         }

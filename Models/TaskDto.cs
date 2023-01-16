@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public StatusEnum Status {get; set;} 
-        public Guid Assignee { get; set; }  
-        public Guid Bucket { get; set; }
+        public PersonDto Assignee { get; set; }  
+        public BucketDto Bucket { get; set; }
     }
 }

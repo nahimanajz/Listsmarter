@@ -11,7 +11,7 @@ namespace CSharp_intro_1.Services.interfaces
         List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
 
         TaskDto GetById(Guid id);
-        TaskDto Create(TaskDto TaskDto);
+        TaskDto Create(CreateTaskDto TaskDto);
         TaskDto Update(TaskDto TaskDto);
         void Delete(Guid id);
 

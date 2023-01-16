@@ -24,11 +24,6 @@ namespace CSharp_intro_1
             services.AddTransient<ITaskRepository, TaskRepository>();
 
         }
-        public static void RegisterValidators(this IServiceCollection services)
-        {
-            services.AddScoped<IValidator<PersonDto>, PersonDtoValidator>();
-            services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
-            services.AddScoped<IValidator<TaskDto>, TaskValidator>();
-        }
+        
     }
 }

@@ -10,22 +10,22 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IRepository<BucketDto> _repo;
-        private readonly IRepository<TaskDto> _taskRepo;
+        private readonly TaskService _taskService;
+        private readonly PersonService _personService;
 
-        private readonly IValidator<BucketDto> _personValidator;
-        public BucketService(IRepository<BucketDto> repo, IRepository<TaskDto> taskRepo, IValidator<BucketDto> _personValidator)
+
+        public BucketService(IRepository<BucketDto> repo, TaskService taskService)
         {
             _repo = repo;
-            _taskRepo = taskRepo;
+            _taskService = taskService;
 
-            _personValidator = _personValidator ?? throw new ArgumentException();
 
         }
-
+        //TODO: BUCKET SHOULD HAVE UNIQUE NAME
         public BucketDto Create(BucketDto entity)
         {
-           
-           return _repo.Create(entity);
+            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            return _repo.Create(entity);
         }
         public List<BucketDto> GetAll()
         {
@@ -37,19 +37,21 @@ namespace CSharp_intro_1.Services
             return _repo.GetById(id);
 
         }
-
+        //TODO: BUCKET SHOULD HAVE UNIQUE NAME
         public BucketDto Update(BucketDto entity)
         {
             return _repo.Update(entity);
         }
+        //TODO: CONSIDER THROWING EXCEPTION RATHER THAN IF-ELSE THINGS 
         public bool Delete(Guid id)
         {
-            
-            bool isBucketEmpty = _taskRepo.GetAll().Any<TaskDto>(task => task.Bucket == id);
+
+            bool isBucketEmpty = _taskService.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
             if (isBucketEmpty == false)
             {
                 _repo.Delete(id);
                 return true;
+
             }
             else
             {
@@ -63,6 +65,6 @@ namespace CSharp_intro_1.Services
             throw new NotImplementedException();
         }
 
-       
+
     }
 }

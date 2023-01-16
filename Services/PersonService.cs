@@ -11,13 +11,11 @@ namespace CSharp_intro_1.Services
     {
         private readonly IRepository<PersonDto> _repo;
         private readonly IRepository<TaskDto> _taskRepo;
-        private readonly IValidator<PersonDto> _personValidator;
-        public PersonService(IRepository<PersonDto> repo, IRepository<TaskDto> taskRepo, IValidator<PersonDto> _personValidator)
+  
+        public PersonService(IRepository<PersonDto> repo, IRepository<TaskDto> taskRepo)
         {
             _repo = repo;
             _taskRepo = taskRepo;
-            _personValidator = _personValidator ?? throw new ArgumentException();
-
         }
 
         public PersonDto Create(PersonDto entity)
@@ -28,12 +26,10 @@ namespace CSharp_intro_1.Services
         {
             return _repo.GetAll();
         }
-
         public PersonDto GetById(Guid id)
         {
             return _repo.GetById(id);
         }
-
         public PersonDto Update(PersonDto entity)
         {
             return _repo.Update(entity);
@@ -41,7 +37,7 @@ namespace CSharp_intro_1.Services
         public bool Delete(Guid id)
         {
 
-            bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee == id);
+            bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee.Id == id);
 
             if (!hasTask)
             {
