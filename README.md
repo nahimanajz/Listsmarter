@@ -50,16 +50,7 @@ Controllers and Services should operate on DTO entites, Automapper should be use
 Use dependency injection for all services and repositories.
 Use LINQ for all operations that filter and retrieve data.
 If anything is not clear please let me know.
-**Source code for task in auto mapper**
-`C:\Users\jnahimana\Desktop\coding\CSharp-intro-1\AutoMapperProfile.cs`
-``` 
-  CreateMap<Task, TaskDto>()
-                .ForMember(dest => dest.Bucket, opt => opt.MapFrom(src => src.Bucket))
-                .ForMember(dst => dst.Assignee, opt => opt.MapFrom(src => src.Assignee))
-                .ForMember(dest=> dest.Description, opt => opt.MapFrom(src=> src.Description))
-                .ForMember(dest=> dest.Status, opt => opt.MapFrom(src=> src.Status))
-                .ReverseMap();
-```
+
 
 Questions
 ------------

@@ -17,10 +17,7 @@ namespace CSharp_intro_1.Services
         {
             _repo = repo;
             _taskService = taskService;
-
-
         }
-       
         public BucketDto Create(BucketDto entity)
         {
             var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
@@ -34,7 +31,6 @@ namespace CSharp_intro_1.Services
         {
             return _repo.GetAll();
         }
-
         public BucketDto GetById(Guid id)
         {
             return _repo.GetById(id);
@@ -42,15 +38,13 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Update(BucketDto entity)
         {
-             var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
             if (!isBucketExist)
             {
                 return _repo.Update(entity);
             }
             throw new Exception($"{entity.Title} is already exist please try different title");
-      
         }
-      
         public void Delete(Guid id)
         {
 

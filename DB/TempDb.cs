@@ -17,8 +17,7 @@ namespace CSharp_intro_1.DB
                 Status = (int) StatusEnum.Open,
                 Assignee = people.First(),
                 Bucket = buckets.First(),
-            //TODO: Fixing: using object rather than ids in
-
+            
         }
         
         };

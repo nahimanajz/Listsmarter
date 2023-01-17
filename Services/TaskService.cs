@@ -13,6 +13,7 @@ namespace CSharp_intro_1.Services
         private readonly ITaskRepository _taskRepo;
         private readonly IRepository<BucketDto> _bucketRepo;
         private readonly IRepository<PersonDto> _personRepo;
+        private const int MAX_TASKS = 1; 
 
         public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IRepository<PersonDto> personRepo, IRepository<BucketDto> bucketRepo)
         {
@@ -20,7 +21,7 @@ namespace CSharp_intro_1.Services
             _taskRepo = taskRepo;
             _bucketRepo = bucketRepo;
             _personRepo = personRepo;
-           //TODO: implement builder to limit number of parameter in the construcor
+            //TODO: implement builder to limit number of parameter in the construcor
 
         }
 
@@ -37,7 +38,7 @@ namespace CSharp_intro_1.Services
             var bucket = _bucketRepo.GetById(task.Bucket); // TODO: call service rather than repository
             if (bucket == null)
             {
-                bucket = new BucketDto { Id = task.Bucket, Title = "Default created Bucket" };
+                bucket = new BucketDto { Id = task.Bucket, Title = "Default created Bucket" }; // TODO: Add dynamism to this title
                 bucket = _bucketRepo.Create(bucket);
                 newTask.Bucket = bucket;
             }
@@ -45,12 +46,23 @@ namespace CSharp_intro_1.Services
             {
                 newTask.Bucket = bucket;
             }
-            //TODO: verify if bucket is full
-            if(bucket.Tasks.Count == bucket.MaxTasks){
-                //TODO: THROW EXCEPTION AND SHOW USER THAT HE CAN NOT ADD MORE TASK
+             IsBucketFull(newTask.Bucket.Id);
+
+            var person = _personRepo.GetById(task.Assignee); // TODO: call service rather than repository
+            SetTaskToPerson(task, newTask, person);
+            return _repo.Create(newTask);
+        }
+        private void IsBucketFull(Guid bucketId)
+        {
+           var bucket = _repo.GetAll().FindAll(task=> task.Bucket.Id == bucketId).ToList();
+            if ( MAX_TASKS < bucket.Count)
+            {
                 throw new Exception("Bucket is full,");
             }
-            var person = _personRepo.GetById(task.Assignee); // TODO: call service rather than repository
+
+        }
+        private TaskDto SetTaskToPerson(CreateTaskDto task, TaskDto newTask, PersonDto person)
+        {
             if (person == null)
             {
                 person = new PersonDto { Id = task.Assignee, FirstName = "Janvier", LastName = "Nahimana" };
@@ -61,8 +73,9 @@ namespace CSharp_intro_1.Services
             {
                 newTask.Assignee = _personRepo.GetById(task.Assignee);
             }
-            return _repo.Create(newTask);
+            return newTask;
         }
+
 
         public void Delete(Guid id)
         {
