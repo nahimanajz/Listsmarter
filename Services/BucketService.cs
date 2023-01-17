@@ -21,12 +21,15 @@ namespace CSharp_intro_1.Services
 
 
         }
-        //TODO: BUCKET SHOULD HAVE UNIQUE NAME
+       
         public BucketDto Create(BucketDto entity)
         {
             var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
-            //if bucket exist throw exceptions
-            return _repo.Create(entity);
+            if (!isBucketExist)
+            {
+                return _repo.Create(entity);
+            }
+            throw new Exception($"{entity.Title} is already exist please try different title");
         }
         public List<BucketDto> GetAll()
         {
