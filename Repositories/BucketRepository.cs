@@ -47,6 +47,7 @@ namespace CSharp_intro_1.Repositories
         {
             var deleteRecord = TempDb.buckets.RemoveAll(bucket => bucket.Id == bucketId);
         }
+        
        
     }
 }

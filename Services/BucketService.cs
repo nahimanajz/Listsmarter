@@ -25,6 +25,7 @@ namespace CSharp_intro_1.Services
         public BucketDto Create(BucketDto entity)
         {
             var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            //if bucket exist throw exceptions
             return _repo.Create(entity);
         }
         public List<BucketDto> GetAll()
@@ -43,19 +44,18 @@ namespace CSharp_intro_1.Services
             return _repo.Update(entity);
         }
         //TODO: CONSIDER THROWING EXCEPTION RATHER THAN IF-ELSE THINGS 
-        public bool Delete(Guid id)
+        public void Delete(Guid id)
         {
 
             bool isBucketEmpty = _taskService.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
-            if (isBucketEmpty == false)
+            if (!isBucketEmpty)
             {
                 _repo.Delete(id);
-                return true;
-
             }
             else
             {
-                return false;
+                throw new("Bucket has some tasks yet you can not delete it");
+
             }
 
         }

@@ -9,6 +9,6 @@ namespace CSharp_intro_1.Services.interfaces
         PersonDto GetById(Guid id);
         PersonDto Create(PersonDto personDto);
         PersonDto Update(PersonDto personDto);
-        bool Delete(Guid id);
+        void Delete(Guid id);
     }
 }

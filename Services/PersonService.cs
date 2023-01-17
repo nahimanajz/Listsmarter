@@ -34,19 +34,17 @@ namespace CSharp_intro_1.Services
         {
             return _repo.Update(entity);
         }
-        public bool Delete(Guid id)
+        public void Delete(Guid id)
         {
-
             bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee.Id == id);
-
             if (!hasTask)
             {
                 _repo.Delete(id);
-                return true;
             }
-            else return false;
-
-
+            else
+            {
+                throw new("Person can not be deleted since he has some task");
+            }
         }
     }
 }

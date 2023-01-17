@@ -20,15 +20,13 @@ namespace CSharp_intro_1.Services
             _taskRepo = taskRepo;
             _bucketRepo = bucketRepo;
             _personRepo = personRepo;
-
+           //TODO: implement builder to limit number of parameter in the construcor
 
         }
-
 
         public TaskDto Create(CreateTaskDto task)
         {
             // TODO: BUCKET SHOULD HAVE FIXED NUMBER OF TASKS   
-
             var newTask = new TaskDto
             {
                 Title = task.Title,
@@ -47,7 +45,11 @@ namespace CSharp_intro_1.Services
             {
                 newTask.Bucket = bucket;
             }
-
+            //TODO: verify if bucket is full
+            if(bucket.Tasks.Count == bucket.MaxTasks){
+                //TODO: THROW EXCEPTION AND SHOW USER THAT HE CAN NOT ADD MORE TASK
+                throw new Exception("Bucket is full,");
+            }
             var person = _personRepo.GetById(task.Assignee); // TODO: call service rather than repository
             if (person == null)
             {
@@ -57,7 +59,7 @@ namespace CSharp_intro_1.Services
             }
             else
             {
-                newTask.Assignee = person;
+                newTask.Assignee = _personRepo.GetById(task.Assignee);
             }
             return _repo.Create(newTask);
         }
