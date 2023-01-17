@@ -13,7 +13,6 @@ namespace CSharp_intro_1.Services
         private readonly TaskService _taskService;
         private readonly PersonService _personService;
 
-
         public BucketService(IRepository<BucketDto> repo, TaskService taskService)
         {
             _repo = repo;
@@ -41,12 +40,17 @@ namespace CSharp_intro_1.Services
             return _repo.GetById(id);
 
         }
-        //TODO: BUCKET SHOULD HAVE UNIQUE NAME
         public BucketDto Update(BucketDto entity)
         {
-            return _repo.Update(entity);
+             var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            if (!isBucketExist)
+            {
+                return _repo.Update(entity);
+            }
+            throw new Exception($"{entity.Title} is already exist please try different title");
+      
         }
-        //TODO: CONSIDER THROWING EXCEPTION RATHER THAN IF-ELSE THINGS 
+      
         public void Delete(Guid id)
         {
 
