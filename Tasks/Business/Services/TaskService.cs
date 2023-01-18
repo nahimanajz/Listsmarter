@@ -13,7 +13,7 @@ namespace CSharp_intro_1.Services
         private readonly ITaskRepository _taskRepo;
         private readonly IBucketService _bucketService;
         private readonly IPersonService _personService;
-        private const int MAXIMUM_TASKS = 1;
+        private const int ALLOWED_TASKS = 10;
 
         public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personSerice)
         {
@@ -31,7 +31,7 @@ namespace CSharp_intro_1.Services
                 Status = task.Status
             };
 
-            var bucket = _bucketService.GetById(task.Bucket); // TODO: call service rather than repository
+            var bucket = _bucketService.GetById(task.Bucket); 
             if (bucket == null)
             {
                 bucket = new BucketDto { Id = task.Bucket, Title = "Default created Bucket" }; // TODO: Add dynamism to this title
@@ -44,14 +44,14 @@ namespace CSharp_intro_1.Services
             }
             IsBucketFull(newTask.Bucket.Id);
 
-            var person = _personService.GetById(task.Assignee); // TODO: call service rather than repository
+            var person = _personService.GetById(task.Assignee); 
             SetTaskToPerson(task, newTask, person);
             return _repo.Create(newTask);
         }
         private void IsBucketFull(Guid bucketId)
         {
             var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();
-            if (MAXIMUM_TASKS < bucket.Count)
+            if (ALLOWED_TASKS < bucket.Count)
             {
                 throw new Exception("Bucket is full,");
             }

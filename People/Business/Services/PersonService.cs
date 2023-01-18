@@ -11,10 +11,10 @@ namespace CSharp_intro_1.Services
     public class PersonService : IPersonService
     {
         private readonly IRepository<PersonDto> _repo;
-        // private readonly IRepository<TaskDto> _taskRepo;
-        private readonly ITaskAndModels _taskService;
+   
+        private readonly ITaskPersonBucketService _taskService;
 
-        public PersonService(IRepository<PersonDto> repo, ITaskAndModels taskService)// IRepository<TaskDto> taskRepo)
+        public PersonService(IRepository<PersonDto> repo, ITaskPersonBucketService taskService)
         {
             _repo = repo;
             _taskService = taskService;

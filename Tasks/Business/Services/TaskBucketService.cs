@@ -9,7 +9,7 @@ using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 
 namespace CSharp_intro_1.Tasks.Business.Services
 {
-    public class TaskBucketService : ITaskAndModels
+    public class TaskBucketService : ITaskPersonBucketService
     {
         private readonly IRepository<TaskDto> _repo;
         public TaskBucketService(IRepository<TaskDto> repo)

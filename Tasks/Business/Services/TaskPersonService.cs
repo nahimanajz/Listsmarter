@@ -10,10 +10,10 @@ using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 
 namespace CSharp_intro_1.Tasks.Business.Services
 {
-    public class PersonTaskService : ITaskAndModels
+    public class TaskPersonService : ITaskPersonBucketService
     {
         private readonly IRepository<TaskDto> _repo;
-        public PersonTaskService(IRepository<TaskDto> repo)
+        public TaskPersonService(IRepository<TaskDto> repo)
         {
             _repo = repo;
         }

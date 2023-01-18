@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharp_intro_1.Tasks.Business.Services.Interfaces
 {
-    public interface ITaskAndModels
+    public interface ITaskPersonBucketService
     {
         bool HasTask(Guid id);
     }

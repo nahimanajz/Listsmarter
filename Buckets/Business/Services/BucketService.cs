@@ -11,10 +11,10 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IRepository<BucketDto> _repo;
-        private readonly ITaskAndModels _taskService;
-        //private readonly PersonService _personService;
+        private readonly ITaskPersonBucketService _taskService;
+        
 
-        public BucketService(IRepository<BucketDto> repo, ITaskAndModels taskService)
+        public BucketService(IRepository<BucketDto> repo, ITaskPersonBucketService taskService)
         {
             _repo = repo;
             _taskService = taskService;
