@@ -2,6 +2,7 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
+using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 using FluentValidation;
 using Microsoft.Extensions.Hosting;
 
@@ -10,17 +11,18 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IRepository<BucketDto> _repo;
-        //private readonly ITaskService _taskService;
+        private readonly ITaskAndModels _taskService;
         //private readonly PersonService _personService;
 
-        public BucketService(IRepository<BucketDto> repo)/*, ITaskService taskService*/
+        public BucketService(IRepository<BucketDto> repo, ITaskAndModels taskService)
         {
             _repo = repo;
-            //_taskService = taskService;
+            _taskService = taskService;
+           
         }
         public BucketDto Create(BucketDto entity)
         {
-            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
             if (!isBucketExist)
             {
                 return _repo.Create(entity);
@@ -38,7 +40,7 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Update(BucketDto entity)
         {
-            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title == entity.Title);
+            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
             if (!isBucketExist)
             {
                 return _repo.Update(entity);
@@ -47,19 +49,16 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
-            /*
-
-            bool isBucketEmpty = _taskService.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
-            if (!isBucketEmpty)
+            if(GetById(id) == null)
+            {
+                throw new Exception("Bucket does not exist");
+            }
+            if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
             }
-            else
-            {
-                throw new("Bucket has some tasks yet you can not delete it");
-
-            }
-            */
+           
+          
         }
 
         public BucketDto GetByStatus(int status)

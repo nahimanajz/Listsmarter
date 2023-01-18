@@ -2,6 +2,7 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
+using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 using FluentValidation;
 using Microsoft.Extensions.Hosting;
 
@@ -10,12 +11,13 @@ namespace CSharp_intro_1.Services
     public class PersonService : IPersonService
     {
         private readonly IRepository<PersonDto> _repo;
-        private readonly IRepository<TaskDto> _taskRepo;
-  
-        public PersonService(IRepository<PersonDto> repo, IRepository<TaskDto> taskRepo)
+        // private readonly IRepository<TaskDto> _taskRepo;
+        private readonly ITaskAndModels _taskService;
+
+        public PersonService(IRepository<PersonDto> repo, ITaskAndModels taskService)// IRepository<TaskDto> taskRepo)
         {
             _repo = repo;
-            _taskRepo = taskRepo;
+            _taskService = taskService;
         }
 
         public PersonDto Create(PersonDto entity)
@@ -36,17 +38,14 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
-            /*
-            bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee.Id == id);
-            if (!hasTask)
+            if (GetById(id) == null)
+            {
+                throw new Exception("Person not found");
+            }
+            if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
             }
-            else
-            {
-                throw new("Person can not be deleted since he has some task");
-            }
-            */
         }
     }
 }

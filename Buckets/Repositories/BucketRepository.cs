@@ -45,7 +45,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid bucketId)
         {
-            var deleteRecord = TempDb.buckets.RemoveAll(bucket => bucket.Id == bucketId);
+            TempDb.buckets.RemoveAll(bucket => bucket.Id == bucketId);
         }
        
         

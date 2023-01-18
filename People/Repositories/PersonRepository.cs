@@ -14,7 +14,7 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-        public List<PersonDto> GetAll()
+        public List<PersonDto> GetAll() 
         {
             return _mapper.Map<List<PersonDto>>(TempDb.people.ToList());
 

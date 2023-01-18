@@ -11,24 +11,19 @@ namespace CSharp_intro_1.Services
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly ITaskRepository _taskRepo;
-        private readonly BucketService _bucketService;
-        private readonly PersonService _personService;
-        private const int MAXIMUM_TASKS  = 1; 
+        private readonly IBucketService _bucketService;
+        private readonly IPersonService _personService;
+        private const int MAXIMUM_TASKS = 1;
 
-        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, BucketService bucketService, PersonService personSerice)
+        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personSerice)
         {
             _repo = repo;
             _taskRepo = taskRepo;
             _bucketService = bucketService;
-          _personService = personSerice;
-         
-            //TODO: implement builder to limit number of parameter in the construcor
-
+            _personService = personSerice;
         }
-
         public TaskDto Create(CreateTaskDto task)
         {
-            // TODO: BUCKET SHOULD HAVE FIXED NUMBER OF TASKS   
             var newTask = new TaskDto
             {
                 Title = task.Title,
@@ -47,7 +42,7 @@ namespace CSharp_intro_1.Services
             {
                 newTask.Bucket = bucket;
             }
-             IsBucketFull(newTask.Bucket.Id);
+            IsBucketFull(newTask.Bucket.Id);
 
             var person = _personService.GetById(task.Assignee); // TODO: call service rather than repository
             SetTaskToPerson(task, newTask, person);
@@ -55,8 +50,8 @@ namespace CSharp_intro_1.Services
         }
         private void IsBucketFull(Guid bucketId)
         {
-           var bucket = _repo.GetAll().FindAll(task=> task.Bucket.Id == bucketId).ToList();
-            if ( MAXIMUM_TASKS  < bucket.Count)
+            var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();
+            if (MAXIMUM_TASKS < bucket.Count)
             {
                 throw new Exception("Bucket is full,");
             }
