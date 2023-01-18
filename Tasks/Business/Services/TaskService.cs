@@ -11,11 +11,11 @@ namespace CSharp_intro_1.Services
     {
         private readonly IRepository<TaskDto> _repo;
         private readonly ITaskRepository _taskRepo;
-        private readonly IBucketService _bucketService;
-        private readonly IPersonService _personService;
+        private readonly BucketService _bucketService;
+        private readonly PersonService _personService;
         private const int MAXIMUM_TASKS  = 1; 
 
-        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personSerice)
+        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, BucketService bucketService, PersonService personSerice)
         {
             _repo = repo;
             _taskRepo = taskRepo;
