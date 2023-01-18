@@ -59,7 +59,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid taskId)
         {
-            var deleteRecord = TempDb.tasks.RemoveAll(task => task.Id == taskId);
+           TempDb.tasks.RemoveAll(task => task.Id == taskId);
         }
         public void UpdateByStatus(int status, int newStatus)
         {

@@ -1,5 +1,4 @@
-﻿
-using CSharp_intro_1.Repositories.Models;
+﻿using CSharp_intro_1.Repositories.Models;
 
 namespace CSharp_intro_1.Repositories.Models
 {

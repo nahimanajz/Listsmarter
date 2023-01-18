@@ -36,6 +36,7 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
+            /*
             bool hasTask = _taskRepo.GetAll().Any(task => task.Assignee.Id == id);
             if (!hasTask)
             {
@@ -45,6 +46,7 @@ namespace CSharp_intro_1.Services
             {
                 throw new("Person can not be deleted since he has some task");
             }
+            */
         }
     }
 }

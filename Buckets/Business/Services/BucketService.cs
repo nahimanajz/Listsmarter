@@ -10,13 +10,13 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IRepository<BucketDto> _repo;
-        private readonly TaskService _taskService;
-        private readonly PersonService _personService;
+        //private readonly ITaskService _taskService;
+        //private readonly PersonService _personService;
 
-        public BucketService(IRepository<BucketDto> repo, TaskService taskService)
+        public BucketService(IRepository<BucketDto> repo)/*, ITaskService taskService*/
         {
             _repo = repo;
-            _taskService = taskService;
+            //_taskService = taskService;
         }
         public BucketDto Create(BucketDto entity)
         {
@@ -47,6 +47,7 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
+            /*
 
             bool isBucketEmpty = _taskService.GetAll().Any<TaskDto>(task => task.Bucket.Id == id);
             if (!isBucketEmpty)
@@ -58,7 +59,7 @@ namespace CSharp_intro_1.Services
                 throw new("Bucket has some tasks yet you can not delete it");
 
             }
-
+            */
         }
 
         public BucketDto GetByStatus(int status)
