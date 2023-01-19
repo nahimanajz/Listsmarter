@@ -62,6 +62,7 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
+            IsTaskExist(id);
             _repo.Delete(id);
         }
 
@@ -72,7 +73,6 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-
             return _taskRepo.GetByBucketAndStatus(bucketId, status);
         }
 
@@ -84,10 +84,18 @@ namespace CSharp_intro_1.Services
 
         public TaskDto Update(TaskDto entity)
         {
+            IsTaskExist(entity.Id);
             return _repo.Update(entity);
         }
 
         public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
         public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
+        private void IsTaskExist(Guid id)
+         {
+            if (GetById(id) == null)
+            {
+                throw new Exception("Task does not exist");
+            }
+        }
     }
 }
