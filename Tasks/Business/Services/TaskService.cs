@@ -28,24 +28,14 @@ namespace CSharp_intro_1.Services
             {
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status
+                Status = task.Status,
+                Assignee = _personService.GetById(task.Assignee)
             };
 
-            var bucket = _bucketService.GetById(task.Bucket); 
-            if (bucket == null)
-            {
-                bucket = new BucketDto { Id = task.Bucket, Title = "Default created Bucket" }; // TODO: Add dynamism to this title
-                bucket = _bucketService.Create(bucket);
-                newTask.Bucket = bucket;
-            }
-            else
-            {
-                newTask.Bucket = bucket;
-            }
-            IsBucketFull(newTask.Bucket.Id);
+            var bucket = _bucketService.GetById(task.Bucket);
+            AssignTaskToBucket(bucket, newTask, task);
 
-            var person = _personService.GetById(task.Assignee); 
-            SetTaskToPerson(task, newTask, person);
+            IsBucketFull(newTask.Bucket.Id);
             return _repo.Create(newTask);
         }
         private void IsBucketFull(Guid bucketId)
@@ -57,22 +47,19 @@ namespace CSharp_intro_1.Services
             }
 
         }
-        private TaskDto SetTaskToPerson(CreateTaskDto task, TaskDto newTask, PersonDto person)
-        { //TODO: throw exception if user is not there
-            if (person == null)
+        private void AssignTaskToBucket(BucketDto bucket, TaskDto newTask, CreateTaskDto task)
+        {
+            if (bucket == null)
             {
-                person = new PersonDto { Id = task.Assignee, FirstName = "Janvier", LastName = "Nahimana" };
-                person = _personService.Create(person);
-                newTask.Assignee = person;
+                bucket = new BucketDto { Id = task.Bucket, Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
+                bucket = _bucketService.Create(bucket);
+                newTask.Bucket = bucket;
             }
             else
             {
-                newTask.Assignee = _personService.GetById(task.Assignee);
+                newTask.Bucket = bucket;
             }
-            return newTask;
         }
-
-
         public void Delete(Guid id)
         {
             _repo.Delete(id);

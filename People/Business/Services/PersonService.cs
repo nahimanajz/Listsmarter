@@ -34,17 +34,22 @@ namespace CSharp_intro_1.Services
         }
         public PersonDto Update(PersonDto entity)
         {
+            IsPersonExist(entity.Id);
             return _repo.Update(entity);
         }
         public void Delete(Guid id)
         {
-            if (GetById(id) == null)
-            {
-                throw new Exception("Person not found");
-            }
+            IsPersonExist(id);
             if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
+            }
+        }
+        private void IsPersonExist(Guid id)
+        {
+            if (GetById(id) == null)
+            {
+                throw new Exception("Person does not exist");
             }
         }
     }

@@ -13,7 +13,7 @@ namespace CSharp_intro_1
 {
     public static class IoCExtension
     {
-       public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IBucketService, BucketService>();
@@ -33,6 +33,6 @@ namespace CSharp_intro_1
             services.AddTransient<ITaskRepository, TaskRepository>();
 
         }
-        
+
     }
 }
