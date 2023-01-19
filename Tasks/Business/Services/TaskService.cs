@@ -74,6 +74,7 @@ namespace CSharp_intro_1.Services
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
             return _taskRepo.GetByBucketAndStatus(bucketId, status);
+        
         }
 
         public TaskDto GetById(Guid id)
