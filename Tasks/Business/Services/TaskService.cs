@@ -73,7 +73,12 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            return _taskRepo.GetByBucketAndStatus(bucketId, status);
+             var bucket = _taskRepo.GetByBucketAndStatus(bucketId, status);
+            if (bucket.Count == 0)
+            {
+                throw new Exception($"There is no Task{bucketId} and status {status} found");
+            }
+            return bucket;
         
         }
 
