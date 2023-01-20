@@ -18,11 +18,10 @@ namespace CSharp_intro_1
             services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IBucketService, BucketService>();
             services.AddTransient<ITaskService, TaskService>();
+            services.AddTransient<TaskBuilder>();
 
             services.AddTransient<ITaskPersonBucketService, TaskBucketService>();
             services.AddTransient<ITaskPersonBucketService, TaskPersonService>();
-
-
 
         }
         public static void RegisterRepositories(this IServiceCollection services)

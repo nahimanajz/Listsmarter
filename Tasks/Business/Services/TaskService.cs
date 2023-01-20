@@ -2,7 +2,7 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
-
+using CSharp_intro_1.Tasks.Business.Services;
 
 namespace CSharp_intro_1.Services
 {
@@ -15,12 +15,12 @@ namespace CSharp_intro_1.Services
         private readonly IPersonService _personService;
         private const int ALLOWED_TASKS = 10;
 
-        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personSerice)
+        public TaskService(TaskBuilder builder)
         {
-            _repo = repo;
-            _taskRepo = taskRepo;
-            _bucketService = bucketService;
-            _personService = personSerice;
+            _repo = builder._repo;
+            _taskRepo = builder._taskRepo;
+            _bucketService = builder._bucketService;
+            _personService = builder._personService;
         }
         public TaskDto Create(CreateTaskDto task)
         {
