@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CSharp_intro_1.Models.Validators
 {
-    public class TaskValidator : AbstractValidator<CreateTaskDto>
+    public class TaskValidator : AbstractValidator<TaskDto>
     {
         public TaskValidator()
         {

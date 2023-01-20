@@ -15,25 +15,25 @@ namespace CSharp_intro_1.Services
         private readonly IPersonService _personService;
         private const int ALLOWED_TASKS = 10;
 
-        public TaskService(TaskBuilder builder)
+        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personService)
         {
-            _repo = builder._repo;
-            _taskRepo = builder._taskRepo;
-            _bucketService = builder._bucketService;
-            _personService = builder._personService;
+            _repo = repo;
+            _taskRepo = taskRepo;
+            _bucketService = bucketService;
+            _personService = personService;
         }
-        public TaskDto Create(CreateTaskDto task)
+        public TaskDto Create(TaskDto task)
         {
             var newTask = new TaskDto
             {
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
-                Assignee = _personService.GetById(task.Assignee)
+                Assignee = _personService.GetById(task.Assignee.Id)
             };
 
-            var bucket = _bucketService.GetById(task.Bucket);
-            AssignTaskToBucket(bucket, newTask, task);
+            var bucket = _bucketService.GetById(task.Bucket.Id);
+            AssignTaskToBucket(bucket, newTask);
 
             IsBucketFull(newTask.Bucket.Id);
             return _repo.Create(newTask);
@@ -47,11 +47,12 @@ namespace CSharp_intro_1.Services
             }
 
         }
-        private void AssignTaskToBucket(BucketDto bucket, TaskDto newTask, CreateTaskDto task)
+        private void AssignTaskToBucket(BucketDto bucket, TaskDto newTask)
         {
+
             if (bucket == null)
             {
-                bucket = new BucketDto { Id = task.Bucket, Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
+                bucket = new BucketDto { Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
                 bucket = _bucketService.Create(bucket);
                 newTask.Bucket = bucket;
             }
@@ -59,6 +60,7 @@ namespace CSharp_intro_1.Services
             {
                 newTask.Bucket = bucket;
             }
+
         }
         public void Delete(Guid id)
         {
@@ -73,13 +75,13 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-             var bucket = _taskRepo.GetByBucketAndStatus(bucketId, status);
+            var bucket = _taskRepo.GetByBucketAndStatus(bucketId, status);
             if (bucket.Count == 0)
             {
                 throw new Exception($"There is no Task{bucketId} and status {status} found");
             }
             return bucket;
-        
+
         }
 
         public TaskDto GetById(Guid id)
@@ -97,7 +99,7 @@ namespace CSharp_intro_1.Services
         public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
         public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
         private void IsTaskExist(Guid id)
-         {
+        {
             if (GetById(id) == null)
             {
                 throw new Exception("Task does not exist");
