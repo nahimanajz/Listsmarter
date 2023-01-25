@@ -77,3 +77,6 @@ Adding new bucket or person isn't working due to adding this line in codes `List
 https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration
 
 Auto reload: `dotnet watch run` 
+
+## TDD task
+- Writing unit test to our project [personService, taskService and bucketService]

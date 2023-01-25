@@ -1,5 +1,11 @@
 RestApis/bin
 RestApis/debug
+RestApis/obj
 
-CSharp-intro-1/bin
-CSharp-intro-1/debug
+App/bin
+App/debug
+App/obj
+
+AppTest/obj
+AppTest/bin
+
