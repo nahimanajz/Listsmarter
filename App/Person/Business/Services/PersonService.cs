@@ -31,7 +31,7 @@ namespace CSharp_intro_1.Services
             var person = _repo.GetById(id);
             
             if(person ==null ){
-                throw new Exception($"Person with {id} does not exist");
+                throw new Exception($"Person with this {id} Id is not exist");
             }
             return person;
         }

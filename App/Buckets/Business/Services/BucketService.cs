@@ -32,7 +32,7 @@ namespace CSharp_intro_1.Services
             var bucket = _repo.GetById(id);
             if (bucket == null)
             {
-                throw new Exception($"Bucket with {id} does not exist");
+                throw new Exception($"Bucket with  this {id} Id is not exist");
             }
             return bucket;
         }

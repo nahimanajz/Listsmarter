@@ -81,7 +81,7 @@ namespace CSharp_intro_1.Services
             var task = _repo.GetById(id);
             if (task == null)
             {
-                throw new Exception($"Task with {id} does not exist");
+                throw new Exception($"Task with this {id} Id is not exist");
             }
             return task;
         }
