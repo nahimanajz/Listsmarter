@@ -11,11 +11,10 @@ namespace CSharp_intro_1.Services
 {
     public class BucketService : IBucketService
     {
-        private readonly IRepository<BucketDto> _repo;
+        private readonly IBucketRepository _repo;
         private readonly ITaskPersonBucketService _taskService;
 
-
-        public BucketService(IRepository<BucketDto> repo, ITaskPersonBucketService taskService)
+        public BucketService(IBucketRepository repo, ITaskPersonBucketService taskService)
         {
             _repo = repo;
             _taskService = taskService;
@@ -23,12 +22,8 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Create(BucketDto entity)
         {
-            var CheckBucketExistence = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
-            if (!CheckBucketExistence)
-            {
-                return _repo.Create(entity);
-            }
-            throw new Exception($"{entity.Title} is already exist please try different title");
+            CheckTitleExistence(entity.Title);
+            return _repo.Create(entity);
         }
         public List<BucketDto> GetAll()
         {
@@ -36,28 +31,23 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto GetById(Guid id)
         {
-             var bucket = _repo.GetById(id);
-            if(bucket ==null ){
+            var bucket = _repo.GetById(id);
+            if (bucket == null)
+            {
                 throw new Exception($"Bucket with {id} does not exist");
             }
             return bucket;
-            
-
         }
         public BucketDto Update(BucketDto entity)
         {
             CheckBucketExistence(entity.Id);
-            var isTitleExist = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
-            if (!isTitleExist)
-            {
-
-                return _repo.Update(entity);
-            }
-            throw new Exception($"{entity.Title} is already exist please try different title");
+            CheckTitleExistence(entity.Title);
+            return _repo.Update(entity);
         }
 
         public void Delete(Guid id)
         {
+            //TODO: THROW EXCEPTION WHEN TASK HAS ID
             CheckBucketExistence(id);
             if (!_taskService.HasTask(id))
             {
@@ -71,6 +61,14 @@ namespace CSharp_intro_1.Services
             {
                 throw new Exception("Bucket does not exist");
             }
+        }
+        private bool CheckTitleExistence(string title)
+        {
+            if (_repo.CheckTitleExistence(title))
+            {
+                throw new Exception($"Bucket called {title} is already exist please try different title");
+            }
+            return false;
         }
     }
 }
