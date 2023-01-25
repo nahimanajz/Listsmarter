@@ -2,11 +2,9 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
-using CSharp_intro_1.Tasks.Business.Services;
 
 namespace CSharp_intro_1.Services
 {
-
     public class TaskService : ITaskService
     {
         private readonly IRepository<TaskDto> _repo;
@@ -76,19 +74,17 @@ namespace CSharp_intro_1.Services
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
             return _taskRepo.GetByBucketAndStatus(bucketId, status);
-
         }
-
+        
         public TaskDto GetById(Guid id)
         {
             var task = _repo.GetById(id);
-            if(task ==null ){
+            if (task == null)
+            {
                 throw new Exception($"Task with {id} does not exist");
             }
             return task;
-
         }
-
         public TaskDto Update(TaskDto entity)
         {
             CheckTaskExistence(entity.Id);
@@ -99,10 +95,7 @@ namespace CSharp_intro_1.Services
         public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
         private void CheckTaskExistence(Guid id)
         {
-            if (GetById(id) == null)
-            {
-                throw new Exception("Task does not exist");
-            }
+            GetById(id);
         }
     }
 }

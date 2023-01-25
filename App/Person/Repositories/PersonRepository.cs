@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
@@ -14,7 +13,7 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-        public List<PersonDto> GetAll() 
+        public List<PersonDto> GetAll()
         {
             return _mapper.Map<List<PersonDto>>(TempDb.people.ToList());
 
@@ -39,7 +38,7 @@ namespace CSharp_intro_1.Repositories
                  currentPerson.LastName = person.LastName != null ? person.LastName : currentPerson.LastName;
                  return currentPerson;
              }).ToList();
-            return _mapper.Map<PersonDto>(upatedPerson) ;
+            return _mapper.Map<PersonDto>(upatedPerson);
 
         }
 

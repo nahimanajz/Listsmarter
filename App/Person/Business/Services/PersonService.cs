@@ -3,8 +3,6 @@ using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
-using FluentValidation;
-using Microsoft.Extensions.Hosting;
 
 namespace CSharp_intro_1.Services
 {
@@ -33,7 +31,7 @@ namespace CSharp_intro_1.Services
             var person = _repo.GetById(id);
             
             if(person ==null ){
-                throw new Exception($"Bucket with {id} does not exist");
+                throw new Exception($"Person with {id} does not exist");
             }
             return person;
         }

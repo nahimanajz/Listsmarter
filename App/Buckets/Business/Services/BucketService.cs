@@ -1,11 +1,9 @@
 
-using System.Reflection.Metadata;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
-using FluentValidation;
-using Microsoft.Extensions.Hosting;
+
 
 namespace CSharp_intro_1.Services
 {
@@ -57,10 +55,7 @@ namespace CSharp_intro_1.Services
 
         private void CheckBucketExistence(Guid id)
         {
-            if (GetById(id) == null)
-            {
-                throw new Exception("Bucket does not exist");
-            }
+            GetById(id);
         }
         private bool CheckTitleExistence(string title)
         {

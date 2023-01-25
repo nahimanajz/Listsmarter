@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
