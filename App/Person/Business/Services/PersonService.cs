@@ -34,18 +34,18 @@ namespace CSharp_intro_1.Services
         }
         public PersonDto Update(PersonDto entity)
         {
-            IsPersonExist(entity.Id);
+            CheckPersonExistence(entity.Id);
             return _repo.Update(entity);
         }
         public void Delete(Guid id)
         {
-            IsPersonExist(id);
+            CheckPersonExistence(id);
             if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
             }
         }
-        private void IsPersonExist(Guid id)
+        private void CheckPersonExistence(Guid id)
         {
             if (GetById(id) == null)
             {

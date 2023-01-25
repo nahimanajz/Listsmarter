@@ -29,7 +29,7 @@ namespace CSharp_intro_1.Repositories
         public BucketDto Create(BucketDto newBucket)
         {
           TempDb.buckets.Add(_mapper.Map<Bucket>(newBucket));
-          return _mapper.Map<BucketDto>(TempDb.buckets.Last());
+          return _mapper.Map<BucketDto>(newBucket);
         }
 
         public BucketDto Update(BucketDto bucket)
@@ -40,7 +40,7 @@ namespace CSharp_intro_1.Repositories
                 return bucket;
             }).ToList();
 
-            return GetById(bucket.Id);
+            return _mapper.Map<BucketDto>(updatedBucket);
         }
 
         public void Delete(Guid bucketId)

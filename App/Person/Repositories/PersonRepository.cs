@@ -28,7 +28,7 @@ namespace CSharp_intro_1.Repositories
         public PersonDto Create(PersonDto newPerson)
         {
             TempDb.people.Add(_mapper.Map<Person>(newPerson));
-            return _mapper.Map<PersonDto>(TempDb.people.Last());
+            return _mapper.Map<PersonDto>(newPerson);
 
         }
         public PersonDto Update(PersonDto person)
@@ -39,7 +39,7 @@ namespace CSharp_intro_1.Repositories
                  currentPerson.LastName = person.LastName != null ? person.LastName : currentPerson.LastName;
                  return currentPerson;
              }).ToList();
-            return GetById(person.Id);
+            return _mapper.Map<PersonDto>(upatedPerson) ;
 
         }
 

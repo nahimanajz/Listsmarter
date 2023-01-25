@@ -35,10 +35,10 @@ namespace CSharp_intro_1.Services
             var bucket = _bucketService.GetById(task.Bucket.Id);
             AssignTaskToBucket(bucket, newTask);
 
-            IsBucketFull(newTask.Bucket.Id);
+            CheckWhetherBucketIsFull(newTask.Bucket.Id);
             return _repo.Create(newTask);
         }
-        private void IsBucketFull(Guid bucketId)
+        private void CheckWhetherBucketIsFull(Guid bucketId)
         {
             var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();
             if (ALLOWED_TASKS < bucket.Count)
@@ -64,7 +64,7 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
-            IsTaskExist(id);
+            CheckTaskExistence(id);
             _repo.Delete(id);
         }
 
@@ -92,13 +92,13 @@ namespace CSharp_intro_1.Services
 
         public TaskDto Update(TaskDto entity)
         {
-            IsTaskExist(entity.Id);
+            CheckTaskExistence(entity.Id);
             return _repo.Update(entity);
         }
 
         public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
         public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
-        private void IsTaskExist(Guid id)
+        private void CheckTaskExistence(Guid id)
         {
             if (GetById(id) == null)
             {

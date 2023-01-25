@@ -11,6 +11,6 @@ namespace CSharp_intro_1.Services.interfaces
         void Delete(Guid id);
         BucketDto Update(BucketDto record);
         
-        BucketDto GetByStatus(int status);
+       
     }
 }

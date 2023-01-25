@@ -39,7 +39,7 @@ namespace CSharp_intro_1.Repositories
         public TaskDto Create(TaskDto newTask)
         {
             TempDb.tasks.Add(_mapper.Map<Task>(newTask));
-            return _mapper.Map<TaskDto>(TempDb.tasks.Last());
+            return _mapper.Map<TaskDto>(newTask);
         }
 
         public TaskDto Update(TaskDto registeredTask)
@@ -54,7 +54,7 @@ namespace CSharp_intro_1.Repositories
 
                  return task;
              }).ToList();
-            return GetById(registeredTask.Id);
+            return _mapper.Map<TaskDto>(updatedTask);
         }
 
         public void Delete(Guid taskId)

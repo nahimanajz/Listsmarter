@@ -23,8 +23,8 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Create(BucketDto entity)
         {
-            var isBucketExist = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
-            if (!isBucketExist)
+            var CheckBucketExistence = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
+            if (!CheckBucketExistence)
             {
                 return _repo.Create(entity);
             }
@@ -41,7 +41,7 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Update(BucketDto entity)
         {
-            IsBucketExist(entity.Id);
+            CheckBucketExistence(entity.Id);
             var isTitleExist = _repo.GetAll().Any(bucket => bucket.Title.ToLower() == entity.Title.ToLower());
             if (!isTitleExist)
             {
@@ -53,18 +53,14 @@ namespace CSharp_intro_1.Services
 
         public void Delete(Guid id)
         {
-            IsBucketExist(id);
+            CheckBucketExistence(id);
             if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
             }
         }
 
-        public BucketDto GetByStatus(int status)
-        {
-            throw new NotImplementedException();
-        }
-        private void IsBucketExist(Guid id)
+        private void CheckBucketExistence(Guid id)
         {
             if (GetById(id) == null)
             {
