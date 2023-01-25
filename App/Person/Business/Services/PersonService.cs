@@ -33,7 +33,7 @@ namespace CSharp_intro_1.Services
             var person = _repo.GetById(id);
             
             if(person ==null ){
-                throw new Exception($"Task with {id} does not exist");
+                throw new Exception($"Bucket with {id} does not exist");
             }
             return person;
         }
