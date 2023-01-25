@@ -30,7 +30,12 @@ namespace CSharp_intro_1.Services
         }
         public PersonDto GetById(Guid id)
         {
-            return _repo.GetById(id);
+            var person = _repo.GetById(id);
+            
+            if(person ==null ){
+                throw new Exception($"Task with {id} does not exist");
+            }
+            return person;
         }
         public PersonDto Update(PersonDto entity)
         {

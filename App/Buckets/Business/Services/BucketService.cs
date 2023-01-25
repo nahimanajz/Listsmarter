@@ -36,7 +36,12 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto GetById(Guid id)
         {
-            return _repo.GetById(id);
+             var bucket = _repo.GetById(id);
+            if(bucket ==null ){
+                throw new Exception($"Task with {id} does not exist");
+            }
+            return bucket;
+            
 
         }
         public BucketDto Update(BucketDto entity)
