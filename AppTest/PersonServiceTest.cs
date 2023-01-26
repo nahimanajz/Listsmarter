@@ -12,12 +12,12 @@ public class PersonServiceTest
 
 
     private readonly PersonService _personService;
-    private readonly Mock<IRepository<PersonDto>> _pesonRepositoryMock = new Mock<IRepository<PersonDto>>();
+    private readonly Mock<IRepository<PersonDto>> _personRepositoryMock = new Mock<IRepository<PersonDto>>();
     private readonly Mock<ITaskPersonBucketService> taskPersonAndBucketServiceMock = new Mock<ITaskPersonBucketService>();
 
     public PersonServiceTest()
     {
-        _personService = new PersonService(_pesonRepositoryMock.Object, taskPersonAndBucketServiceMock.Object);
+        _personService = new PersonService(_personRepositoryMock.Object, taskPersonAndBucketServiceMock.Object);
 
     }
 
@@ -26,7 +26,7 @@ public class PersonServiceTest
     {
         //SET UP MOCK AND TELL HO IT BEHAVE
 
-        _pesonRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
+        _personRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
 
             new PersonDto(){Id= Guid.NewGuid(), FirstName="Janvier", LastName="Nahimana"}
         });
@@ -42,8 +42,8 @@ public class PersonServiceTest
 
         var newPersonDto = new PersonDto { Id = personDto.Id, FirstName = "John", LastName = "Nahimana" };
 
-        _pesonRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
-        _pesonRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
+        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
 
         var updatedPerson = _personService.Update(newPersonDto);
 
@@ -58,21 +58,36 @@ public class PersonServiceTest
 
         var newPersonDto = new PersonDto { Id = personDto.Id, FirstName = "John", LastName = "Nahimana" };
 
-        _pesonRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
-        _pesonRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
+        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
 
         Assert.Throws<ArgumentException>(() => _personService.Update(newPersonDto));
     }
 
     [Fact]
-    public void DeletePerson_WhenNoPersonInDatabase_ThrowsException()
+    public void DeletePerson_WhenGivenPersonIdIsNotInDatabase_ThrowsException()
     {
         Guid personId = Guid.NewGuid();
 
-        _pesonRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
-         _pesonRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
+         _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
 
-        Assert.Throws<ArgumentException>(() => _personService.Delete(personId));
+        Assert.Throws<Exception>(() => _personService.Delete(personId));
+
+    }
+
+    [Fact]
+    public void DeletePerson_WhenPersonInDatabase_ReturnNothing()
+    {
+        Guid personId = Guid.NewGuid();
+        var personDto = new PersonDto() { Id = Guid.NewGuid(), FirstName = "Janvier", LastName = "Nahimana" };
+
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
+         _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
+
+        _personRepositoryMock.Verify(repo => repo.Delete(It.IsAny<Guid>()), Times.Once());
+
+        Assert.Throws<Exception>( ()=> _personService.Delete(personId));
 
     }
 
