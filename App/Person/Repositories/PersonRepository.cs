@@ -15,36 +15,35 @@ namespace CSharp_intro_1.Repositories
         }
         public List<PersonDto> GetAll()
         {
-            return _mapper.Map<List<PersonDto>>(TempDb.people.ToList());
+            return _mapper.Map<List<PersonDto>>(TempDb.persons.ToList());
 
         }
         public PersonDto GetById(Guid id)
         {
-            var person = TempDb.people.FirstOrDefault(person => person.Id == id, null);
+            var person = TempDb.persons.FirstOrDefault(person => person.Id == id, null);
             var mappedData = _mapper.Map<PersonDto>(person);
             return mappedData;
         }
         public PersonDto Create(PersonDto newPerson)
         {
-            TempDb.people.Add(_mapper.Map<Person>(newPerson));
+            TempDb.persons.Add(_mapper.Map<Person>(newPerson));
             return _mapper.Map<PersonDto>(newPerson);
 
         }
         public PersonDto Update(PersonDto person)
         {
-            var upatedPerson = TempDb.people.Where(currentPerson => currentPerson.Id == person.Id).Select(currentPerson =>
-             {
-                 currentPerson.FirstName = person.FirstName != null ? person.FirstName : currentPerson.FirstName;
-                 currentPerson.LastName = person.LastName != null ? person.LastName : currentPerson.LastName;
-                 return currentPerson;
-             }).ToList();
+            var upatedPerson = TempDb.persons.First(currentPerson => currentPerson.Id == person.Id);
+            
+            upatedPerson.FirstName = person.FirstName;
+            upatedPerson.LastName = person.LastName;
+
             return _mapper.Map<PersonDto>(upatedPerson);
 
         }
 
         public void Delete(Guid personId)
         {
-            var deleteRecord = TempDb.people.RemoveAll(person => person.Id == personId);
+            var deleteRecord = TempDb.persons.RemoveAll(person => person.Id == personId);
         }
     }
 

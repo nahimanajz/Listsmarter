@@ -1,6 +1,6 @@
 ﻿
 
-    public enum StatusEnum
+    public enum Status
     {
         Open,
         InProgress,

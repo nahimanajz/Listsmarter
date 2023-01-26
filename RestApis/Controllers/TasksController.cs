@@ -10,12 +10,12 @@ namespace RestApis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaskController : ControllerBase
+    public class TasksController : ControllerBase
     {
         private readonly ITaskService _service;
         private readonly IMapper _mapper;
         private CreateTaskValidator _createTaskValidator;
-        public TaskController(ITaskService service, CreateTaskValidator createTaskValidator, IMapper mapper)
+        public TasksController(ITaskService service, CreateTaskValidator createTaskValidator, IMapper mapper)
         {
             _service = service;
             _createTaskValidator = createTaskValidator;
@@ -27,15 +27,10 @@ namespace RestApis.Controllers
 
             return await Task.FromResult(_service.GetAll());
         }
-        [HttpGet("task/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<TaskDto>> GetById([FromRoute] Guid id)
         {
-            var task = _service.GetById(id);
-            if (task == null)
-            {
-                return await Task.FromResult(NotFound("Task is not found"));
-            }
-            return await Task.FromResult(Ok(task));
+            return await Task.FromResult(Ok(_service.GetById(id)));
 
         }
         [HttpGet("bucket/{bucketId:Guid}/status/{status}")]
@@ -59,13 +54,13 @@ namespace RestApis.Controllers
          
         }
 
-        [HttpDelete("task/{id:Guid}")]
+        [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
             _service.Delete(id);
             return await Task.FromResult(Ok("Task is deleted"));
         }
-        [HttpPut("task/{id:Guid}")]
+        [HttpPut("{id:Guid}")]
         public async Task<ActionResult<TaskDto>> Update([FromRoute] Guid id, [FromBody] CreateTaskDto task)
         {
             var updatedTask = new TaskDto

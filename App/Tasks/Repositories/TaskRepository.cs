@@ -42,24 +42,20 @@ namespace CSharp_intro_1.Repositories
             return _mapper.Map<TaskDto>(newTask);
         }
 
-        public TaskDto Update(TaskDto registeredTask)
+        public TaskDto Update(TaskDto task)
         {
-            var updatedTask = TempDb.tasks.Where(task => task.Id == registeredTask.Id).Select(task =>
-             {
-                 task.Title = registeredTask.Title == null ? task.Title : registeredTask.Title;
-                 task.Description = task.Description == null ? task.Description : registeredTask.Description;
+            var updatedTask = TempDb.tasks.First(currentTask => currentTask.Id == task.Id);
 
-                 task.Status = registeredTask.Status == null ? task.Status : (int)registeredTask.Status;
-
-
-                 return task;
-             }).ToList();
+            updatedTask.Title = task.Title;
+            updatedTask.Description = task.Description;
+            updatedTask.Status = (int)task.Status;
+            
             return _mapper.Map<TaskDto>(updatedTask);
         }
 
         public void Delete(Guid taskId)
         {
-           TempDb.tasks.RemoveAll(task => task.Id == taskId);
+            TempDb.tasks.RemoveAll(task => task.Id == taskId);
         }
         public void UpdateByStatus(int status, int newStatus)
         {
@@ -73,7 +69,7 @@ namespace CSharp_intro_1.Repositories
 
         public void AssignTask(Guid taskId, Guid personId)
         {
-            Person person = TempDb.people.Where(currentPerson => currentPerson.Id == personId).First();
+            Person person = TempDb.persons.Where(currentPerson => currentPerson.Id == personId).First();
             var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
             {
                 registeredTask.Assignee = person;

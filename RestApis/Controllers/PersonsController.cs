@@ -11,12 +11,12 @@ namespace RestApis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class PersonsController : ControllerBase
     {
         private readonly IPersonService _service;
         private readonly IMapper _mapper;
         private CreatePersonValidator _createPersonValidator;
-        public PersonController(IPersonService service, IMapper mapper,CreatePersonValidator createPersonValidator )
+        public PersonsController(IPersonService service, IMapper mapper,CreatePersonValidator createPersonValidator )
         {
             _service = service;
             _mapper= mapper;
@@ -29,15 +29,10 @@ namespace RestApis.Controllers
             return await Task.FromResult(_service.GetAll());
         }
 
-        [HttpGet("person/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<PersonDto>> GetById([FromRoute] Guid id)
         {
-            var person = _service.GetById(id);
-            if (person == null)
-            {
-                return await Task.FromResult(NotFound("Person Not found"));
-            }
-            return await Task.FromResult(person);
+            return await Task.FromResult(_service.GetById(id));
         }
 
         [HttpPost(Name = "CreatePerson")]
@@ -56,7 +51,7 @@ namespace RestApis.Controllers
 
         }
 
-        [HttpDelete("person/{id:Guid}")]
+        [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
         
@@ -65,7 +60,7 @@ namespace RestApis.Controllers
 
 
         }
-        [HttpPut("person/{id:Guid}")]
+        [HttpPut("{id:Guid}")]
         public async Task<ActionResult<PersonDto>> Update([FromRoute] Guid id, [FromBody] CreatePersonDto person)
         {
             var updatedPerson = new PersonDto

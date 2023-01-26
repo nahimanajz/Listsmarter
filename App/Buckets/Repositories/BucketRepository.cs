@@ -14,7 +14,6 @@ namespace CSharp_intro_1.Repositories
         {
             _mapper = mapper;
         }
-
         public List<BucketDto> GetAll()
         {
             return _mapper.Map<List<BucketDto>>(TempDb.buckets);
@@ -22,7 +21,6 @@ namespace CSharp_intro_1.Repositories
 
         public BucketDto GetById(Guid id)
         {
-
             return _mapper.Map<BucketDto>(TempDb.buckets.FirstOrDefault(bucket => bucket.Id == id, null));
         }
 
@@ -34,11 +32,9 @@ namespace CSharp_intro_1.Repositories
 
         public BucketDto Update(BucketDto bucket)
         {
-            var updatedBucket = TempDb.buckets.Where(registeredbucket => registeredbucket.Id == bucket.Id).Select(registeredbucket =>
-             {
-                 registeredbucket.Title = bucket.Title == null ? registeredbucket.Title : bucket.Title;
-                 return bucket;
-             }).ToList();
+            var updatedBucket = TempDb.buckets.First(registeredbucket => registeredbucket.Id == bucket.Id);
+
+            updatedBucket.Title = bucket.Title;
 
             return _mapper.Map<BucketDto>(updatedBucket);
         }
