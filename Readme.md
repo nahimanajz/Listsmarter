@@ -35,3 +35,20 @@ In Model repository ex: `BucketRepository.cs`
             return _mapper.Map<BucketDto>(newBucket);
         }
 ```
+
+
+**Task completed**
+
+- Rename directories and controller variables
+- Put controllers into plural to reflect pluralization changes to  api endpoints
+- Remove conditional checks from `TasksController, BucketsController and
+PersonsController`
+- Throws exceptions in every service within `GetById` method
+- Return updated record with BucketRepository,PersonRepository and
+  TaskRepository without refecthing that record via `GetById method`
+
+**Remaining tasks**
+
+- Avoiding Circular dependency
+- Alternatively creating separate service to create task or simply putting every private method below all public methods
+- Using builder call `Mr. Gulis` for complete guidance on this issue

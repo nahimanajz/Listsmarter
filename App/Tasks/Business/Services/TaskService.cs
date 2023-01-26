@@ -32,9 +32,46 @@ namespace CSharp_intro_1.Services
 
             var bucket = _bucketService.GetById(task.Bucket.Id);
             AssignTaskToBucket(bucket, newTask);
-
             CheckWhetherBucketIsFull(newTask.Bucket.Id);
+            
             return _repo.Create(newTask);
+        }
+        public void Delete(Guid id)
+        {
+            CheckTaskExistence(id);
+            _repo.Delete(id);
+        }
+
+        public List<TaskDto> GetAll()
+        {
+            return _repo.GetAll();
+        }
+
+        public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
+        {
+            return _taskRepo.GetByBucketAndStatus(bucketId, status);
+        }
+
+        public TaskDto GetById(Guid id)
+        {
+            var task = _repo.GetById(id);
+            if (task == null)
+            {
+                throw new Exception($"Task with this {id} Id is not exist");
+            }
+            return task;
+        }
+        public TaskDto Update(TaskDto entity)
+        {
+            CheckTaskExistence(entity.Id);
+            return _repo.Update(entity);
+        }
+
+        public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
+        public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
+        private void CheckTaskExistence(Guid id)
+        {
+            GetById(id);
         }
         private void CheckWhetherBucketIsFull(Guid bucketId)
         {
@@ -60,42 +97,6 @@ namespace CSharp_intro_1.Services
             }
 
         }
-        public void Delete(Guid id)
-        {
-            CheckTaskExistence(id);
-            _repo.Delete(id);
-        }
 
-        public List<TaskDto> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
-        {
-            return _taskRepo.GetByBucketAndStatus(bucketId, status);
-        }
-        
-        public TaskDto GetById(Guid id)
-        {
-            var task = _repo.GetById(id);
-            if (task == null)
-            {
-                throw new Exception($"Task with this {id} Id is not exist");
-            }
-            return task;
-        }
-        public TaskDto Update(TaskDto entity)
-        {
-            CheckTaskExistence(entity.Id);
-            return _repo.Update(entity);
-        }
-
-        public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
-        public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
-        private void CheckTaskExistence(Guid id)
-        {
-            GetById(id);
-        }
     }
 }

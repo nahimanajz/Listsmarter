@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Models.Validators;
-using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Task = System.Threading.Tasks.Task;
 
@@ -23,17 +21,20 @@ namespace RestApis.Controllers
             _createPersonValidator = createPersonValidator;
         }
 
+
         [HttpGet(Name = "GetPeople")]
         public async Task<ActionResult<List<PersonDto>>> GetAll()
         {
             return await Task.FromResult(_service.GetAll());
         }
 
+
         [HttpGet("{id}")]
         public async Task<ActionResult<PersonDto>> GetById([FromRoute] Guid id)
         {
             return await Task.FromResult(_service.GetById(id));
         }
+
 
         [HttpPost(Name = "CreatePerson")]
         public async Task<ActionResult<PersonDto>> Create([FromBody] CreatePersonDto person)
@@ -50,6 +51,7 @@ namespace RestApis.Controllers
         
 
         }
+
 
         [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
