@@ -1,8 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AppTest"
+    "\\App",
+    "\\AppTest",
+    "\\App\\Person",
+    "\\App\\Person\\Business",
+    "\\App\\Person\\Business\\Services",
+    "\\App\\Person\\Repositories"
   ],
-  "SelectedNode": "\\AppTest\\PersonServiceTest.cs",
+  "SelectedNode": "\\App\\App.sln",
   "PreviewInSolutionExplorer": false
 }

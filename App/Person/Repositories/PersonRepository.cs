@@ -43,7 +43,7 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid personId)
         {
-            var deleteRecord = TempDb.persons.RemoveAll(person => person.Id == personId);
+            TempDb.persons.RemoveAll(person => person.Id == personId);
         }
     }
 

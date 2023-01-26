@@ -59,7 +59,7 @@ namespace CSharp_intro_1.Repositories
         }
         public void UpdateByStatus(int status, int newStatus)
         {
-            var taskByStatus = TempDb.tasks.Where(task => task.Status == status).Select(registeredTask =>
+            TempDb.tasks.Where(task => task.Status == status).Select(registeredTask =>
             {
                 registeredTask.Status = newStatus;
                 return registeredTask;

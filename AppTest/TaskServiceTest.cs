@@ -26,7 +26,7 @@ namespace App.Tests
         }
         public void AllTask_GetAllTasks_ReturnListOfTasks()
         {
-            _taskRepoMock = new Mock<IRepository<TaskDto>>();
+          //App  _taskRepoMock = new Mock<IRepository<TaskDto>>();
         }
     }
 }

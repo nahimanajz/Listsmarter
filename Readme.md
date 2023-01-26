@@ -52,3 +52,13 @@ PersonsController`
 - Avoiding Circular dependency
 - Alternatively creating separate service to create task or simply putting every private method below all public methods
 - Using builder call `Mr. Gulis` for complete guidance on this issue
+
+**Short notes**
+ Due to an exception thrown in `GetById` method in `BucketService` and `PersonService` new task cannot be created
+
+ **What to test**
+ - Just test the methods that contains business logic
+ -> testing delete person
+ -> Testing delete person and delete bucket
+ -> testing bucket existence method
+ -

@@ -47,8 +47,5 @@ namespace CSharp_intro_1.Repositories
         {
             return TempDb.buckets.Any(bucket => bucket.Title.ToUpper() == title.ToUpper());
         }
-
-
-
     }
 }
