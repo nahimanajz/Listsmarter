@@ -9,6 +9,7 @@ namespace CSharp_intro_1.Models
         public string LastName { get; set; }
         public string FullName { get; set; }
         public List<TaskDto> Tasks { get; set; }
+        public string Title { get; set; }
     }
 }
 

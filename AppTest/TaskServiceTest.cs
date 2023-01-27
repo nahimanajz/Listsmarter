@@ -13,15 +13,11 @@ namespace App.Tests
 {
     public class TaskServiceTest
     {
-        private readonly Mock<IRepository<TaskDto>> _taskRepoMock;
         private readonly Mock<ITaskRepository> _ItaskRepoMock;
-        private readonly IBucketService _bucketService;
-        private readonly IPersonService _personService;
         private readonly TaskService _taskService;
-
         public TaskServiceTest()
         {
-            _taskService = new TaskService(_taskRepoMock.Object, _ItaskRepoMock.Object, _bucketService, _personService);
+            _taskService = new TaskService(_ItaskRepoMock.Object);
 
         }
         public void AllTask_GetAllTasks_ReturnListOfTasks()
