@@ -11,5 +11,6 @@
     "\\App\\Person\\Repositories",
     "\\RestApis"
   ],
+  "SelectedNode": "\\RestApis\\RestApis.csproj",
   "PreviewInSolutionExplorer": false
 }

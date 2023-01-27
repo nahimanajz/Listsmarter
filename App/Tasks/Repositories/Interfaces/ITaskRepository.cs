@@ -6,6 +6,7 @@ public interface ITaskRepository : IRepository<TaskDto>
         void AssignTask(Guid taskId, Guid personId);
         List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
         void UpdateByStatus(int currentStatus, int newStatus);
+        int CountBucketTasks(Guid id);
         
 
     }

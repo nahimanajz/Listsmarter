@@ -76,6 +76,10 @@ namespace CSharp_intro_1.Repositories
                 return registeredTask;
             }).ToList();
         }
+        public int CountBucketTasks(Guid bucketId){
+
+            return TempDb.tasks.Count( task=> task.Bucket.Id == bucketId);
+        }
     }
 
 }

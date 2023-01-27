@@ -52,10 +52,9 @@ namespace CSharp_intro_1.Tasks.Business.Services
 
         private void CheckWhetherBucketIsFull(Guid bucketId)
         {
-            var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();
-            if (ALLOWED_TASKS < bucket.Count)
+            if (ALLOWED_TASKS < _repo.CountBucketTasks(bucketId))
             {
-                throw new Exception("Bucket is full,");
+                throw new Exception("Bucke t is full,");
             }
 
         }
