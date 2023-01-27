@@ -7,7 +7,7 @@ using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Repositories
 {
-    public class TaskRepository : IRepository<TaskDto>, ITaskRepository
+    public class TaskRepository : ITaskRepository
     {
         private readonly IMapper _mapper;
 

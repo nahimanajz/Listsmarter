@@ -2,13 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\App",
-    "\\AppTest",
+    "\\App\\Buckets",
+    "\\App\\Buckets\\Repositories",
+    "\\App\\Buckets\\Repositories\\interface",
     "\\App\\Person",
     "\\App\\Person\\Business",
     "\\App\\Person\\Business\\Services",
     "\\App\\Person\\Repositories",
     "\\RestApis"
   ],
-  "SelectedNode": "\\RestApis",
   "PreviewInSolutionExplorer": false
 }

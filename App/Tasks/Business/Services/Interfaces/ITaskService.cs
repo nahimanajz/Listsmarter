@@ -10,7 +10,7 @@ namespace CSharp_intro_1.Services.interfaces
         List<TaskDto> GetAll();
 
         TaskDto GetById(Guid id);
-        TaskDto Create(TaskDto TaskDto);
+        
         TaskDto Update(TaskDto TaskDto);
         void Delete(Guid id);
         void AssignTask(Guid taskId, Guid personId);

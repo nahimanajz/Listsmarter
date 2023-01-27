@@ -48,6 +48,5 @@ namespace CSharp_intro_1.Services
                 _repo.Delete(id);
             }
         }
-        
     }
 }

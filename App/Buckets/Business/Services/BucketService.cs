@@ -52,8 +52,6 @@ namespace CSharp_intro_1.Services
                 _repo.Delete(id);
             }
         }
-
-      
         private bool CheckTitleExistence(string title)
         {
             if (_repo.CheckTitleExistence(title))

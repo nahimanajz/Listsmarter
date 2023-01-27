@@ -7,35 +7,16 @@ namespace CSharp_intro_1.Services
 {
     public class TaskService : ITaskService
     {
-        private readonly IRepository<TaskDto> _repo;
-        private readonly ITaskRepository _taskRepo;
-        private readonly IBucketService _bucketService;
-        private readonly IPersonService _personService;
-        private const int ALLOWED_TASKS = 10;
+        private readonly ITaskRepository _repo;
 
-        public TaskService(IRepository<TaskDto> repo, ITaskRepository taskRepo, IBucketService bucketService, IPersonService personService)
+    
+
+        public TaskService(ITaskRepository repo)
         {
             _repo = repo;
-            _taskRepo = taskRepo;
-            _bucketService = bucketService;
-            _personService = personService;
         }
-        public TaskDto Create(TaskDto task)
-        {
-            var newTask = new TaskDto
-            {
-                Title = task.Title,
-                Description = task.Description,
-                Status = task.Status,
-                Assignee = _personService.GetById(task.Assignee.Id)
-            };
 
-            var bucket = _bucketService.GetById(task.Bucket.Id);
-            AssignTaskToBucket(bucket, newTask);
-            CheckWhetherBucketIsFull(newTask.Bucket.Id);
-            
-            return _repo.Create(newTask);
-        }
+     
         public void Delete(Guid id)
         {
             GetById(id);
@@ -49,7 +30,7 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            return _taskRepo.GetByBucketAndStatus(bucketId, status);
+            return _repo.GetByBucketAndStatus(bucketId, status);
         }
          public TaskDto Update(TaskDto entity)
         {
@@ -68,33 +49,10 @@ namespace CSharp_intro_1.Services
         }
        
 
-        public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
-        public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
+        public void UpdateByStatus(int status, int newStatus) => _repo.UpdateByStatus(status, newStatus);
+        public void AssignTask(Guid taskId, Guid personId) => _repo.AssignTask(taskId, personId);
        
-        private void CheckWhetherBucketIsFull(Guid bucketId)
-        {
-            var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();
-            if (ALLOWED_TASKS < bucket.Count)
-            {
-                throw new Exception("Bucket is full,");
-            }
-
-        }
-        private void AssignTaskToBucket(BucketDto bucket, TaskDto newTask)
-        {
-
-            if (bucket == null)
-            {
-                bucket = new BucketDto { Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
-                bucket = _bucketService.Create(bucket);
-                newTask.Bucket = bucket;
-            }
-            else
-            {
-                newTask.Bucket = bucket;
-            }
-
-        }
+       
 
     }
 }
