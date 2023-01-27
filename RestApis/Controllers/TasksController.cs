@@ -2,6 +2,7 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Models.Validators;
 using CSharp_intro_1.Services.interfaces;
+using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Task = System.Threading.Tasks.Task;
 
@@ -11,12 +12,15 @@ namespace RestApis.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly ITaskService _service;
+        private readonly ITaskService _taskService;
+        private readonly ITaskCreateService _createTaskService;
+  
         private readonly IMapper _mapper;
         private CreateTaskValidator _createTaskValidator;
-        public TasksController(ITaskService service, CreateTaskValidator createTaskValidator, IMapper mapper)
+        public TasksController(ITaskService taskService, ITaskCreateService createTaskService,  CreateTaskValidator createTaskValidator, IMapper mapper)
         {
-            _service = service;
+            _taskService = taskService;
+            _createTaskService = createTaskService;
             _createTaskValidator = createTaskValidator;
             _mapper = mapper;
         }
@@ -26,14 +30,14 @@ namespace RestApis.Controllers
         public async Task<ActionResult<List<TaskDto>>> GetAll()
         {
 
-            return await Task.FromResult(_service.GetAll());
+            return await Task.FromResult(_taskService.GetAll());
         }
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskDto>> GetById([FromRoute] Guid id)
         {
-            return await Task.FromResult(Ok(_service.GetById(id)));
+            return await Task.FromResult(Ok(_taskService.GetById(id)));
 
         }
 
@@ -41,20 +45,20 @@ namespace RestApis.Controllers
         [HttpGet("bucket/{bucketId:Guid}/status/{status}")]
         public async Task<ActionResult> GetByBucketAndStatus([FromRoute] Guid bucketId, [FromRoute] int status)
         {
-            return await Task.FromResult(Ok( _service.GetByBucketAndStatus(bucketId, status)));
+            return await Task.FromResult(Ok( _taskService.GetByBucketAndStatus(bucketId, status)));
         }
 
 
         [HttpPost(Name = "CreateTask")]
         public async Task<ActionResult<TaskDto>> Create([FromBody] CreateTaskDto task)
         {
-            var result = _createTaskValidator.Validate(task);
+           var result = _createTaskValidator.Validate(task);
             if (result.IsValid)
             {
-                var personDto = _mapper.Map<TaskDto>(task);
-                return await Task.FromResult(Ok(_service.Create(personDto)));
-            }
-            
+                var taskDto = _mapper.Map<TaskDto>(task);
+                return await Task.FromResult(Ok(_createTaskService.Create(taskDto)));
+            } 
+       
             throw new Exception($" Validations error: {string.Join(",", result.Errors)}");
         }
 
@@ -62,7 +66,7 @@ namespace RestApis.Controllers
         [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            _service.Delete(id);
+            _taskService.Delete(id);
             return await Task.FromResult(Ok("Task is deleted"));
         }
 
@@ -76,7 +80,7 @@ namespace RestApis.Controllers
                 Title = task.Title,
                 Description = task.Description
             };
-            return await Task.FromResult(Ok(_service.Update(updatedTask)));
+            return await Task.FromResult(Ok(_taskService.Update(updatedTask)));
 
         }
 
@@ -84,7 +88,7 @@ namespace RestApis.Controllers
         [HttpPut("{status}/{newStatus}")]
         public async Task<ActionResult> UpdateByStatus([FromRoute] int status, [FromRoute] int newStatus)
         {
-            _service.UpdateByStatus(status, newStatus);
+            _taskService.UpdateByStatus(status, newStatus);
             return await Task.FromResult(Ok("Tasks statuses are updated"));
         }
 
@@ -92,7 +96,7 @@ namespace RestApis.Controllers
         [HttpPut("task/{taskId}/person/{personId}")]
         public async Task<ActionResult> AssignTask([FromRoute] Guid taskId, [FromRoute] Guid personId)
         {
-            _service.AssignTask(taskId, personId);
+            _taskService.AssignTask(taskId, personId);
             return await Task.FromResult(Ok("Task is assigneed to specified person successfully"));
         }
 
