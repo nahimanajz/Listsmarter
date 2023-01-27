@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharp_intro_1.Models;
+using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 
@@ -33,17 +34,19 @@ namespace CSharp_intro_1.Tasks.Business.Services
                 Status = task.Status,
                 Assignee = _personService.GetById(task.Assignee.Id)
             };
+            var bucket =(BucketDto) null;
+
             try
             {
-                var bucket = _bucketService.GetById(task.Bucket.Id);
-                AssignTaskToBucket(bucket, newTask);
+                 bucket = _bucketService.GetById(task.Bucket.Id);
             }
             catch (Exception exception)
             {
-              Console.WriteLine(exception);
+                Console.WriteLine(exception.Message);
             }
-
-            CheckWhetherBucketIsFull(newTask.Bucket.Id);
+                AssignTaskToBucket(bucket, newTask);
+                CheckWhetherBucketIsFull(newTask.Bucket.Id);
+        
             return _repo.Create(newTask);
         }
 
@@ -58,7 +61,6 @@ namespace CSharp_intro_1.Tasks.Business.Services
         }
         private void AssignTaskToBucket(BucketDto bucket, TaskDto newTask)
         {
-
             if (bucket == null)
             {
                 bucket = new BucketDto { Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
