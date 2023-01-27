@@ -62,3 +62,13 @@ PersonsController`
  -> Testing delete person and delete bucket
  -> testing bucket existence method
  -
+
+ ## Suggestion 
+ creating one interface to check if bucket and person has task
+ and I use this interface in `bucket` and `person` service
+ this interface calls taskdto repository
+
+ -> check if bucket exist and assign to task
+ -> check whether person  exist and assign to task otherwise set that person to null
+
+ -> creating services specific for create and update task

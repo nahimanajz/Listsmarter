@@ -6,8 +6,9 @@
     "\\App\\Person",
     "\\App\\Person\\Business",
     "\\App\\Person\\Business\\Services",
-    "\\App\\Person\\Repositories"
+    "\\App\\Person\\Repositories",
+    "\\RestApis"
   ],
-  "SelectedNode": "\\App\\App.sln",
+  "SelectedNode": "\\RestApis",
   "PreviewInSolutionExplorer": false
 }

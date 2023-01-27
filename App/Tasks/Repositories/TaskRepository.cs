@@ -70,7 +70,7 @@ namespace CSharp_intro_1.Repositories
         public void AssignTask(Guid taskId, Guid personId)
         {
             Person person = TempDb.persons.Where(currentPerson => currentPerson.Id == personId).First();
-            var assignByPerson = TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
+            TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
             {
                 registeredTask.Assignee = person;
                 return registeredTask;

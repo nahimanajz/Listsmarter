@@ -38,7 +38,7 @@ namespace CSharp_intro_1.Services
         }
         public void Delete(Guid id)
         {
-            CheckTaskExistence(id);
+            GetById(id);
             _repo.Delete(id);
         }
 
@@ -51,6 +51,11 @@ namespace CSharp_intro_1.Services
         {
             return _taskRepo.GetByBucketAndStatus(bucketId, status);
         }
+         public TaskDto Update(TaskDto entity)
+        {
+            GetById(entity.Id);
+            return _repo.Update(entity);
+        }
 
         public TaskDto GetById(Guid id)
         {
@@ -61,18 +66,11 @@ namespace CSharp_intro_1.Services
             }
             return task;
         }
-        public TaskDto Update(TaskDto entity)
-        {
-            CheckTaskExistence(entity.Id);
-            return _repo.Update(entity);
-        }
+       
 
         public void UpdateByStatus(int status, int newStatus) => _taskRepo.UpdateByStatus(status, newStatus);
         public void AssignTask(Guid taskId, Guid personId) => _taskRepo.AssignTask(taskId, personId);
-        private void CheckTaskExistence(Guid id)
-        {
-            GetById(id);
-        }
+       
         private void CheckWhetherBucketIsFull(Guid bucketId)
         {
             var bucket = _repo.GetAll().FindAll(task => task.Bucket.Id == bucketId).ToList();

@@ -38,7 +38,7 @@ namespace CSharp_intro_1.Services
         }
         public BucketDto Update(BucketDto entity)
         {
-            CheckBucketExistence(entity.Id);
+            GetById(entity.Id);
             CheckTitleExistence(entity.Title);
             return _repo.Update(entity);
         }
@@ -46,17 +46,14 @@ namespace CSharp_intro_1.Services
         public void Delete(Guid id)
         {
             //TODO: THROW EXCEPTION WHEN TASK HAS ID
-            CheckBucketExistence(id);
+             GetById(id);
             if (!_taskService.HasTask(id))
             {
                 _repo.Delete(id);
             }
         }
 
-        private void CheckBucketExistence(Guid id)
-        {
-            GetById(id);
-        }
+      
         private bool CheckTitleExistence(string title)
         {
             if (_repo.CheckTitleExistence(title))
