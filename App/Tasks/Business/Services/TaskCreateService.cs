@@ -34,27 +34,28 @@ namespace CSharp_intro_1.Tasks.Business.Services
                 Status = task.Status,
                 Assignee = _personService.GetById(task.Assignee.Id)
             };
-            var bucket =(BucketDto) null;
+            var bucket = (BucketDto)null;
 
             try
             {
-                 bucket = _bucketService.GetById(task.Bucket.Id);
+                bucket = _bucketService.GetById(task.Bucket.Id);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
             }
-                AssignTaskToBucket(bucket, newTask);
-               CheckWhetherBucketIsFull(bucket.Id);
-        
+            AssignTaskToBucket(bucket, newTask);
+            CheckWhetherBucketIsFull(newTask.Bucket.Id);
+
             return _repo.Create(newTask);
         }
 
         private void CheckWhetherBucketIsFull(Guid bucketId)
         {
-            if (ALLOWED_TASKS < _repo.CountBucketTasks(bucketId))
+
+            if (ALLOWED_TASKS <_repo.CountBucketTasks(bucketId))
             {
-                throw new Exception("Bucke t is full,");
+                throw new Exception("Bucket is full,");
             }
 
         }

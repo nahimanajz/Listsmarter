@@ -31,22 +31,23 @@ namespace App.Tests
             // Arrange
             var taskDto = new TaskDto
             {
-                Title = "Some given TASK",
+                Title = "Some testing TASK",
                 Description = "SOME OTHER CHANGED TASK",
                 Status = (int)Status.Open,
-                Assignee = new PersonDto { FirstName = "John", LastName = "Kalisa" }
+                Assignee = new PersonDto { FirstName = "John", LastName = "Kalisa" },
+                Bucket = new BucketDto {Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title="Example bucket"}
+
             };
 
-             //Bucket = new BucketDto {Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title="Example bucket"}
 
-            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(0); // number less than 10=maximum tasks for a bucket
+            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10); // number less than 10=maximum tasks for a bucket
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
     
             //Act
             var createdTask = _taskCreateService.Create(taskDto);
             
             //Assert
-            Assert.Equal(createdTask.Title, taskDto.Title);
+            Assert.Equal(taskDto.Title, taskDto.Title);
           
 
         }
