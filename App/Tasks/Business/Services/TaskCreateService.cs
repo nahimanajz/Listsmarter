@@ -45,7 +45,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
                 Console.WriteLine(exception.Message);
             }
                 AssignTaskToBucket(bucket, newTask);
-               // CheckWhetherBucketIsFull(newTask.Bucket.Id);
+               CheckWhetherBucketIsFull(bucket.Id);
         
             return _repo.Create(newTask);
         }
