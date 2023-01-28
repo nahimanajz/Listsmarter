@@ -36,18 +36,17 @@ namespace App.Tests
                 Status = (int)Status.Open,
                 Assignee = new PersonDto { FirstName = "John", LastName = "Kalisa" },
                 Bucket = new BucketDto {Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title="Example bucket"}
-
             };
 
-
-            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10); // number less than 10=maximum tasks for a bucket
+             //TODO: this test is not working unless we comment  CheckWhetherBucketIsFull(newTask.Bucket.Id); method
+            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10); 
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
     
             //Act
             var createdTask = _taskCreateService.Create(taskDto);
             
             //Assert
-            Assert.Equal(taskDto.Title, taskDto.Title);
+            Assert.Equal(createdTask.Title, taskDto.Title);
           
 
         }

@@ -72,7 +72,7 @@ namespace RestApis.Controllers
 
 
         [HttpPut("{id:Guid}")]
-        public async Task<ActionResult<TaskDto>> Update([FromRoute] Guid id, [FromBody] CreateTaskDto task)
+        public async Task<ActionResult<TaskDto>> Update([FromRoute] Guid id, [FromBody] UpdateTaskDto task)
         {
             var updatedTask = new TaskDto
             {
