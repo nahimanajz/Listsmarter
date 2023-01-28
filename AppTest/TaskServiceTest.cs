@@ -105,7 +105,6 @@ namespace App.Tests
         {
            
 
-
             var actualAssignedTask = new TaskDto
             {
                 Id= Guid.NewGuid(),
@@ -124,6 +123,51 @@ namespace App.Tests
             
             Assert.NotNull(assignedTask);
             Assert.Equal(assignedTask[0].Id, actualAssignedTask.Id);
+
+        }
+
+        [Fact]
+        public void AssignTask_GivenValidStatusAndBucketId_ThenReturnBucketTaskData()
+        {
+
+
+            var actualBucketTasks = new TaskDto
+            {
+                Id = Guid.NewGuid(),
+                Title = "Some testing TASK",
+                Description = "SOME OTHER CHANGED TASK",
+                Status = Status.Open,
+                Person = new PersonDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698752111"), FirstName = "John", LastName = "Kalisa" },
+                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
+            };
+
+            _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> { actualBucketTasks });
+
+            var bucketTasks = _taskService.GetByBucketAndStatus(actualBucketTasks.Bucket.Id, (int)Status.Open);
+                
+            Assert.Equal(1, bucketTasks.Count);
+
+        }
+        [Fact]
+        public void AssignTask_GivenUnexistedBucketIdOrStatus_ThenReturnEmptyArray()
+        {
+
+
+            var actualBucketTasks = new TaskDto
+            {
+                Id = Guid.NewGuid(),
+                Title = "Some testing TASK",
+                Description = "SOME OTHER CHANGED TASK",
+                Status = Status.Open,
+                Person = new PersonDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698752111"), FirstName = "John", LastName = "Kalisa" },
+                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
+            };
+
+            _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> {  });
+
+            var bucketTasks = _taskService.GetByBucketAndStatus(actualBucketTasks.Bucket.Id, (int)Status.Closed);
+
+            Assert.Equal(0, bucketTasks.Count);
 
         }
 
