@@ -36,7 +36,7 @@ Instances in each repository should properly reference instances in other reposi
 
 Services should have methods to:
 assign a user to task `I am using create task to assign task`
-update task status to desired value ✔ [refactor needed] //suggestion using id to update it
+update task status to desired value ✔ [refactor needed] //suggestion using id to update it `Nb: consider updating one task with specified id`
   ✔ 
 create/update/delete user ✔
 create/update/delete task ✔

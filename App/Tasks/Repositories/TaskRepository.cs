@@ -57,24 +57,21 @@ namespace CSharp_intro_1.Repositories
         {
             TempDb.tasks.RemoveAll(task => task.Id == taskId);
         }
-        public void UpdateByStatus(int status, int newStatus)
+        public TaskDto UpdateByStatus(Guid id, int status, int newStatus)
         {
-            TempDb.tasks.Where(task => task.Status == status).Select(registeredTask =>
-            {
-                registeredTask.Status = newStatus;
-                return registeredTask;
-            }).ToList();
+            var updatedTask = TempDb.tasks.First(task => task.Status == status && task.Id == id);
+            updatedTask.Status = newStatus;
+            return _mapper.Map<TaskDto>(updatedTask);
 
         }
 
-        public void AssignTask(Guid taskId, Guid personId)
+        public TaskDto AssignTask(Guid taskId, Guid personId)
         {
             Person person = TempDb.persons.Where(currentPerson => currentPerson.Id == personId).First();
-            TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
-            {
-                registeredTask.Person = person;
-                return registeredTask;
-            }).ToList();
+
+            var updatedTask = TempDb.tasks.First(task => task.Id == taskId);
+            updatedTask.Person = person;
+            return _mapper.Map<TaskDto>(updatedTask);
         }
         public int CountBucketTasks(Guid bucketId)
         {
