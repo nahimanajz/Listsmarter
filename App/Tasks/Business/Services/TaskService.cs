@@ -9,14 +9,14 @@ namespace CSharp_intro_1.Services
     {
         private readonly ITaskRepository _repo;
 
-    
+
 
         public TaskService(ITaskRepository repo)
         {
             _repo = repo;
         }
 
-     
+
         public void Delete(Guid id)
         {
             GetById(id);
@@ -32,7 +32,7 @@ namespace CSharp_intro_1.Services
         {
             return _repo.GetByBucketAndStatus(bucketId, status);
         }
-         public TaskDto Update(TaskDto entity)
+        public TaskDto Update(TaskDto entity)
         {
             GetById(entity.Id);
             return _repo.Update(entity);
@@ -47,10 +47,19 @@ namespace CSharp_intro_1.Services
             }
             return task;
         }
-       
 
-        public TaskDto UpdateByStatus(Guid id, int status, int newStatus) => _repo.UpdateByStatus(id, status, newStatus);
-        public TaskDto AssignTask(Guid taskId, Guid personId) => _repo.AssignTask(taskId, personId);
+
+        public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
+        {
+            GetById(id);
+            return _repo.UpdateByStatus(id, status, newStatus);
+        }
+        public List<TaskDto> AssignTask(Guid taskId, Guid personId)
+        {
+            GetById(taskId);
+
+            return _repo.AssignTask(taskId, personId);
+        }
 
         public bool HasBucketTasks(Guid bucketId)
         {

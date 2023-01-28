@@ -47,9 +47,6 @@ namespace CSharp_intro_1.Repositories
         {
             return TempDb.buckets.Any(bucket => bucket.Title.ToUpper() == title.ToUpper());
         }
-        // return bucket to be used while assigning and creating new task
-        public BucketDto GetBucketData(Guid id){
-            return GetById(id);
-        }
+       
     }
 }
