@@ -4,9 +4,11 @@
     "\\App",
     "\\AppTest",
     "\\App\\Common",
+    "\\App\\Common\\Repository",
     "\\App\\Tasks",
+    "\\App\\Tasks\\Repositories",
     "\\RestApis"
   ],
-  "SelectedNode": "\\AppTest\\TaskServiceTest.cs",
+  "SelectedNode": "\\App\\Tasks\\Repositories\\TaskRepository.cs",
   "PreviewInSolutionExplorer": false
 }
