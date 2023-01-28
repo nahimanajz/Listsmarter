@@ -51,8 +51,15 @@ namespace CSharp_intro_1.Services
 
         public void UpdateByStatus(int status, int newStatus) => _repo.UpdateByStatus(status, newStatus);
         public void AssignTask(Guid taskId, Guid personId) => _repo.AssignTask(taskId, personId);
-       
-       
 
+        public bool HasBucketTasks(Guid bucketId)
+        {
+            return _repo.HasBucketTasks(bucketId);
+        }
+
+        public bool HasPersonTasks(Guid personId)
+        {
+            return _repo.HasPersonTasks(personId);
+        }
     }
 }

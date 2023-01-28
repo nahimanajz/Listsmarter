@@ -10,9 +10,9 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository _repo;
-        private readonly ITaskPersonBucketService _taskService;
+        private readonly ITaskService _taskService;
 
-        public BucketService(IBucketRepository repo, ITaskPersonBucketService taskService)
+        public BucketService(IBucketRepository repo, ITaskService taskService)
         {
             _repo = repo;
             _taskService = taskService;
@@ -45,11 +45,15 @@ namespace CSharp_intro_1.Services
 
         public void Delete(Guid id)
         {
-            //TODO: THROW EXCEPTION WHEN TASK HAS ID
-             GetById(id);
-            if (!_taskService.HasTask(id))
+
+            GetById(id);
+            if (!_taskService.HasBucketTasks(id))
             {
                 _repo.Delete(id);
+            }
+            else
+            {
+                throw new Exception("Bucket cannot be deleted due to some assigned tasks");
             }
         }
         private bool CheckTitleExistence(string title)

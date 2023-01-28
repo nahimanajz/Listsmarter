@@ -13,11 +13,13 @@ public class PersonServiceTest
 
     private readonly PersonService _personService;
     private readonly Mock<IRepository<PersonDto>> _personRepositoryMock = new Mock<IRepository<PersonDto>>();
-    private readonly Mock<ITaskPersonBucketService> taskPersonAndBucketServiceMock = new Mock<ITaskPersonBucketService>();
+    private readonly Mock<ITaskService> _taskService = new Mock<ITaskService>();
+
+    
 
     public PersonServiceTest()
     {
-        _personService = new PersonService(_personRepositoryMock.Object, taskPersonAndBucketServiceMock.Object);
+        _personService = new PersonService(_personRepositoryMock.Object, _taskService.Object);
 
     }
 

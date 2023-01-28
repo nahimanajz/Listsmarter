@@ -17,6 +17,8 @@ namespace CSharp_intro_1.Services.interfaces
         List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
 
         void UpdateByStatus(int currentStatus, int newStatus);
+        bool HasBucketTasks(Guid bucketId);
+        bool HasPersonTasks(Guid personId);
 
 
     }

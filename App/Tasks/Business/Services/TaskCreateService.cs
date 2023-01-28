@@ -13,7 +13,6 @@ namespace CSharp_intro_1.Tasks.Business.Services
     public class TaskCreateService : ITaskCreateService
     {
         private readonly ITaskRepository _repo;
-
         private readonly IBucketService _bucketService;
         private readonly IPersonService _personService;
         private const int ALLOWED_TASKS = 10;
@@ -53,7 +52,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         private void CheckWhetherBucketIsFull(Guid bucketId)
         {
 
-            if (ALLOWED_TASKS <_repo.CountBucketTasks(bucketId))
+            if (ALLOWED_TASKS < _repo.CountBucketTasks(bucketId))
             {
                 throw new Exception("Bucket is full,");
             }

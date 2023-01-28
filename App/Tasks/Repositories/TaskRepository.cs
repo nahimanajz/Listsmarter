@@ -49,7 +49,7 @@ namespace CSharp_intro_1.Repositories
             updatedTask.Title = task.Title;
             updatedTask.Description = task.Description;
             updatedTask.Status = (int)task.Status;
-            
+
             return _mapper.Map<TaskDto>(updatedTask);
         }
 
@@ -76,10 +76,23 @@ namespace CSharp_intro_1.Repositories
                 return registeredTask;
             }).ToList();
         }
-        public int CountBucketTasks(Guid bucketId){
-
-            return TempDb.tasks.Count( task=> task.Bucket.Id == bucketId);
+        public int CountBucketTasks(Guid bucketId)
+        {
+            return TempDb.tasks.Count(task => task.Bucket.Id == bucketId);
         }
+        public bool HasBucketTasks(Guid bucketId)
+        {
+
+            return TempDb.tasks.Any(task => task.Bucket.Id == bucketId);
+        }
+
+        public bool HasPersonTasks(Guid personId)
+        {
+            return TempDb.tasks.Any(task => task.Person.Id == personId);
+
+        }
+
+
     }
 
 }

@@ -2,7 +2,8 @@
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
-using CSharp_intro_1.Tasks.Business.Services.Interfaces;
+using CSharp_intro_1.Services.interfaces;
+
 using Moq;
 
 namespace App.Tests
@@ -11,12 +12,11 @@ namespace App.Tests
     {
         private readonly BucketService _bucketService;
         private readonly Mock<IBucketRepository> _bucketRepositoryMock = new Mock<IBucketRepository>();
-        private readonly Mock<ITaskPersonBucketService> _taskPersonAndBucketServiceMock = new Mock<ITaskPersonBucketService>();
+        private readonly Mock<ITaskService> _taskService = new Mock<ITaskService>();
+
         public BucketServiceTest()
         {
-          
-            _bucketService = new BucketService(_bucketRepositoryMock.Object, _taskPersonAndBucketServiceMock.Object);
-
+            _bucketService = new BucketService(_bucketRepositoryMock.Object, _taskService.Object);
         }
         [Fact]
         public void CreateBucket_VerifyIfBucketTitleDoesnotExist_ThenReturnCreatedBucket()
@@ -64,11 +64,9 @@ namespace App.Tests
             var newBucket = new BucketDto { Title = "test bucket" };
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto) null);
             _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(newBucket);
-
             //ASSERT&Act
             Assert.Throws<Exception>(() => _bucketService.Update(newBucket));
         }
-
         [Fact]
         public void UpdateBucket_VerifyIfBucketIdExistAndTitleIsNotTaken_ThenReturnUpdatedBucket()
         {
