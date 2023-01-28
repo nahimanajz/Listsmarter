@@ -3,7 +3,10 @@
     "",
     "\\App",
     "\\AppTest",
+    "\\App\\Common",
+    "\\App\\Tasks",
     "\\RestApis"
   ],
+  "SelectedNode": "\\AppTest\\TaskServiceTest.cs",
   "PreviewInSolutionExplorer": false
 }
