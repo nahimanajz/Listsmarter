@@ -72,3 +72,8 @@ PersonsController`
  -> check whether person  exist and assign to task otherwise set that person to null
 
  -> creating services specific for create and update task
+
+
+ # Todo:
+ -> Exception should be thrown when user doesn't exist while assigning new task
+ 
