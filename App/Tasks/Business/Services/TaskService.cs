@@ -9,13 +9,10 @@ namespace CSharp_intro_1.Services
     {
         private readonly ITaskRepository _repo;
 
-
-
         public TaskService(ITaskRepository repo)
         {
             _repo = repo;
         }
-
 
         public void Delete(Guid id)
         {
