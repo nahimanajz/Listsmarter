@@ -12,7 +12,7 @@ namespace RestApis
             .ReverseMap();
             CreateMap<CreateTaskDto, TaskDto>()
             .ForPath(dest => dest.Bucket.Id, opt => opt.MapFrom(src => src.Bucket))
-            .ForPath(dest => dest.Assignee.Id, opt => opt.MapFrom(src => src.Assignee))
+            .ForPath(dest => dest.Person.Id, opt => opt.MapFrom(src => src.Person))
             .ReverseMap();
 
            

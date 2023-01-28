@@ -55,7 +55,7 @@ n.b: controller stays at restapis folder and then change
 Evalution feedback time estimation
 
 - Changing folder structure  8hrs ✔
-- Changing task `Assignee` and  `Bucket` to object 2hrs ✔
+- Changing task `Person` and  `Bucket` to object 2hrs ✔
 - Learning to replace if-statement in validations ✔
 - and on delete record with exceptions 5hrs ✔
 - Removing  controllers from `App` not in `restapis` and fixing their usage 2hrs  ✔

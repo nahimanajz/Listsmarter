@@ -32,7 +32,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
-                Assignee = _personService.GetById(task.Assignee.Id)
+                Person = _personService.GetById(task.Person.Id)
             };
             var bucket = (BucketDto)null;
 

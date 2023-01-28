@@ -18,7 +18,7 @@ Id
 Title
 Description
 Status (enum with values: Open, InProgress, Closed)
-Assignee (reference to Person object)
+Person (reference to Person object)
 
 Bucket (reference to Bucket object)
 Repositories should be based on in-memory Array or Collection of objects

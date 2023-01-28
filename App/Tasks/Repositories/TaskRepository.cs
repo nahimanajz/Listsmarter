@@ -72,7 +72,7 @@ namespace CSharp_intro_1.Repositories
             Person person = TempDb.persons.Where(currentPerson => currentPerson.Id == personId).First();
             TempDb.tasks.Where(task => task.Id == taskId).Select(registeredTask =>
             {
-                registeredTask.Assignee = person;
+                registeredTask.Person = person;
                 return registeredTask;
             }).ToList();
         }

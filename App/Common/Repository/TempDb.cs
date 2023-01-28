@@ -15,7 +15,7 @@ namespace CSharp_intro_1.DB
                 Title = "Some given TASK",
                 Description = "SOME OTHER CHANGED TASK",
                 Status = (int) Status.Open,
-                Assignee = persons.First(),
+                Person = persons.First(),
                 Bucket = buckets.First(),
             
         }

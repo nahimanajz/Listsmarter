@@ -19,7 +19,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         }
         public bool HasTask(Guid personId)
         {
-            var hasTasks = _repo.GetAll().Any<TaskDto>(task => task.Assignee.Id == personId);
+            var hasTasks = _repo.GetAll().Any<TaskDto>(task => task.Person.Id == personId);
             if (hasTasks == true)
             {
                 throw new Exception("Person has some tasks");
