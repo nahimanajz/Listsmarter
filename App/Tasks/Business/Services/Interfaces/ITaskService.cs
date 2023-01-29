@@ -13,7 +13,7 @@ namespace CSharp_intro_1.Services.interfaces
         
         TaskDto Update(TaskDto TaskDto);
         void Delete(Guid id);
-        List<TaskDto> AssignTask(Guid taskId, Guid personId);
+        
         List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
 
         List<TaskDto> UpdateByStatus(Guid id, int currentStatus, int newStatus);

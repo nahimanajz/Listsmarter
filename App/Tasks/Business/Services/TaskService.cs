@@ -8,7 +8,7 @@ namespace CSharp_intro_1.Services
     public class TaskService : ITaskService
     {
         private readonly ITaskRepository _repo;
-
+        
         public TaskService(ITaskRepository repo)
         {
             _repo = repo;
@@ -51,13 +51,7 @@ namespace CSharp_intro_1.Services
             GetById(id);
             return _repo.UpdateByStatus(id, status, newStatus);
         }
-        public List<TaskDto> AssignTask(Guid taskId, Guid personId)
-        {
-            GetById(taskId);
-
-            return _repo.AssignTask(taskId, personId);
-        }
-
+        
         public bool HasBucketTasks(Guid bucketId)
         {
             return _repo.HasBucketTasks(bucketId);
