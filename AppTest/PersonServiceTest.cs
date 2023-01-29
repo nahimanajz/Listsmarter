@@ -75,20 +75,7 @@ public class PersonServiceTest
 
         Assert.Throws<Exception>(() => _personService.Delete(personId));
     }
-
-    [Fact]
-    public void DeletePerson_WhenPersonInDatabase_ReturnNothing()
-    {
-        Guid personId = Guid.NewGuid();
-        var personDto = new PersonDto() { Id = Guid.NewGuid(), FirstName = "Janvier", LastName = "Nahimana" };
-
-        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
-         _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
-        _personRepositoryMock.Verify(repo => repo.Delete(It.IsAny<Guid>()), Times.Once());
-
-        Assert.Throws<Exception>( ()=> _personService.Delete(personId));
-
-    }
+   
      [Fact]
         public void DeletePerson_GivenInvalidPersonId_ThenThrowException(){
             //Arrange

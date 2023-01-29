@@ -15,7 +15,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         private readonly ITaskRepository _repo;
         private readonly IBucketService _bucketService;
         private readonly IPersonService _personService;
-        private const int ALLOWED_TASKS = 10;
+        private const int ALLOWED_TASKS = 1;
 
         public TaskCreateService(ITaskRepository repo, IBucketService bucketService, IPersonService personService)
         {
@@ -43,8 +43,13 @@ namespace CSharp_intro_1.Tasks.Business.Services
             {
                 Console.WriteLine(exception.Message);
             }
+            
             AssignTaskToBucket(bucket, newTask);
-            CheckWhetherBucketIsFull(newTask.Bucket.Id);
+
+            if (bucket != null)
+            {
+                CheckWhetherBucketIsFull(newTask.Bucket.Id);
+            }
 
             return _repo.Create(newTask);
         }
@@ -72,6 +77,6 @@ namespace CSharp_intro_1.Tasks.Business.Services
             }
 
         }
-        
+
     }
 }
