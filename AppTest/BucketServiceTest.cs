@@ -109,7 +109,5 @@ namespace App.Tests
             //Act&Assert
             Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
         }
-
-       
     }
 }
