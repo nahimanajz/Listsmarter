@@ -7,8 +7,9 @@
     "\\App\\Common\\Repository",
     "\\App\\Tasks",
     "\\App\\Tasks\\Repositories",
+    "\\App\\Tasks\\Repositories\\Interfaces",
     "\\RestApis"
   ],
-  "SelectedNode": "\\App\\Tasks\\Repositories\\TaskRepository.cs",
+  "SelectedNode": "\\App\\Tasks\\Repositories\\Interfaces\\ITaskRepository.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -89,10 +89,6 @@ namespace RestApis.Controllers
             return await Task.FromResult(Ok(_taskService.UpdateByStatus(id, status, newStatus)));
         }
 
-        [HttpPut("task/{taskId}/person/{personId}")]
-        public async Task<ActionResult> AssignTask([FromRoute] Guid taskId, [FromRoute] Guid personId)
-        {
-            return await Task.FromResult(Ok(_taskService.AssignTask(taskId, personId)));
-        }
+        
     }
 }

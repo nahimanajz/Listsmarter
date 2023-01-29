@@ -17,8 +17,8 @@ namespace CSharp_intro_1
             services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IBucketService, BucketService>();
             services.AddTransient<ITaskService, TaskService>();
-
             services.AddTransient<ITaskCreateService, TaskCreateService>();
+            services.AddTransient<IAssignTaskService, AssignTaskService>();
      
 
         }

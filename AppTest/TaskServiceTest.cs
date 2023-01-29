@@ -101,32 +101,6 @@ namespace App.Tests
         }
 
         [Fact]
-        public void AssignTask_GivenValidTaskIdAndPersonId_ThenReturnAssignedTaskData()
-        {
-           
-
-            var actualAssignedTask = new TaskDto
-            {
-                Id= Guid.NewGuid(),
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = Status.InProgress,
-                Person = new PersonDto { Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698752111"), FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
-
-
-            _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_taskDto1);
-            _itaskRepoMock.Setup(repo => repo.AssignTask(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(new List<TaskDto> { actualAssignedTask });
-
-            var assignedTask = _taskService.AssignTask(actualAssignedTask.Id, actualAssignedTask.Person.Id);
-            
-            Assert.NotNull(assignedTask);
-            Assert.Equal(assignedTask[0].Id, actualAssignedTask.Id);
-
-        }
-
-        [Fact]
         public void AssignTask_GivenValidStatusAndBucketId_ThenReturnBucketTaskData()
         {
 
