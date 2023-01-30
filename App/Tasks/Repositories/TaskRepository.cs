@@ -93,7 +93,6 @@ namespace CSharp_intro_1.Repositories
         public bool HasPersonTasks(Guid personId)
         {
             return TempDb.tasks.Any(task => task.Person.Id == personId);
-
         }
 
 

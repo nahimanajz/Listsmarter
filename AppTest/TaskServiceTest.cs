@@ -144,6 +144,5 @@ namespace App.Tests
             Assert.Equal(0, bucketTasks.Count);
 
         }
-
     }
 }

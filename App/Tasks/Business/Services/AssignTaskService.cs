@@ -25,8 +25,8 @@ namespace CSharp_intro_1.Tasks.Business.Services
 
         public List<TaskDto> AssignTask(Guid taskId, Guid personId)
         {
+            _personService.GetById(personId); 
             _taskService.GetById(taskId);
-            _personService.GetById(personId);
             return _repo.AssignTask(taskId, personId);
         }
     }
