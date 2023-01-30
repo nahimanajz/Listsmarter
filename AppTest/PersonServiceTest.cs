@@ -99,6 +99,20 @@ public class PersonServiceTest
             Assert.Throws<Exception>(() => _personService.Delete(Guid.NewGuid()));
         }
 
+    [Fact]
+    public void DeletePerson_GivenValidPersonIdWhoHasNoTask_ThenPersonShouldRemovedFromList()
+    {
+        //Arrange
+   
+        _taskServiceMock.Setup(service => service.HasPersonTasks(It.IsAny<Guid>())).Returns(false);
+        _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
+
+        _personService.Delete(Guid.NewGuid());
+
+        //Assert
+        _personRepositoryMock.Verify(person=> person.Delete(It.IsAny<Guid>()), Times.Once());
+    }
+
 
 }
    

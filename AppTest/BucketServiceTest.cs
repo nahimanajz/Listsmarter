@@ -98,7 +98,8 @@ namespace App.Tests
         }
 
         [Fact]
-        public void DeleteBucket_GivenInvalidBucketIdWhichHasTask_ThenThrowException(){
+        public void DeleteBucket_GivenInvalidBucketIdWhichHasTask_ThenThrowException()
+        {
             //Arrange
              var newBucket = new BucketDto { Id= Guid.NewGuid(), Title = "test bucket" };
 
@@ -109,5 +110,21 @@ namespace App.Tests
             //Act&Assert
             Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
         }
+        [Fact]
+        public void DeleteBucket_GivenValidBucketIdWhichHasNoTask_ThenBucketShouldBeRemovedFromList()
+        {
+            //Arrange
+
+            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
+            _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
+
+            _bucketService.Delete(Guid.NewGuid());
+
+            //Assert
+            _bucketRepositoryMock.Verify(person => person.Delete(It.IsAny<Guid>()), Times.Once());
+        }
+
     }
+
+   
 }
