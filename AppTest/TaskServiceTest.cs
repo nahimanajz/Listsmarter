@@ -49,7 +49,7 @@ namespace App.Tests
             Assert.Equal(0, (int)taskDto[0].Status);
         }
         [Fact]
-        public void UpdateTaskStatus_GivenValidIdCurrentStatus_ThenReturnTaskWithNewStatus()
+        public void UpdateTaskStatus_GivenValidIdCurrentStatus_ReturnTaskWithNewStatus()
         {
             Guid taskId = Guid.NewGuid();
             var oldStatus = (int) Status.Open;
@@ -76,7 +76,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateTaskStatus_GivenInvalidTaskId_ThenThrowException()
+        public void UpdateTaskStatus_GivenInvalidTaskId_ThrowException()
         {
             Guid taskId = Guid.NewGuid();
             var oldStatus = (int)Status.Open;
@@ -101,7 +101,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void AssignTask_GivenValidStatusAndBucketId_ThenReturnBucketTaskData()
+        public void AssignTask_GivenValidStatusAndBucketId_ReturnBucketTaskData()
         {
 
 
@@ -123,7 +123,7 @@ namespace App.Tests
 
         }
         [Fact]
-        public void AssignTask_GivenUnexistedBucketIdOrStatus_ThenReturnEmptyArray()
+        public void AssignTask_GivenUnexistedBucketIdOrStatus_ReturnEmptyArray()
         {
 
 

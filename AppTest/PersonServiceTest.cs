@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoFixture;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
@@ -15,7 +16,9 @@ public class PersonServiceTest
     private readonly Mock<IRepository<PersonDto>> _personRepositoryMock = new Mock<IRepository<PersonDto>>();
     private readonly Mock<ITaskService> _taskServiceMock = new Mock<ITaskService>();
 
-    
+    private static Guid personId = Guid.NewGuid();
+    private PersonDto personDto = new PersonDto() { Id = personId, FirstName = "Janvier", LastName = "Nahimana" };
+    private PersonDto  newPersonDto = new PersonDto { Id = personId, FirstName = "John", LastName = "Nahimana" };
 
     public PersonServiceTest()
     {
@@ -24,25 +27,23 @@ public class PersonServiceTest
     }
 
     [Fact]
-    public void GetPeople_ExpectToReturnListOfPeople_WhenListHasRecords()
+    public void GetAll_ExpectToReturnListOfPeople_WhenListHasRecords()
     {
-        //SET UP MOCK AND TELL HO IT BEHAVE
+       
 
         _personRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
-
-            new PersonDto(){Id= Guid.NewGuid(), FirstName="Janvier", LastName="Nahimana"}
+            personDto
         });
         var result = _personService.GetAll();
         Assert.Equal(1, result.Count);
     }
 
     [Fact]
-    public void UpdatePerson_WhenCorrectPersonDataIsProvided_ReturnUpdatedPerson()
+    public void Update_WhenCorrectPersonDataIsProvided_ReturnUpdatedPerson()
     {
         //scenario one:test one person is not found then exception is thrown
-        var personDto = new PersonDto() { Id = Guid.NewGuid(), FirstName = "Janvier", LastName = "Nahimana" };
-
-        var newPersonDto = new PersonDto { Id = personDto.Id, FirstName = "John", LastName = "Nahimana" };
+        
+        
 
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
         _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
@@ -54,12 +55,9 @@ public class PersonServiceTest
         Assert.Equal(newPersonDto.LastName, updatedPerson.LastName);
     }
 
-    public void UpdatePerson_WhenNoPersonInDatabase_ThrowsException()
+    public void Update_WhenNoPersonInDatabase_ThrowsException()
     {
-        var personDto = new PersonDto() { Id = Guid.NewGuid(), FirstName = "Janvier", LastName = "Nahimana" };
-
-        var newPersonDto = new PersonDto { Id = personDto.Id, FirstName = "John", LastName = "Nahimana" };
-
+        
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
         _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
 
@@ -67,7 +65,7 @@ public class PersonServiceTest
     }
 
     [Fact]
-    public void DeletePerson_WhenGivenPersonIdIsNotInDatabase_ThrowsException()
+    public void Delete_WhenGivenPersonIdIsNotInDatabase_ThrowsException()
     {
         Guid personId = Guid.NewGuid();
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
@@ -77,7 +75,7 @@ public class PersonServiceTest
     }
    
      [Fact]
-        public void DeletePerson_GivenInvalidPersonId_ThenThrowException(){
+        public void Delete_GivenInvalidPersonId_ThrowException(){
             //Arrange
             _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
             _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
@@ -87,9 +85,9 @@ public class PersonServiceTest
         }
 
         [Fact]
-        public void DeletePerson_GivenValidPersonIdWhoHasTask_ThenThrowException(){
+        public void Delete_GivenValidPersonIdWhoHasTask_ThrowException(){
             //Arrange
-            var personDto = new PersonDto() { Id = Guid.NewGuid(), FirstName = "Janvier", LastName = "Nahimana" };
+         
 
             _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
             _taskServiceMock.Setup(service=>service.HasPersonTasks(It.IsAny<Guid>())).Returns(true);
@@ -100,10 +98,12 @@ public class PersonServiceTest
         }
 
     [Fact]
-    public void DeletePerson_GivenValidPersonIdWhoHasNoTask_ThenPersonShouldRemovedFromList()
+    public void Delete_GivenValidPersonIdWhoHasNoTask_RemovePersonFromList()
     {
         //Arrange
-   
+        
+
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
         _taskServiceMock.Setup(service => service.HasPersonTasks(It.IsAny<Guid>())).Returns(false);
         _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 

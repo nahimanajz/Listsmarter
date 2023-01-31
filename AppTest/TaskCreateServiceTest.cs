@@ -26,7 +26,7 @@ namespace App.Tests
             _taskCreateService = new TaskCreateService(_taskRepoMock.Object, _bucketService.Object, _personService.Object);
         }
         [Fact]
-        public void CreateTask_GivenValidTaskData_ThenReturnCreatedTask()
+        public void Create_GivenValidTaskData_ReturnCreatedTask()
         {
             // Arrange
             var taskDto = new TaskDto

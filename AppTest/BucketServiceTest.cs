@@ -20,14 +20,14 @@ namespace App.Tests
         }
 
         [Fact]
-        public void CreateBucket_VerifyIfBucketTitleDoesnotExist_ThenReturnCreatedBucket()
+        public void CreateBucket_VerifyIfBucketTitleDoesnotExist_ReturnCreatedBucket()
         {
             //Arrange
-           
+
             var newBucket = new BucketDto { Title = "test bucket" };
 
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(false);
-            _bucketRepositoryMock.Setup(repo=> repo.Create(It.IsAny<BucketDto>())).Returns(newBucket);
+            _bucketRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(newBucket);
 
             //Act
             var createdBucket = _bucketService.Create(newBucket);
@@ -36,7 +36,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void CreateBucket_VerifyIfBucketTitleExist_ThenThrowException()
+        public void CreateBucket_VerifyIfBucketTitleExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
@@ -48,7 +48,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketTitleExist_ThenThrowException()
+        public void UpdateBucket_VerifyIfBucketTitleExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
@@ -60,35 +60,36 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketIdDoesnotExist_ThenThrowException()
+        public void UpdateBucket_VerifyIfBucketIdDoesnotExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto) null);
+            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
             _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(newBucket);
             //ASSERT&Act
             Assert.Throws<Exception>(() => _bucketService.Update(newBucket));
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketIdExistAndTitleIsNotTaken_ThenReturnUpdatedBucket()
+        public void UpdateBucket_VerifyIfBucketIdExistAndTitleIsNotTaken_ReturnUpdatedBucket()
         {
             //ARRANGE
             var bucket = new BucketDto { Title = "test bucket" };
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((bucket));
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(false);
             _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucket);
-            
+
             // Act
             var updatedBucket = _bucketService.Update(bucket);
             //ASSERT
             Assert.Equal(updatedBucket.Title, bucket.Title);
             Assert.Same(updatedBucket, bucket);
-           
+
         }
 
         [Fact]
-        public void DeleteBucket_GivenInvalidBucketId_ThenThrowException(){
+        public void DeleteBucket_GivenInvalidBucketId_ThrowException()
+        {
             //Arrange
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
@@ -98,26 +99,26 @@ namespace App.Tests
         }
 
         [Fact]
-        public void DeleteBucket_GivenInvalidBucketIdWhichHasTask_ThenThrowException()
+        public void DeleteBucket_GivenInvalidBucketIdWhichHasTask_ThrowException()
         {
             //Arrange
-             var newBucket = new BucketDto { Id= Guid.NewGuid(), Title = "test bucket" };
+            var newBucket = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };
 
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(newBucket);
-            _taskServiceMock.Setup(service=>service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
+            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
-            
+
             //Act&Assert
             Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
         }
         [Fact]
-        public void DeleteBucket_GivenValidBucketIdWhichHasNoTask_ThenBucketShouldBeRemovedFromList()
+        public void DeleteBucket_GivenValidBucketIdWhichHasNoTask_BucketShouldBeRemovedFromList()
         {
             //Arrange
-
-            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
+            var bucketDto = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };
+            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
+            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
-
             _bucketService.Delete(Guid.NewGuid());
 
             //Assert
@@ -126,5 +127,5 @@ namespace App.Tests
 
     }
 
-   
+
 }
