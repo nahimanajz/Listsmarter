@@ -20,7 +20,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void CreateBucket_VerifyIfBucketTitleDoesnotExist_ReturnCreatedBucket()
+        public void Create_VerifyIfBucketTitleDoesnotExist_ReturnCreatedBucket()
         {
             //Arrange
 
@@ -36,7 +36,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void CreateBucket_VerifyIfBucketTitleExist_ThrowException()
+        public void Create_VerifyIfBucketTitleExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
@@ -48,7 +48,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketTitleExist_ThrowException()
+        public void Update_VerifyIfBucketTitleExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
@@ -60,7 +60,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketIdDoesnotExist_ThrowException()
+        public void Update_VerifyIfBucketIdDoesnotExist_ThrowException()
         {
             //ARRANGE
             var newBucket = new BucketDto { Title = "test bucket" };
@@ -71,7 +71,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void UpdateBucket_VerifyIfBucketIdExistAndTitleIsNotTaken_ReturnUpdatedBucket()
+        public void Update_VerifyIfBucketIdExistAndTitleIsNotTaken_ReturnUpdatedBucket()
         {
             //ARRANGE
             var bucket = new BucketDto { Title = "test bucket" };
@@ -88,7 +88,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void DeleteBucket_GivenInvalidBucketId_ThrowException()
+        public void Delete_GivenInvalidBucketId_ThrowException()
         {
             //Arrange
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
@@ -99,7 +99,7 @@ namespace App.Tests
         }
 
         [Fact]
-        public void DeleteBucket_GivenInvalidBucketIdWhichHasTask_ThrowException()
+        public void Delete_GivenInvalidBucketIdWhichHasTask_ThrowException()
         {
             //Arrange
             var newBucket = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };
@@ -112,7 +112,7 @@ namespace App.Tests
             Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
         }
         [Fact]
-        public void DeleteBucket_GivenValidBucketIdWhichHasNoTask_BucketShouldBeRemovedFromList()
+        public void Delete_GivenValidBucketIdWhichHasNoTask_BucketShouldBeRemovedFromList()
         {
             //Arrange
             var bucketDto = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };

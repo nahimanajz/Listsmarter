@@ -32,7 +32,7 @@ namespace App.Tests
 
         }
         [Fact]
-        public void AllTask_GetAllTasks_ReturnListOfTasks()
+        public void GetAll_RetrieveAllTasks_ReturnListOfTasks()
         {
             //Arrange
 

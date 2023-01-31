@@ -38,7 +38,7 @@ namespace App.Tests
                 Bucket = new BucketDto {Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title="Example bucket"}
             };
 
-             //TODO: this test is not working unless we comment  CheckWhetherBucketIsFull(newTask.Bucket.Id); method
+            
             _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10); 
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
     
