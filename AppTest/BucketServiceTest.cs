@@ -120,7 +120,6 @@ namespace App.Tests
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
-            
             Action action = () => _bucketService.Delete(Guid.NewGuid());
             action.Should().Throw<Exception>();
             

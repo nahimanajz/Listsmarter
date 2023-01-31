@@ -8,6 +8,7 @@ using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
+using FluentAssertions;
 using Moq;
 
 namespace App.Tests
@@ -17,7 +18,7 @@ namespace App.Tests
         private readonly Mock<ITaskRepository> _itaskRepoMock = new Mock<ITaskRepository>();
         private readonly TaskService _taskService;
         private TaskDto _taskDto1;
-        
+
         public TaskServiceTest()
         {
             _taskService = new TaskService(_itaskRepoMock.Object);
@@ -45,15 +46,16 @@ namespace App.Tests
             //Act
             var tasks = _taskService.GetAll();
             //Assert
-            Assert.Equal(tasks[0].Title, taskDto[0].Title);
-            Assert.Equal(0, (int)taskDto[0].Status);
+   
+            tasks[0].Title.Should().Be(taskDto[0].Title);
+            tasks[0].Status.Should().Be(taskDto[0].Status);
         }
         [Fact]
         public void UpdateTaskStatus_GivenValidIdCurrentStatus_ReturnTaskWithNewStatus()
         {
             Guid taskId = Guid.NewGuid();
-            var oldStatus = (int) Status.Open;
-            var newStatus = (int) Status.InProgress;
+            var oldStatus = (int)Status.Open;
+            var newStatus = (int)Status.InProgress;
 
             var taskDto = new TaskDto
             {
@@ -66,12 +68,12 @@ namespace App.Tests
 
 
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_taskDto1);
-            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto>{ taskDto });
+            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto> { taskDto });
 
             var updatedTask = _taskService.UpdateByStatus(taskId, oldStatus, newStatus);
-            
-            Assert.Equal(updatedTask[0].Status, taskDto.Status);
-            Assert.Equal(updatedTask[0].Id, taskDto.Id);
+
+            updatedTask[0].Status.Should().Be(taskDto.Status);
+            updatedTask[0].Id.Should().Be(taskDto.Id);
 
         }
 
@@ -81,7 +83,7 @@ namespace App.Tests
             Guid taskId = Guid.NewGuid();
             var oldStatus = (int)Status.Open;
             var newStatus = (int)Status.InProgress;
-            
+
 
             var taskDto = new TaskDto
             {
@@ -95,8 +97,9 @@ namespace App.Tests
 
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((TaskDto)null);
             _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto> { taskDto });
-
-            Assert.Throws<Exception>(() => _taskService.UpdateByStatus(taskId, oldStatus, newStatus));
+            
+            Action action = () => _taskService.UpdateByStatus(taskId, oldStatus, newStatus);
+            action.Should().Throw<Exception>();
 
         }
 
@@ -118,9 +121,8 @@ namespace App.Tests
             _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> { actualBucketTasks });
 
             var bucketTasks = _taskService.GetByBucketAndStatus(actualBucketTasks.Bucket.Id, (int)Status.Open);
-                
-            Assert.Equal(1, bucketTasks.Count);
-
+            
+            1.Should().Be(bucketTasks.Count);
         }
         [Fact]
         public void AssignTask_GivenUnexistedBucketIdOrStatus_ReturnEmptyArray()
@@ -137,11 +139,12 @@ namespace App.Tests
                 Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
             };
 
-            _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> {  });
+            _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> { });
 
             var bucketTasks = _taskService.GetByBucketAndStatus(actualBucketTasks.Bucket.Id, (int)Status.Closed);
 
-            Assert.Equal(0, bucketTasks.Count);
+            
+            0.Should().Be(bucketTasks.Count);
 
         }
     }
