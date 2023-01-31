@@ -59,7 +59,7 @@ namespace CSharp_intro_1.Repositories
         }
         public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
         {
-            var updatedTask = TempDb.tasks.Where(task => task.Status == status).Select(registeredTask =>
+            var updatedTask = TempDb.tasks.Where(task => task.Status == status && task.Id == id).Select(registeredTask =>
             {
                 registeredTask.Status = newStatus;
                 return registeredTask;
@@ -70,14 +70,18 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> AssignTask(Guid taskId, Guid personId)
         {
-            Person person = TempDb.persons.FirstOrDefault(currentPerson => currentPerson.Id == personId, null);
+            var person = TempDb.persons.FirstOrDefault(currentPerson => currentPerson.Id == personId, null);
+            var task = TempDb.tasks.FirstOrDefault(task => task.Id == taskId, null);
+            if(person == null || task == null){
+                return _mapper.Map<List<TaskDto>>(null);
+            }
 
             var updatedTask = TempDb.tasks.Where(task => task.Id == taskId).Select(task =>
             {
                 task.Person = person;
                 return task;
             }).ToList();
-
+        
             return _mapper.Map<List<TaskDto>>(updatedTask);
         }
         public int CountBucketTasks(Guid bucketId)

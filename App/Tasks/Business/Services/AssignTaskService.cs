@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSharp_intro_1.Models;
-using CSharp_intro_1.Services.interfaces;
+
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 
 namespace CSharp_intro_1.Tasks.Business.Services
@@ -12,22 +12,20 @@ namespace CSharp_intro_1.Tasks.Business.Services
     public class AssignTaskService : IAssignTaskService
     {
         private readonly ITaskRepository _repo;
-        private readonly ITaskService _taskService;
-        private readonly IPersonService _personService;
-
-        public AssignTaskService(ITaskRepository repo, IPersonService personService, ITaskService taskService)
+        public AssignTaskService(ITaskRepository repo)
         {
             _repo= repo;
-            _taskService = taskService;
-            _personService = personService;
             
         }
 
         public List<TaskDto> AssignTask(Guid taskId, Guid personId)
         {
-            _personService.GetById(personId); 
-            _taskService.GetById(taskId);
-            return _repo.AssignTask(taskId, personId);
+      
+            var task = _repo.AssignTask(taskId, personId);
+            if(task == null){
+                throw new Exception("Invalid person or task id");
+            }
+            return task;
         }
     }
 }

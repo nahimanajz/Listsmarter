@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\App",
+    "\\AppTest",
+    "\\App\\Tasks",
+    "\\App\\Tasks\\Business",
+    "\\App\\Tasks\\Business\\Services"
   ],
+  "SelectedNode": "\\App\\Tasks\\Business\\Services\\AssignTaskService.cs",
   "PreviewInSolutionExplorer": false
 }
