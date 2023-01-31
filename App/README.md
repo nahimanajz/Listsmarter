@@ -80,3 +80,17 @@ Auto reload: `dotnet watch run`
 
 ## TDD task
 - Writing unit test to our project [personService, taskService and bucketService]
+
+## database 
+
+In a finishing company, there are employees described by the following characteristics: name, surname, personal identification number, date of birth.
+Employees are assigned to teams. Each team has its own unique name.
+One employee can only work in one team. In addition, employees work on construction sites.
+One employee can work on many construction sites at the same time.
+
+Each construction is assigned a name, start date, end date and its manager (who is also an employee).
+It is important that the system contains full information about the participation of a given employee on the construction site.
+It is possible that a given employee worked on a construction site for a given period of time, then left the construction site and was involved again. 
+
+It is possible that he performed various functions in it. At a given time, an employee can perform only one function on the construction site: PAINTER, ELECTRICIAN or PLUMINATOR.
+In addition, an employee performing a function on a given construction site is assigned an hourly remuneration for participation in it.
