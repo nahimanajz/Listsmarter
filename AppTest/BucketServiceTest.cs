@@ -3,7 +3,7 @@ using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
-
+using FluentAssertions;
 using Moq;
 
 namespace App.Tests
@@ -32,7 +32,7 @@ namespace App.Tests
             //Act
             var createdBucket = _bucketService.Create(newBucket);
             //Assert
-            Assert.Equal(createdBucket.Title, newBucket.Title);
+            createdBucket.Title.Should().Be(newBucket.Title);
         }
 
         [Fact]
@@ -44,7 +44,8 @@ namespace App.Tests
             _bucketRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(newBucket);
 
             //ASSERT&Act
-            Assert.Throws<Exception>(() => _bucketService.Create(newBucket));
+            Action action = () => _bucketService.Create(newBucket);
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -56,7 +57,9 @@ namespace App.Tests
             _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(newBucket);
 
             //ASSERT&Act
-            Assert.Throws<Exception>(() => _bucketService.Update(newBucket));
+             Action action = () => _bucketService.Update(newBucket);
+            action.Should().Throw<Exception>();
+          
         }
 
         [Fact]
@@ -66,8 +69,11 @@ namespace App.Tests
             var newBucket = new BucketDto { Title = "test bucket" };
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
             _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(newBucket);
+            
             //ASSERT&Act
-            Assert.Throws<Exception>(() => _bucketService.Update(newBucket));
+            Action action = () => _bucketService.Update(newBucket);
+            action.Should().Throw<Exception>();
+           
         }
 
         [Fact]
@@ -82,8 +88,10 @@ namespace App.Tests
             // Act
             var updatedBucket = _bucketService.Update(bucket);
             //ASSERT
-            Assert.Equal(updatedBucket.Title, bucket.Title);
-            Assert.Same(updatedBucket, bucket);
+           
+            updatedBucket.Title.Should().Be(bucket.Title);
+            updatedBucket.Should().BeSameAs(bucket);
+            
 
         }
 
@@ -96,6 +104,9 @@ namespace App.Tests
 
             //Act&Assert
             Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
+             
+            Action action = () => _bucketService.Delete(Guid.NewGuid());
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -109,7 +120,10 @@ namespace App.Tests
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
-            Assert.Throws<Exception>(() => _bucketService.Delete(Guid.NewGuid()));
+            
+            Action action = () => _bucketService.Delete(Guid.NewGuid());
+            action.Should().Throw<Exception>();
+            
         }
         [Fact]
         public void Delete_GivenValidBucketIdWhichHasNoTask_BucketShouldBeRemovedFromList()

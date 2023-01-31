@@ -6,6 +6,7 @@ using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
+using FluentAssertions;
 using Moq;
 
 public class PersonServiceTest
@@ -30,29 +31,27 @@ public class PersonServiceTest
     public void GetAll_ExpectToReturnListOfPeople_WhenListHasRecords()
     {
        
-
         _personRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
             personDto
         });
         var result = _personService.GetAll();
-        Assert.Equal(1, result.Count);
+        1.Should().Be(result.Count);
+      
     }
 
     [Fact]
     public void Update_WhenCorrectPersonDataIsProvided_ReturnUpdatedPerson()
     {
-        //scenario one:test one person is not found then exception is thrown
-        
-        
 
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
         _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
 
         var updatedPerson = _personService.Update(newPersonDto);
 
-        Assert.Equal(newPersonDto.Id, updatedPerson.Id);
-        Assert.Equal(newPersonDto.FirstName, updatedPerson.FirstName);
-        Assert.Equal(newPersonDto.LastName, updatedPerson.LastName);
+         newPersonDto.Id.Should().Be(newPersonDto.Id);
+         newPersonDto.FirstName.Should().Be(newPersonDto.FirstName);
+         newPersonDto.LastName.Should().Be(newPersonDto.LastName);
+         
     }
 
     public void Update_WhenNoPersonInDatabase_ThrowsException()
@@ -60,8 +59,10 @@ public class PersonServiceTest
         
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
         _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
-
-        Assert.Throws<ArgumentException>(() => _personService.Update(newPersonDto));
+        
+        Action action = () => _personService.Update(newPersonDto);
+        action.Should().Throw<ArgumentException>();
+        
     }
 
     [Fact]
@@ -71,7 +72,9 @@ public class PersonServiceTest
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
          _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
 
-        Assert.Throws<Exception>(() => _personService.Delete(personId));
+        
+        Action action =()=> _personService.Delete(personId);
+        action.Should().Throw<Exception>();
     }
    
      [Fact]
@@ -81,7 +84,8 @@ public class PersonServiceTest
             _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
-            Assert.Throws<Exception>(() => _personService.Delete(Guid.NewGuid()));
+            Action action =()=> _personService.Delete(Guid.NewGuid());
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -94,7 +98,8 @@ public class PersonServiceTest
             _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
             
             //Act&Assert
-            Assert.Throws<Exception>(() => _personService.Delete(Guid.NewGuid()));
+            Action action =()=> _personService.Delete(Guid.NewGuid());
+            action.Should().Throw<Exception>();
         }
 
     [Fact]

@@ -9,6 +9,7 @@ using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
 using Moq;
 using Xunit.Sdk;
+using FluentAssertions;
 
 namespace App.Tests
 {
@@ -35,23 +36,24 @@ namespace App.Tests
                 Description = "SOME OTHER CHANGED TASK",
                 Status = (int)Status.Open,
                 Person = new PersonDto { FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto {Id= Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title="Example bucket"}
+                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
             };
 
-            
-            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10); 
+
+            _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10);
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
-    
+
             //Act
             var createdTask = _taskCreateService.Create(taskDto);
-            
+
             //Assert
-            Assert.Equal(createdTask.Title, taskDto.Title);
-          
+            createdTask.Title.Should().Be(taskDto.Title);
+
+
 
         }
-        
-        
-        
+
+
+
     }
 }

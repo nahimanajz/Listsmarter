@@ -11,6 +11,7 @@ using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
 using Moq;
+using FluentAssertions;
 
 namespace App.Tests
 {
@@ -24,7 +25,7 @@ namespace App.Tests
         private readonly AssignTaskService _assignTaskService;
         private TaskDto _task;
         private Fixture fixture = new Fixture();
-        private  Guid defaultTaskId = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852129");
+        private Guid defaultTaskId = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852129");
 
 
         public AssignTaskServiceTest()
@@ -40,8 +41,8 @@ namespace App.Tests
                 Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
             };
 
-         
-            _taskRepoMock.Setup(repo => repo.GetById(defaultTaskId)).Returns(new TaskDto { Id=defaultTaskId});
+
+            _taskRepoMock.Setup(repo => repo.GetById(defaultTaskId)).Returns(new TaskDto { Id = defaultTaskId });
         }
 
         [Fact]
@@ -63,9 +64,9 @@ namespace App.Tests
             _taskRepoMock.Setup(repo => repo.AssignTask(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(new List<TaskDto> { actualAssignedTask });
 
             var assignedTask = _assignTaskService.AssignTask(actualAssignedTask.Id, actualAssignedTask.Person.Id);
+            assignedTask[0].Should().NotBeNull();
+            assignedTask[0].Id.Should().Be(actualAssignedTask.Id);
 
-            Assert.NotNull(assignedTask);
-            Assert.Equal(assignedTask[0].Id, actualAssignedTask.Id);
 
         }
 
@@ -73,17 +74,23 @@ namespace App.Tests
         public void AssignTask_GivenInValidTaskIdOrPersonId_ThrowException()
         {
             _personRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns<PersonDto>(null);
-           _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns(new List<TaskDto> { null });
-            Assert.Throws<Exception>(() => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid()));
+            _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns(new List<TaskDto> { null });
+
+            Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
+            action.Should().Throw<Exception>();
         }
 
-        
+
         [Fact]
         public void AssignTask_GivenInValidPersonId_ThrowException()
         {
             _personRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns<PersonDto>(null);
-            Assert.Throws<Exception>(() => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid()));
+
+            Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
+            action.Should().Throw<Exception>();
         }
-        
+
     }
 }
+//      TODO: Using Fixture 
+//    Using fluent assertion
