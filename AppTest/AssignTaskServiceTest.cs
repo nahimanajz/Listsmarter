@@ -32,15 +32,12 @@ namespace App.Tests
         {
             _assignTaskService = new AssignTaskService(_taskRepoMock.Object);
 
-            _task = new TaskDto
-            {
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = (int)Status.Open,
-                Person = null,
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
-
+            
+            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+          .ForEach(b => fixture.Behaviors.Remove(b));
+           fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            
+            _task = fixture.Create<TaskDto>();
 
             _taskRepoMock.Setup(repo => repo.GetById(defaultTaskId)).Returns(new TaskDto { Id = defaultTaskId });
         }
@@ -49,15 +46,7 @@ namespace App.Tests
         public void AssignTask_GivenValidTaskIdAndPersonId_ReturnAssignedTaskData()
         {
 
-            var actualAssignedTask = new TaskDto
-            {
-                Id = Guid.NewGuid(),
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = Status.InProgress,
-                Person = new PersonDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698752111"), FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
+            var actualAssignedTask = fixture.Create<TaskDto>();
 
 
             _taskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_task);

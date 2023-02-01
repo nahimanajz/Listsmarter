@@ -19,21 +19,18 @@ namespace App.Tests
         private readonly Mock<ITaskRepository> _itaskRepoMock = new Mock<ITaskRepository>();
         private readonly TaskService _taskService;
         private TaskDto _taskDto1;
-        //private readonly Fixture fixture;
+        private  Fixture fixture;
 
         public TaskServiceTest()
         {
             _taskService = new TaskService(_itaskRepoMock.Object);
-           // fixture = new Fixture();
+           fixture = new Fixture();
+           
+           fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+          .ForEach(b => fixture.Behaviors.Remove(b));
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            _taskDto1 = new TaskDto
-            {
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = (int)Status.Open,
-                Person = new PersonDto { FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
+            _taskDto1 = fixture.Create<TaskDto>();
 
 
         }
@@ -44,7 +41,6 @@ namespace App.Tests
 
             var taskDto = new List<TaskDto>
             {
-               // fixture.Create<TaskDto>()
                 _taskDto1
             };
 
@@ -64,14 +60,7 @@ namespace App.Tests
             var oldStatus = (int)Status.Open;
             var newStatus = (int)Status.InProgress;
 
-            var taskDto = new TaskDto
-            {
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = Status.InProgress,
-                Person = new PersonDto { FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
+            var taskDto = fixture.Create<TaskDto>();
 
 
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_taskDto1);
@@ -91,16 +80,7 @@ namespace App.Tests
             var oldStatus = (int)Status.Open;
             var newStatus = (int)Status.InProgress;
 
-
-            var taskDto = new TaskDto
-            {
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = Status.InProgress,
-                Person = new PersonDto { FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
-
+            var taskDto = fixture.Create<TaskDto>();
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((TaskDto)null);
             _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto> { taskDto });
 
@@ -114,15 +94,7 @@ namespace App.Tests
         {
 
 
-            var actualBucketTasks = new TaskDto
-            {
-                Id = Guid.NewGuid(),
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = Status.Open,
-                Person = new PersonDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698752111"), FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
+            var actualBucketTasks = fixture.Create<TaskDto>();
 
             _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> { actualBucketTasks });
 
@@ -133,30 +105,10 @@ namespace App.Tests
         [Fact]
         public void AssignTask_GivenUnexistedBucketIdOrStatus_ReturnEmptyArray()
         {
-           /* Fixture fixture = new Fixture();
-            var actualBucketTasks = fixture.Build<TaskDto>()
-            .With(x => x.Id, Guid.NewGuid())
-            .With(x => x.Title, "Guid.NewGuid()")
-            .With(x => x.Description, "Guid.NewGuid()")
-            .With(x => x.Status, Status.Open)
-            .Create();
 
-            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-            .ForEach(b => fixture.Behaviors.Remove(b));
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            */
-            
-               var actualBucketTasks = new TaskDto
-               {
-                   Id = Guid.NewGuid(),
-                   Title = "Some testing TASK",
-                   Description = "SOME OTHER CHANGED TASK",
-                   Status = Status.Open,
-                   Person = new PersonDto { FirstName="XYZ",LastName="ABC"},
-                   Bucket = new BucketDto { Title="XTITLE"}
-               };
-         
+            var actualBucketTasks = fixture.Create<TaskDto>();
+
             _itaskRepoMock.Setup(repo => repo.GetByBucketAndStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new List<TaskDto> { });
 
             var bucketTasks = _taskService.GetByBucketAndStatus(actualBucketTasks.Bucket.Id, (int)Status.Closed);

@@ -18,19 +18,28 @@ public class PersonServiceTest
     private readonly Mock<ITaskService> _taskServiceMock = new Mock<ITaskService>();
 
     private static Guid personId = Guid.NewGuid();
-    private PersonDto personDto = new PersonDto() { Id = personId, FirstName = "Janvier", LastName = "Nahimana" };
-    private PersonDto  newPersonDto = new PersonDto { Id = personId, FirstName = "John", LastName = "Nahimana" };
+    private PersonDto _personDto;
+    private PersonDto  _newPersonDto;
+    private Fixture _fixture;
 
     public PersonServiceTest()
     {
         _personService = new PersonService(_personRepositoryMock.Object, _taskServiceMock.Object);
+        _fixture = new Fixture();
+
+        _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+          .ForEach(b => _fixture.Behaviors.Remove(b));
+        _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+        _personDto = _fixture.Create<PersonDto>();
+        _newPersonDto = _fixture.Create<PersonDto>();
     }
 
     [Fact]
     public void GetAll_ExpectToReturnListOfPeople_WhenListHasRecords()
     {
         _personRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
-            personDto
+            _personDto
         });
         var result = _personService.GetAll();
         1.Should().Be(result.Count);
@@ -41,14 +50,14 @@ public class PersonServiceTest
     public void Update_WhenCorrectPersonDataIsProvided_ReturnUpdatedPerson()
     {
 
-        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
-        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_personDto);
+        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(_newPersonDto);
 
-        var updatedPerson = _personService.Update(newPersonDto);
+        var updatedPerson = _personService.Update(_newPersonDto);
 
-         newPersonDto.Id.Should().Be(newPersonDto.Id);
-         newPersonDto.FirstName.Should().Be(newPersonDto.FirstName);
-         newPersonDto.LastName.Should().Be(newPersonDto.LastName);
+         _newPersonDto.Id.Should().Be(_newPersonDto.Id);
+         _newPersonDto.FirstName.Should().Be(_newPersonDto.FirstName);
+         _newPersonDto.LastName.Should().Be(_newPersonDto.LastName);
          
     }
 
@@ -56,9 +65,9 @@ public class PersonServiceTest
     {
         
         _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((PersonDto)null);
-        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(newPersonDto);
+        _personRepositoryMock.Setup(repo => repo.Update(It.IsAny<PersonDto>())).Returns(_newPersonDto);
         
-        Action action = () => _personService.Update(newPersonDto);
+        Action action = () => _personService.Update(_newPersonDto);
         action.Should().Throw<ArgumentException>();
         
     }
@@ -91,7 +100,7 @@ public class PersonServiceTest
             //Arrange
          
 
-            _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
+            _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_personDto);
             _taskServiceMock.Setup(service=>service.HasPersonTasks(It.IsAny<Guid>())).Returns(true);
             _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
             
@@ -106,7 +115,7 @@ public class PersonServiceTest
         //Arrange
         
 
-        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(personDto);
+        _personRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_personDto);
         _taskServiceMock.Setup(service => service.HasPersonTasks(It.IsAny<Guid>())).Returns(false);
         _personRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 

@@ -36,7 +36,7 @@ namespace CSharp_intro_1.Services
             {
                 MessageServiceBuilder builder = new MessageServiceBuilder();
                 MessageService message = builder.BuildBucketNotFound($"Bucket with  this {id} Id is not exist").build();
-                // throw new Exception(message);
+                throw new Exception($"Bucket with  this {id} Id is not exist");
             }
             return bucket;
         }
@@ -51,7 +51,7 @@ namespace CSharp_intro_1.Services
         {
 
             GetById(id);
-            if (_bucketValidationService.HasBucketTasks(id))
+            if (_repo.HasBucketTasks(id))
             {
                 throw new Exception("Bucket can not be deleted due some task(s) assigned to it ");
             }
