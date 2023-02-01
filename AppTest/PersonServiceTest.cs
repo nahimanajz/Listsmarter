@@ -24,13 +24,11 @@ public class PersonServiceTest
     public PersonServiceTest()
     {
         _personService = new PersonService(_personRepositoryMock.Object, _taskServiceMock.Object);
-
     }
 
     [Fact]
     public void GetAll_ExpectToReturnListOfPeople_WhenListHasRecords()
     {
-       
         _personRepositoryMock.Setup(person => person.GetAll()).Returns(new List<PersonDto> {
             personDto
         });

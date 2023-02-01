@@ -47,6 +47,11 @@ namespace CSharp_intro_1.Repositories
         {
             return TempDb.buckets.Any(bucket => bucket.Title.ToUpper() == title.ToUpper());
         }
-       
+
+        public bool HasBucketTasks(Guid bucketId)
+        {
+            return TempDb.tasks.Any(task => task.Bucket.Id == bucketId);
+
+        }
     }
 }

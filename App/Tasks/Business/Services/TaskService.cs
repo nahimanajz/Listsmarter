@@ -34,7 +34,7 @@ namespace CSharp_intro_1.Services
             GetById(entity.Id);
             return _repo.Update(entity);
         }
-
+        
         public TaskDto GetById(Guid id)
         {
             var task = _repo.GetById(id);
@@ -45,21 +45,17 @@ namespace CSharp_intro_1.Services
             return task;
         }
 
-
         public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
         {
             GetById(id);
             return _repo.UpdateByStatus(id, status, newStatus);
         }
         
-        public bool HasBucketTasks(Guid bucketId)
-        {
-            return _repo.HasBucketTasks(bucketId);
-        }
-
         public bool HasPersonTasks(Guid personId)
         {
             return _repo.HasPersonTasks(personId);
         }
+
+       
     }
 }

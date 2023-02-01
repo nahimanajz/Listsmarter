@@ -92,5 +92,3 @@ namespace App.Tests
 
     }
 }
-//      TODO: Using Fixture 
-//    Using fluent assertion

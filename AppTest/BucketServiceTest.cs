@@ -1,4 +1,6 @@
 ﻿
+using AutoFixture;
+using CSharp_intro_1.Buckets.Business.Validations;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
@@ -12,11 +14,11 @@ namespace App.Tests
     {
         private readonly BucketService _bucketService;
         private readonly Mock<IBucketRepository> _bucketRepositoryMock = new Mock<IBucketRepository>();
-        private readonly Mock<ITaskService> _taskServiceMock = new Mock<ITaskService>();
+        private readonly Mock<IBucketValidationService> _bucketValidationService = new Mock<IBucketValidationService>();
 
         public BucketServiceTest()
         {
-            _bucketService = new BucketService(_bucketRepositoryMock.Object, _taskServiceMock.Object);
+            _bucketService = new BucketService(_bucketRepositoryMock.Object, _bucketValidationService.Object);
         }
 
         [Fact]
@@ -116,7 +118,7 @@ namespace App.Tests
             var newBucket = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };
 
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(newBucket);
-            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
+            _bucketValidationService.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
@@ -129,8 +131,10 @@ namespace App.Tests
         {
             //Arrange
             var bucketDto = new BucketDto { Id = Guid.NewGuid(), Title = "test bucket" };
+            //var fixture = new Fixture();
+            //fixture.Create<BucketDto>();
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
-            _taskServiceMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
+            _bucketValidationService.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
             _bucketService.Delete(Guid.NewGuid());
 

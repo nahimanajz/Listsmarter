@@ -1,4 +1,6 @@
 
+using CSharp_intro_1.Buckets.Business.Validations;
+using CSharp_intro_1.Common.Business.Services;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
@@ -10,14 +12,14 @@ namespace CSharp_intro_1.Services
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository _repo;
-        private readonly ITaskService _taskService;
+        private readonly IBucketValidationService _bucketValidationService;
 
-        public BucketService(IBucketRepository repo, ITaskService taskService)
+        public BucketService(IBucketRepository repo, IBucketValidationService bucketValidationService)
         {
             _repo = repo;
-            _taskService = taskService;
-
+            _bucketValidationService = bucketValidationService;
         }
+
         public BucketDto Create(BucketDto entity)
         {
             CheckTitleExistence(entity.Title);
@@ -32,7 +34,9 @@ namespace CSharp_intro_1.Services
             var bucket = _repo.GetById(id);
             if (bucket == null)
             {
-                throw new Exception($"Bucket with  this {id} Id is not exist");
+                MessageServiceBuilder builder = new MessageServiceBuilder();
+                MessageService message = builder.BuildBucketNotFound($"Bucket with  this {id} Id is not exist").build();
+                // throw new Exception(message);
             }
             return bucket;
         }
@@ -47,14 +51,12 @@ namespace CSharp_intro_1.Services
         {
 
             GetById(id);
-            if (!_taskService.HasBucketTasks(id))
+            if (_bucketValidationService.HasBucketTasks(id))
             {
-                _repo.Delete(id);
+                throw new Exception("Bucket can not be deleted due some task(s) assigned to it ");
             }
-            else
-            {
-                throw new Exception("Bucket cannot be deleted due to some assigned tasks");
-            }
+            _repo.Delete(id);
+
         }
         private bool CheckTitleExistence(string title)
         {

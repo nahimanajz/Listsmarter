@@ -5,6 +5,7 @@ namespace CSharp_intro_1.Repositories
     public interface IBucketRepository: IRepository<BucketDto>
     {
         bool CheckTitleExistence(String title);
+        bool HasBucketTasks(Guid bucketId);
        
     }
 }
