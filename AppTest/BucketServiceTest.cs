@@ -1,6 +1,6 @@
 ﻿
 using AutoFixture;
-using CSharp_intro_1.Buckets.Business.Validations;
+using CSharp_intro_1.Common.Business.ResponseMessages;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
@@ -14,15 +14,14 @@ namespace App.Tests
     {
         private readonly BucketService _bucketService;
         private readonly Mock<IBucketRepository> _bucketRepositoryMock = new Mock<IBucketRepository>();
-        private readonly Mock<IBucketValidationService> _bucketValidationService = new Mock<IBucketValidationService>();
+       
         private  Fixture _fixture ;
         private readonly BucketDto bucketDto;
 
         public BucketServiceTest()
         {
-            _bucketService = new BucketService(_bucketRepositoryMock.Object, _bucketValidationService.Object);
+            _bucketService = new BucketService(_bucketRepositoryMock.Object);
 
-            //configure to fixture to ignore circular reference
             _fixture = new Fixture();
           
             bucketDto = _fixture.Create<BucketDto>();
@@ -54,7 +53,7 @@ namespace App.Tests
 
             //ASSERT&Act
             Action action = () => _bucketService.Create(bucketDto);
-            action.Should().Throw<Exception>();
+            action.Should().Throw<Exception>().WithMessage(ResponseMessages.BucketAlreadyExist);
         }
 
         [Fact]
@@ -81,7 +80,7 @@ namespace App.Tests
             
             //ASSERT&Act
             Action action = () => _bucketService.Update(bucketDto);
-            action.Should().Throw<Exception>();
+            action.Should().Throw<Exception>().WithMessage(ResponseMessages.BucketNotFound);;
            
         }
 
@@ -115,7 +114,7 @@ namespace App.Tests
             
              
             Action action = () => _bucketService.Delete(Guid.NewGuid());
-            action.Should().Throw<Exception>();
+            action.Should().Throw<Exception>().WithMessage(ResponseMessages.BucketNotFound);;
         }
 
         [Fact]
@@ -139,7 +138,7 @@ namespace App.Tests
             //Arrange
          
             _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
-            _bucketValidationService.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
+            _bucketRepositoryMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
             _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
             _bucketService.Delete(Guid.NewGuid());
 

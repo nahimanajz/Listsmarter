@@ -1,4 +1,5 @@
 ﻿
+using CSharp_intro_1.Common.Business.ResponseMessages;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
@@ -29,7 +30,7 @@ namespace CSharp_intro_1.Services
 
             if (person == null)
             {
-                throw new Exception($"Person with this {id} Id is not exist");
+                throw new Exception(ResponseMessages.PersonNotFound);
             }
             return person;
         }
@@ -47,7 +48,7 @@ namespace CSharp_intro_1.Services
             }
             else
             {
-                throw new Exception("Person cannot be deleted due to some assigned tasks");
+                throw new Exception(ResponseMessages.PersonNotDeleted);
             }
 
         }

@@ -1,13 +1,12 @@
 ﻿
 using System.Runtime.CompilerServices;
-using CSharp_intro_1.Buckets.Business.Validations;
+
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CSharp_intro_1
@@ -21,7 +20,7 @@ namespace CSharp_intro_1
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<ITaskCreateService, TaskCreateService>();
             services.AddTransient<IAssignTaskService, AssignTaskService>();
-            services.AddTransient<IBucketValidationService, BucketValidationService>();
+          
      
 
         }

@@ -1,4 +1,5 @@
 
+using CSharp_intro_1.Common.Business.ResponseMessages;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
@@ -40,7 +41,7 @@ namespace CSharp_intro_1.Services
             var task = _repo.GetById(id);
             if (task == null)
             {
-                throw new Exception($"Task with this {id} Id is not exist");
+                throw new Exception(ResponseMessages.TaskNotFound);
             }
             return task;
         }

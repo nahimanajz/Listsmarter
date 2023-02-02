@@ -12,6 +12,7 @@ using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
 using Moq;
 using FluentAssertions;
+using CSharp_intro_1.Common.Business.ResponseMessages;
 
 namespace App.Tests
 {
@@ -62,7 +63,8 @@ namespace App.Tests
             _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns(new List<TaskDto> { null });
 
             Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
-            action.Should().Throw<Exception>();
+            action.Should().Throw<Exception>().WithMessage(ResponseMessages.TaskOrPersonNotFound);
+           
         }
 
 

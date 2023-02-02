@@ -1,23 +1,20 @@
 
-using CSharp_intro_1.Buckets.Business.Validations;
-using CSharp_intro_1.Common.Business.Services;
+using CSharp_intro_1.Common.Business.ResponseMessages;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
-using CSharp_intro_1.Tasks.Business.Services.Interfaces;
-
 
 namespace CSharp_intro_1.Services
 {
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository _repo;
-        private readonly IBucketValidationService _bucketValidationService;
+       
 
-        public BucketService(IBucketRepository repo, IBucketValidationService bucketValidationService)
+        public BucketService(IBucketRepository repo)
         {
             _repo = repo;
-            _bucketValidationService = bucketValidationService;
+           
         }
 
         public BucketDto Create(BucketDto entity)
@@ -34,9 +31,7 @@ namespace CSharp_intro_1.Services
             var bucket = _repo.GetById(id);
             if (bucket == null)
             {
-                MessageServiceBuilder builder = new MessageServiceBuilder();
-                MessageService message = builder.BuildBucketNotFound($"Bucket with  this {id} Id is not exist").build();
-                throw new Exception($"Bucket with  this {id} Id is not exist");
+                throw new Exception(ResponseMessages.BucketNotFound);
             }
             return bucket;
         }
@@ -53,7 +48,7 @@ namespace CSharp_intro_1.Services
             GetById(id);
             if (_repo.HasBucketTasks(id))
             {
-                throw new Exception("Bucket can not be deleted due some task(s) assigned to it ");
+                throw new Exception(ResponseMessages.BucketNotDeleted);
             }
             _repo.Delete(id);
 
@@ -62,7 +57,7 @@ namespace CSharp_intro_1.Services
         {
             if (_repo.CheckTitleExistence(title))
             {
-                throw new Exception($"Bucket called {title} is already exist please try different title");
+                throw new Exception(ResponseMessages.BucketAlreadyExist);
             }
             return false;
         }
