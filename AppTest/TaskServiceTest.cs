@@ -26,9 +26,7 @@ namespace App.Tests
             _taskService = new TaskService(_itaskRepoMock.Object);
            fixture = new Fixture();
            
-           fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-          .ForEach(b => fixture.Behaviors.Remove(b));
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+         
 
             _taskDto1 = fixture.Create<TaskDto>();
 

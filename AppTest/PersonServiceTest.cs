@@ -27,10 +27,7 @@ public class PersonServiceTest
         _personService = new PersonService(_personRepositoryMock.Object, _taskServiceMock.Object);
         _fixture = new Fixture();
 
-        _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-          .ForEach(b => _fixture.Behaviors.Remove(b));
-        _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
+       
         _personDto = _fixture.Create<PersonDto>();
         _newPersonDto = _fixture.Create<PersonDto>();
     }

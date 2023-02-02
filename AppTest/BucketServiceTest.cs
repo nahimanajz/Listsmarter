@@ -24,11 +24,9 @@ namespace App.Tests
 
             //configure to fixture to ignore circular reference
             _fixture = new Fixture();
-            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-           .ForEach(b => _fixture.Behaviors.Remove(b));
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
+          
             bucketDto = _fixture.Create<BucketDto>();
+           
 
         }
 

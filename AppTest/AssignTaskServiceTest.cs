@@ -33,10 +33,6 @@ namespace App.Tests
             _assignTaskService = new AssignTaskService(_taskRepoMock.Object);
 
             
-            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-          .ForEach(b => fixture.Behaviors.Remove(b));
-           fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-            
             _task = fixture.Create<TaskDto>();
 
             _taskRepoMock.Setup(repo => repo.GetById(defaultTaskId)).Returns(new TaskDto { Id = defaultTaskId });

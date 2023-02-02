@@ -11,25 +11,23 @@ namespace CSharp_intro_1.Buckets.Business.Validations
 {
     public class BucketValidationService : IBucketValidationService
     {
- 
+
         private readonly IBucketRepository _repo;
 
-        public BucketValidationService( IBucketRepository repo)
+        public BucketValidationService(IBucketRepository repo)
         {
-           
+
             _repo = repo;
         }
 
         public bool HasBucketTasks(Guid id)
         {
             return _repo.HasBucketTasks(id);
-            /*
-            if (!)
+
+            if (!_repo.HasBucketTasks(id))
             {
                 throw new Exception("Bucket can not be deleted due to some tasks assigned to it");
             }
-    */
-
         }
     }
 }

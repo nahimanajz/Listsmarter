@@ -20,7 +20,7 @@ namespace App.Tests
         private readonly Mock<IPersonService> _personService = new Mock<IPersonService>();
 
         private readonly TaskCreateService _taskCreateService;
-
+        private Fixture fixture = new Fixture();
 
         public TaskCreateServiceTest()
         {
@@ -30,16 +30,8 @@ namespace App.Tests
         public void Create_GivenValidTaskData_ReturnCreatedTask()
         {
             // Arrange
-            var taskDto = new TaskDto
-            {
-                Title = "Some testing TASK",
-                Description = "SOME OTHER CHANGED TASK",
-                Status = (int)Status.Open,
-                Person = new PersonDto { FirstName = "John", LastName = "Kalisa" },
-                Bucket = new BucketDto { Id = Guid.Parse("8D2B0128-5D0D-4C23-9B49-02A698852119"), Title = "Example bucket" }
-            };
-
-
+           var taskDto = fixture.Create<TaskDto>();
+           
             _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10);
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
 
