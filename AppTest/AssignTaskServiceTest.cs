@@ -1,6 +1,14 @@
-﻿using AutoFixture;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoFixture;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Repositories.Models;
+using CSharp_intro_1.Services;
+using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
 using Moq;
 using FluentAssertions;
@@ -12,6 +20,8 @@ namespace App.Tests
     {
         private readonly Mock<ITaskRepository> _taskRepoMock = new Mock<ITaskRepository>();
         private readonly Mock<IRepository<PersonDto>> _personRepoMock = new Mock<IRepository<PersonDto>>();
+        private readonly Mock<TaskService> _taskService = new Mock<TaskService>();
+        private readonly Mock<PersonService> _personService = new Mock<PersonService>();
 
         private readonly AssignTaskService _assignTaskService;
         private TaskDto _task;
