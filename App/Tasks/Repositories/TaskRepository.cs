@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
@@ -10,21 +11,23 @@ namespace CSharp_intro_1.Repositories
     public class TaskRepository : ITaskRepository
     {
         private readonly IMapper _mapper;
+        private readonly AppContexts _context;
 
-        public TaskRepository(IMapper mapper)
+        public TaskRepository(IMapper mapper, AppContexts context)
         {
             _mapper = mapper;
+            _context = context; 
         }
 
         public List<TaskDto> GetAll()
         {
-            return _mapper.Map<List<TaskDto>>(TempDb.tasks.ToList());
+            return _mapper.Map<List<TaskDto>>(_context.tasks.ToList());
 
         }
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            var tasks = TempDb.tasks.Where(task => task.Bucket.Id == bucketId && task.Status == status).Select(task => task);
+            var tasks = _context.tasks.Where(task => task.Bucket.Id == bucketId && task.Status == status).Select(task => task);
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }
@@ -32,19 +35,19 @@ namespace CSharp_intro_1.Repositories
         public TaskDto GetById(Guid id)
         {
 
-            return _mapper.Map<TaskDto>(TempDb.tasks.FirstOrDefault(task => task.Id == id, null)); ;
+            return _mapper.Map<TaskDto>(_context.tasks.FirstOrDefault(task => task.Id == id, null)); 
 
         }
 
         public TaskDto Create(TaskDto newTask)
         {
-            TempDb.tasks.Add(_mapper.Map<Task>(newTask));
+            _context.tasks.Add(_mapper.Map<Task>(newTask));
             return _mapper.Map<TaskDto>(newTask);
         }
 
         public TaskDto Update(TaskDto task)
         {
-            var updatedTask = TempDb.tasks.First(currentTask => currentTask.Id == task.Id);
+            var updatedTask = _context.tasks.First(currentTask => currentTask.Id == task.Id);
 
             updatedTask.Title = task.Title;
             updatedTask.Description = task.Description;
@@ -59,44 +62,38 @@ namespace CSharp_intro_1.Repositories
         }
         public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
         {
-            var updatedTask = TempDb.tasks.Where(task => task.Status == status && task.Id == id).Select(registeredTask =>
-            {
-                registeredTask.Status = newStatus;
-                return registeredTask;
-            }).ToList();
+            var updatedTask = TempDb.tasks.First(task => task.Status == status && task.Id == id);
+            updatedTask.Status = newStatus;
+
             return _mapper.Map<List<TaskDto>>(updatedTask);
 
         }
 
         public List<TaskDto> AssignTask(Guid taskId, Guid personId)
         {
-            var person = TempDb.persons.FirstOrDefault(currentPerson => currentPerson.Id == personId, null);
-            var task = TempDb.tasks.FirstOrDefault(task => task.Id == taskId, null);
+            var person = _context.persons.FirstOrDefault(currentPerson => currentPerson.Id == personId, null);
+            var task = _context.tasks.FirstOrDefault(task => task.Id == taskId, null);
             if(person == null || task == null){
                 return _mapper.Map<List<TaskDto>>(null);
             }
 
-            var updatedTask = TempDb.tasks.Where(task => task.Id == taskId).Select(task =>
-            {
-                task.Person = person;
-                return task;
-            }).ToList();
+            task.PersonId = personId;
         
-            return _mapper.Map<List<TaskDto>>(updatedTask);
+            return _mapper.Map<List<TaskDto>>(task);
         }
         public int CountBucketTasks(Guid bucketId)
         {
-            return TempDb.tasks.Count(task => task.Bucket.Id == bucketId);
+            return _context.tasks.Count(task => task.Bucket.Id == bucketId);
         }
         public bool HasBucketTasks(Guid bucketId)
         {
 
-            return TempDb.tasks.Any(task => task.Bucket.Id == bucketId);
+            return _context.tasks.Any(task => task.Bucket.Id == bucketId);
         }
 
         public bool HasPersonTasks(Guid personId)
         {
-            return TempDb.tasks.Any(task => task.Person.Id == personId);
+            return _context.tasks.Any(task => task.Person.Id == personId);
         }
 
 
