@@ -16,8 +16,6 @@ public class PersonServiceTest
     private readonly PersonService _personService;
     private readonly Mock<IRepository<PersonDto>> _personRepositoryMock = new Mock<IRepository<PersonDto>>();
     private readonly Mock<ITaskService> _taskServiceMock = new Mock<ITaskService>();
-
-    private static Guid personId = Guid.NewGuid();
     private PersonDto _personDto;
     private PersonDto  _newPersonDto;
     private Fixture _fixture;

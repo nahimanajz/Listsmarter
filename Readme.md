@@ -77,3 +77,14 @@ PersonsController`
  # Todo:
  -> Exception should be thrown when user doesn't exist while assigning new task
  
+ # 03.02.2023 todo list
+
+ - Show Gulis implementation of Builder design pattern and ask him whether you can use it in all services or only in `BucketService`
+ - Recreate database tables and show `Krystian ` using sequel 
+
+
+
+
+Enity framework core 
+entity framework core sqlserver 6th version
+Entity framework core design

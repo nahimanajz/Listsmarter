@@ -10,6 +10,5 @@
     "\\App\\Tasks\\Business",
     "\\App\\Tasks\\Business\\Services"
   ],
-  "SelectedNode": "\\App\\Common\\Business\\ResponseMessages\\ResponseMessages.cs",
   "PreviewInSolutionExplorer": false
 }

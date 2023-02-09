@@ -99,4 +99,17 @@ Testing whole project
 - thrown exception for 
 - updated controllers to use createModel dto instead real dtos
 
+## Database 
+`Libraries`
+1. Enity framework core 
+2. entity framework core sqlserver 6th version
+3. Entity framework core design
 
+
+**Configuring model methods**
+* Data annotation 
+* fluentApi
+**Running migrations**
+dotnet ef migrations add initialCreate --start-project .\TaskManagerAPI\TaskManagerApi.csproje 
+** Task *
+-updating our project with example of files krystian shared\
