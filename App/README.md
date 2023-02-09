@@ -81,7 +81,7 @@ Auto reload: `dotnet watch run`
 ## TDD task
 - Writing unit test to our project [personService, taskService and bucketService]
 
-## database 
+## database TASK
 
 In a finishing company, there are employees described by the following characteristics: name, surname, personal identification number, date of birth.
 Employees are assigned to teams. Each team has its own unique name.
@@ -94,3 +94,16 @@ It is possible that a given employee worked on a construction site for a given p
 
 It is possible that he performed various functions in it. At a given time, an employee can perform only one function on the construction site: PAINTER, ELECTRICIAN or PLUMINATOR.
 In addition, an employee performing a function on a given construction site is assigned an hourly remuneration for participation in it.
+
+## Entity framework
+**packages in App**
+entityframework.sqlserver
+Microsoft.EntityFrameworkCore
+
+**Packages to put in rest api projectect**
+
+Entity framework design 
+entityframework.sqlserver
+
+**Finally**
+`dotnet ef migrations add InitialCreate --startup-project .\RestApis\RestApis.csproj --project .\App\App.csproj --output-dir Common\DataAccess\Migrations`

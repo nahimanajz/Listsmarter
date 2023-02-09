@@ -16,10 +16,13 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
             builder.Property(x => x.Description).HasMaxLength(500);
 
             builder.HasOne(x => x.Person)
-                .WithMany(x => x.Tasks)
-                .HasForeignKey(x => x.Person.Id);
+               .WithMany(c => c.Tasks)
+                .HasForeignKey(x => x.PersonId);
 
-            builder.Ignore(x => x.Bucket);
+            builder.HasOne(x => x.Bucket)
+               .WithMany(c => c.Tasks)
+                .HasForeignKey(x => x.BucketId);
+
             builder.Ignore(x => x.Person);
 
 

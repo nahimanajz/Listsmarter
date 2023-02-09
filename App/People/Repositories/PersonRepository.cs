@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
+using CSharp_intro_1.People.Repositories.Modal;
 using CSharp_intro_1.Repositories.Models;
 
 namespace CSharp_intro_1.Repositories

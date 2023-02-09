@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace CSharp_intro_1.Persons.Repositories.Model
+using Task = CSharp_intro_1.Repositories.Models.Task;
+
+namespace CSharp_intro_1.People.Repositories.Modal
 {
     public class Person
     {

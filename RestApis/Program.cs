@@ -1,7 +1,9 @@
 using CSharp_intro_1;
+using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.Models.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateBucketValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePersonValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
+
+builder.Services.AddDbContext<AppContexts>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
+
 object value = builder.Services.AddAutoMapper((config) =>
 {
 }, AppDomain.CurrentDomain.GetAssemblies());

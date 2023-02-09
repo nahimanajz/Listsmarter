@@ -22,10 +22,12 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
             builder.HasData(
                 new Bucket
                 {
+                    Id=Guid.NewGuid(),
                     Title = "My DB Bucket",
                 },
                 new Bucket
                 {
+                    Id = Guid.NewGuid(),
                     Title = "My DB second Bucket",
                 }
                 );
