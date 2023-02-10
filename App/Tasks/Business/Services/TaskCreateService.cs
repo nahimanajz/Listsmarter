@@ -10,7 +10,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         private readonly ITaskRepository _repo;
         private readonly IBucketService _bucketService;
         private readonly IPersonService _personService;
-        private const int ALLOWED_TASKS = 1;
+        private const int ALLOWED_TASKS = 9;
 
         public TaskCreateService(ITaskRepository repo, IBucketService bucketService, IPersonService personService)
         {

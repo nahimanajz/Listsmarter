@@ -35,13 +35,19 @@ namespace CSharp_intro_1.Repositories
         public TaskDto GetById(Guid id)
         {
 
-            return _mapper.Map<TaskDto>(_context.tasks.FirstOrDefault(task => task.Id == id, null)); 
+            return _mapper.Map<TaskDto>(_context.tasks.FirstOrDefault(task => task.Id == id)); 
 
         }
 
         public TaskDto Create(TaskDto newTask)
         {
-            _context.tasks.Add(_mapper.Map<Task>(newTask));
+            var task = _mapper.Map<Task>(newTask);
+            task.PersonId = newTask.Person.Id;
+            task.BucketId = newTask.Bucket.Id;
+            _context.tasks.Add(task);
+
+            _context.SaveChanges();
+
             return _mapper.Map<TaskDto>(newTask);
         }
 
@@ -53,17 +59,23 @@ namespace CSharp_intro_1.Repositories
             updatedTask.Description = task.Description;
             updatedTask.Status = (int)task.Status;
 
+            _context.SaveChanges();
+
             return _mapper.Map<TaskDto>(updatedTask);
         }
 
-        public void Delete(Guid taskId)
-        {
-            TempDb.tasks.RemoveAll(task => task.Id == taskId);
+        public void Delete(Guid taskId) { 
+            var task = _context.tasks.First(task => task.Id == taskId);
+            _context.tasks.Remove(task);
+            _context.SaveChanges();
+
         }
         public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
         {
-            var updatedTask = TempDb.tasks.First(task => task.Status == status && task.Id == id);
+            var updatedTask = _context.tasks.First(task => task.Status == status && task.Id == id);
             updatedTask.Status = newStatus;
+
+            _context.SaveChanges();
 
             return _mapper.Map<List<TaskDto>>(updatedTask);
 
@@ -78,7 +90,8 @@ namespace CSharp_intro_1.Repositories
             }
 
             task.PersonId = personId;
-        
+            _context.SaveChanges();
+
             return _mapper.Map<List<TaskDto>>(task);
         }
         public int CountBucketTasks(Guid bucketId)
