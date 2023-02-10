@@ -24,13 +24,13 @@ namespace CSharp_intro_1.Repositories
         }
         public PersonDto GetById(Guid id)
         {
-            var person = _context.persons.FirstOrDefault(person => person.Id == id, null);
-            var mappedData = _mapper.Map<PersonDto>(person);
-            return mappedData;
+            var person = _context.persons.FirstOrDefault(person => person.Id == id);
+            return _mapper.Map<PersonDto>(person);
         }
         public PersonDto Create(PersonDto newPerson)
         {
             _context.persons.Add(_mapper.Map<Person>(newPerson));
+            _context.SaveChanges();
             return _mapper.Map<PersonDto>(newPerson);
 
         }
@@ -40,6 +40,8 @@ namespace CSharp_intro_1.Repositories
             
             upatedPerson.FirstName = person.FirstName;
             upatedPerson.LastName = person.LastName;
+
+            _context.SaveChanges();
 
             return _mapper.Map<PersonDto>(upatedPerson);
 
