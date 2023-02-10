@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CSharp_intro_1.Common.DataAccess.Migrations
+namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,29 +65,27 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Bucket",
                 columns: new[] { "Id", "Title" },
-                values: new object[,]
-                {
-                    { new Guid("2099c99b-cf1c-418c-ade4-4ef38cce2a38"), "My DB Bucket" },
-                    { new Guid("7e0098e0-cd4b-4c0a-8f3e-be8335eab368"), "My DB second Bucket" }
-                });
+                values: new object[] { new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"), "My DB Bucket" });
 
             migrationBuilder.InsertData(
                 table: "Person",
                 columns: new[] { "Id", "FirstName", "LastName" },
-                values: new object[,]
-                {
-                    { new Guid("d12bd9ba-27ca-4271-b9fb-f68b356f06f3"), "Will", "Smith" },
-                    { new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"), "John", "Doe" }
-                });
+                values: new object[] { new Guid("d12bd9ba-27ca-4271-b9fb-f68b356f06f3"), "Will", "Smith" });
+
+            migrationBuilder.InsertData(
+                table: "Person",
+                columns: new[] { "Id", "FirstName", "LastName" },
+                values: new object[] { new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"), "John", "Doe" });
 
             migrationBuilder.InsertData(
                 table: "Task",
                 columns: new[] { "Id", "BucketId", "Description", "PersonId", "Status", "Title" },
-                values: new object[,]
-                {
-                    { new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f2"), new Guid("00000000-0000-0000-0000-000000000000"), "custom software solution for x company", new Guid("00000000-0000-0000-0000-000000000000"), 0, "Development work" },
-                    { new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f3"), new Guid("00000000-0000-0000-0000-000000000000"), "promotion material for new software", new Guid("00000000-0000-0000-0000-000000000000"), 1, "Marketing work" }
-                });
+                values: new object[] { new Guid("d21bd8ba-27ca-4271-b9fb-f68b356f06f3"), new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"), "promotion material for new software", new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"), 1, "Marketing work" });
+
+            migrationBuilder.InsertData(
+                table: "Task",
+                columns: new[] { "Id", "BucketId", "Description", "PersonId", "Status", "Title" },
+                values: new object[] { new Guid("d42bd8ba-27ca-4271-b9fb-f68b356f06f2"), new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"), "custom software solution for x company", new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"), 0, "Development work" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Task_BucketId",

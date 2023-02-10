@@ -23,24 +23,28 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
                .WithMany(c => c.Tasks)
                 .HasForeignKey(x => x.BucketId);
 
-            builder.Ignore(x => x.Person);
+          
 
 
             builder.HasData(
                  new Task
                  {
-                     Id = new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f2"),
+                     Id = Guid.Parse("d42bd8ba-27ca-4271-b9fb-f68b356f06f2"),
                      Title = "Development work",
                      Description = "custom software solution for x company",
                      Status = (int)Status.Open,
+                     BucketId= Guid.Parse("6B29FC40-CA47-1067-B31D-00DD010662DA"),
+                     PersonId= Guid.Parse("d22bd9ba-27ca-4271-b9fb-f68b356f06f3")
 
                  },
             new Task
             {
-                Id = new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f3"),
+                Id = Guid.Parse("d21bd8ba-27ca-4271-b9fb-f68b356f06f3"),
                 Title = "Marketing work",
                 Description = "promotion material for new software",
                 Status = (int)Status.InProgress,
+                BucketId = Guid.Parse("6B29FC40-CA47-1067-B31D-00DD010662DA"),
+                PersonId = Guid.Parse("d22bd9ba-27ca-4271-b9fb-f68b356f06f3")
 
             });
 

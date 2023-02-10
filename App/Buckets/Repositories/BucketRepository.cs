@@ -24,12 +24,13 @@ namespace CSharp_intro_1.Repositories
 
         public BucketDto GetById(Guid id)
         {
-            return _mapper.Map<BucketDto>(_context.buckets.FirstOrDefault(bucket => bucket.Id == id, null));
+            return _mapper.Map<BucketDto>(_context.buckets.FirstOrDefault(bucket => bucket.Id == id));
         }
 
         public BucketDto Create(BucketDto newBucket)
         {
             _context.buckets.Add(_mapper.Map<Bucket>(newBucket));
+            _context.SaveChanges();
             return _mapper.Map<BucketDto>(newBucket);
         }
 
@@ -38,7 +39,7 @@ namespace CSharp_intro_1.Repositories
             var updatedBucket = _context.buckets.First(registeredbucket => registeredbucket.Id == bucket.Id);
 
             updatedBucket.Title = bucket.Title;
-
+            _context.SaveChanges();
             return _mapper.Map<BucketDto>(updatedBucket);
         }
 

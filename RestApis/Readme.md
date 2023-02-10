@@ -110,6 +110,12 @@ Testing whole project
 * Data annotation 
 * fluentApi
 **Running migrations**
-dotnet ef migrations add initialCreate --start-project .\TaskManagerAPI\TaskManagerApi.csproje 
+// add new migration
+dotnet ef migrations add initialCreate --startup-project ./RestApis/RestApis.csproj  --project ./App/App.csproj
+
+dotnet ef migrations add initialCreate --startup-project ./RestApis/RestApis.csproj  --project ./App/App.csproj --output-dir Common\DataAccess\Migrations
+
+// Updating migration 
+dotnet ef database update --startup-project ./RestApis/RestApis.csproj --project ./App/App.csproj
 ** Task *
 -updating our project with example of files krystian shared\

@@ -4,16 +4,18 @@ using CSharp_intro_1.Common.Repository.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CSharp_intro_1.Common.DataAccess.Migrations
+namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(AppContexts))]
-    partial class AppContextsModelSnapshot : ModelSnapshot
+    [Migration("20230210135547_initialCreate")]
+    partial class initialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,13 +74,8 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2099c99b-cf1c-418c-ade4-4ef38cce2a38"),
+                            Id = new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"),
                             Title = "My DB Bucket"
-                        },
-                        new
-                        {
-                            Id = new Guid("7e0098e0-cd4b-4c0a-8f3e-be8335eab368"),
-                            Title = "My DB second Bucket"
                         });
                 });
 
@@ -88,7 +85,8 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BucketId")
+                    b.Property<Guid?>("BucketId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -96,7 +94,8 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid>("PersonId")
+                    b.Property<Guid?>("PersonId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -118,19 +117,19 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f2"),
-                            BucketId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Id = new Guid("d42bd8ba-27ca-4271-b9fb-f68b356f06f2"),
+                            BucketId = new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"),
                             Description = "custom software solution for x company",
-                            PersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            PersonId = new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"),
                             Status = 0,
                             Title = "Development work"
                         },
                         new
                         {
-                            Id = new Guid("d22bd8ba-27ca-4271-b9fb-f68b356f06f3"),
-                            BucketId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Id = new Guid("d21bd8ba-27ca-4271-b9fb-f68b356f06f3"),
+                            BucketId = new Guid("6b29fc40-ca47-1067-b31d-00dd010662da"),
                             Description = "promotion material for new software",
-                            PersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            PersonId = new Guid("d22bd9ba-27ca-4271-b9fb-f68b356f06f3"),
                             Status = 1,
                             Title = "Marketing work"
                         });
@@ -144,13 +143,15 @@ namespace CSharp_intro_1.Common.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CSharp_intro_1.People.Repositories.Modal.Person", null)
+                    b.HasOne("CSharp_intro_1.People.Repositories.Modal.Person", "Person")
                         .WithMany("Tasks")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bucket");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("CSharp_intro_1.People.Repositories.Modal.Person", b =>
