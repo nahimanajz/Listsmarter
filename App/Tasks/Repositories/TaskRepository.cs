@@ -29,7 +29,12 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            var tasks = _context.tasks.Where(task => task.Bucket.Id == bucketId && task.Status == status).Select(task => task);
+            var tasks = _context.tasks
+                .Include(task => task.Bucket)
+                .Include(task => task.Person)
+                .Where(task => task.Bucket.Id == bucketId && task.Status == status)
+                .Select(task => task);
+
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }
@@ -59,7 +64,7 @@ namespace CSharp_intro_1.Repositories
 
         public TaskDto Update(TaskDto task)
         {
-            var updatedTask = _context.tasks.First(currentTask => currentTask.Id == task.Id);
+            var updatedTask = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).First(currentTask => currentTask.Id == task.Id);
 
             updatedTask.Title = task.Title;
             updatedTask.Description = task.Description;
@@ -76,21 +81,23 @@ namespace CSharp_intro_1.Repositories
             _context.SaveChanges();
 
         }
-        public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
+        public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
-            var updatedTask = _context.tasks.First(task => task.Status == status && task.Id == id);
+            // TODO: Remove current task 
+            var updatedTask = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).First(task =>task.Id == id);
+           
             updatedTask.Status = newStatus;
 
             _context.SaveChanges();
 
-            return _mapper.Map<List<TaskDto>>(updatedTask);
+            return _mapper.Map<TaskDto>(updatedTask);
 
         }
 
         public List<TaskDto> AssignTask(Guid taskId, Guid personId)
         {
-            var person = _context.persons.FirstOrDefault(currentPerson => currentPerson.Id == personId, null);
-            var task = _context.tasks.FirstOrDefault(task => task.Id == taskId, null);
+            var person = _context.persons.First(currentPerson => currentPerson.Id == personId);
+            var task = _context.tasks.First(task => task.Id == taskId);
             if(person == null || task == null){
                 return _mapper.Map<List<TaskDto>>(null);
             }

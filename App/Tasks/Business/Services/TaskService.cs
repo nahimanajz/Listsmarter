@@ -46,10 +46,10 @@ namespace CSharp_intro_1.Services
             return task;
         }
 
-        public List<TaskDto> UpdateByStatus(Guid id, int status, int newStatus)
+        public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
             GetById(id);
-            return _repo.UpdateByStatus(id, status, newStatus);
+            return _repo.UpdateByStatus(id, newStatus);
         }
         
         public bool HasPersonTasks(Guid personId)

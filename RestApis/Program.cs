@@ -4,8 +4,7 @@ using CSharp_intro_1.Models.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
