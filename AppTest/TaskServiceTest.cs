@@ -55,19 +55,18 @@ namespace App.Tests
         public void UpdateTaskStatus_GivenValidIdCurrentStatus_ReturnTaskWithNewStatus()
         {
             Guid taskId = Guid.NewGuid();
-            var oldStatus = (int)Status.Open;
             var newStatus = (int)Status.InProgress;
 
             var taskDto = fixture.Create<TaskDto>();
 
 
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_taskDto1);
-            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto> { taskDto });
+            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(taskDto);
 
-            var updatedTask = _taskService.UpdateByStatus(taskId, oldStatus, newStatus);
+            var updatedTask = _taskService.UpdateByStatus(taskId, newStatus);
 
-            updatedTask[0].Status.Should().Be(taskDto.Status);
-            updatedTask[0].Id.Should().Be(taskDto.Id);
+            updatedTask.Status.Should().Be(taskDto.Status);
+            updatedTask.Id.Should().Be(taskDto.Id);
 
         }
 
@@ -75,14 +74,13 @@ namespace App.Tests
         public void UpdateTaskStatus_GivenInvalidTaskId_ThrowException()
         {
             Guid taskId = Guid.NewGuid();
-            var oldStatus = (int)Status.Open;
             var newStatus = (int)Status.InProgress;
 
             var taskDto = fixture.Create<TaskDto>();
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((TaskDto)null);
-            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new List<TaskDto> { taskDto });
+            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(taskDto);
 
-            Action action = () => _taskService.UpdateByStatus(taskId, oldStatus, newStatus);
+            Action action = () => _taskService.UpdateByStatus(taskId, newStatus);
             action.Should().Throw<Exception>();
 
         }
