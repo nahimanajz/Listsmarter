@@ -12,6 +12,6 @@ namespace CSharp_intro_1.People.Repositories.Modal
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Task> Tasks { get; set; }
+        public List<Task> Tasks { get; set; } = new();
     }
 }

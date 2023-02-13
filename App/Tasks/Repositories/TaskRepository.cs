@@ -3,7 +3,9 @@ using AutoMapper;
 using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
+using CSharp_intro_1.People.Repositories.Modal;
 using CSharp_intro_1.Repositories.Models;
+using Microsoft.EntityFrameworkCore;
 using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Repositories
@@ -21,8 +23,8 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> GetAll()
         {
-            return _mapper.Map<List<TaskDto>>(_context.tasks.ToList());
-
+            var tasks = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).ToList();
+            return _mapper.Map<List<TaskDto>>(tasks);
         }
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
@@ -34,21 +36,25 @@ namespace CSharp_intro_1.Repositories
 
         public TaskDto GetById(Guid id)
         {
+            var task = _context.tasks
+                       .Include(task => task.Bucket)
+                       .Include(task => task.Person)
+                       .FirstOrDefault(task => task.Id == id);
 
-            return _mapper.Map<TaskDto>(_context.tasks.FirstOrDefault(task => task.Id == id)); 
+            return _mapper.Map<TaskDto>(task); 
 
         }
 
+      
         public TaskDto Create(TaskDto newTask)
         {
             var task = _mapper.Map<Task>(newTask);
-            task.PersonId = newTask.Person.Id;
-            task.BucketId = newTask.Bucket.Id;
+    
             _context.tasks.Add(task);
-
             _context.SaveChanges();
 
-            return _mapper.Map<TaskDto>(newTask);
+            return _mapper.Map<TaskDto>(task);
+
         }
 
         public TaskDto Update(TaskDto task)

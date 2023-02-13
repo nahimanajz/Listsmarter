@@ -4,13 +4,13 @@ using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Tasks.Repositories.Configurations
 {
-    public class TaskConfiguration: IEntityTypeConfiguration<Task>
+    public class TaskConfiguration : IEntityTypeConfiguration<Task>
     {
         public void Configure(EntityTypeBuilder<Task> builder)
         {
             builder.ToTable("Task");
             builder.HasKey(x => x.Id);
-            builder.Property(x=> x.Title)
+            builder.Property(x => x.Title)
                 .IsRequired()
                 .HasMaxLength(50);
             builder.Property(x => x.Description).HasMaxLength(500);
@@ -23,8 +23,6 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
                .WithMany(c => c.Tasks)
                 .HasForeignKey(x => x.BucketId);
 
-          
-
 
             builder.HasData(
                  new Task
@@ -33,8 +31,8 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
                      Title = "Development work",
                      Description = "custom software solution for x company",
                      Status = (int)Status.Open,
-                     BucketId= Guid.Parse("6B29FC40-CA47-1067-B31D-00DD010662DA"),
-                     PersonId= Guid.Parse("d22bd9ba-27ca-4271-b9fb-f68b356f06f3")
+                     BucketId = Guid.Parse("6B29FC40-CA47-1067-B31D-00DD010662DA"),
+                     PersonId = Guid.Parse("d22bd9ba-27ca-4271-b9fb-f68b356f06f3")
 
                  },
             new Task
@@ -48,6 +46,6 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
 
             });
 
-        } 
+        }
     }
 }

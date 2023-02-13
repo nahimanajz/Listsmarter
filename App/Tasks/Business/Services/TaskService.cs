@@ -23,7 +23,7 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetAll()
         {
-            return _repo.GetAll();
+            return  _repo.GetAll();
         }
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)

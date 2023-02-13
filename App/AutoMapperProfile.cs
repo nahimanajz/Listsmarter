@@ -25,7 +25,13 @@ namespace CSharp_intro_1
             CreateMap<Task, TaskDto>()
                 .ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title));
             CreateMap<TaskDto, Task>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id == Guid.Empty ? Guid.NewGuid() : src.Id));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id == Guid.Empty ? Guid.NewGuid() : src.Id))
+                .ForMember(dest => dest.PersonId, opt => opt.MapFrom(src => src.Person.Id))
+                .ForMember(dest => dest.BucketId, opt => opt.MapFrom(src => src.Bucket.Id))
+               
+                .ForMember(dest => dest.Bucket, opt => opt.Ignore())
+                .ForMember(dest => dest.Person, opt => opt.Ignore());
+
         }
     }
 }

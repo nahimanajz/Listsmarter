@@ -17,8 +17,7 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
             builder.ToTable("Bucket");
             builder.HasKey(X => X.Id);
 
-            builder.Property(x=> x.Title)
-            .IsRequired();
+            builder.Property(x=> x.Title).IsRequired();
             builder.HasData(
                 new Bucket
                 {
