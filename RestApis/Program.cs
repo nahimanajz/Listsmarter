@@ -13,12 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        // prevent circular reference between person and task
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
+builder.Services.AddControllers();
+   
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBucketValidator>();
