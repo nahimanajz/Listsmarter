@@ -9,6 +9,6 @@ namespace CSharp_intro_1.Tasks.Business.Services.Interfaces
 {
     public interface IAssignTaskService
     {
-        List<TaskDto> AssignTask(Guid taskId, Guid personId);
+        TaskDto AssignTask(Guid taskId, Guid personId);
     }
 }

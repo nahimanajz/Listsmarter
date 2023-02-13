@@ -14,7 +14,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
             
         }
 
-        public List<TaskDto> AssignTask(Guid taskId, Guid personId)
+        public TaskDto AssignTask(Guid taskId, Guid personId)
         {
       
             var task = _repo.AssignTask(taskId, personId);

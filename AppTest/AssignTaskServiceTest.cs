@@ -60,7 +60,7 @@ namespace App.Tests
         public void AssignTask_GivenInValidTaskIdOrPersonId_ThrowException()
         {
             _personRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns<PersonDto>(null);
-            _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns(new List<TaskDto> { null });
+            _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns((TaskDto)  null);
 
             Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
             action.Should().Throw<Exception>().WithMessage(ResponseMessages.TaskOrPersonNotFound);

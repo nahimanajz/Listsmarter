@@ -83,7 +83,7 @@ namespace CSharp_intro_1.Repositories
         }
         public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
-            // TODO: Remove current task 
+           
             var updatedTask = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).First(task =>task.Id == id);
            
             updatedTask.Status = newStatus;
@@ -94,18 +94,18 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public List<TaskDto> AssignTask(Guid taskId, Guid personId)
+        public TaskDto AssignTask(Guid taskId, Guid personId)
         {
-            var person = _context.persons.First(currentPerson => currentPerson.Id == personId);
-            var task = _context.tasks.First(task => task.Id == taskId);
+            var person = _context.persons.FirstOrDefault(person => person.Id == personId);
+            var task = _context.tasks.FirstOrDefault(currentTask => currentTask.Id == taskId);
             if(person == null || task == null){
-                return _mapper.Map<List<TaskDto>>(null);
+                return _mapper.Map<TaskDto>(null);
             }
 
             task.PersonId = personId;
             _context.SaveChanges();
 
-            return _mapper.Map<List<TaskDto>>(task);
+            return _mapper.Map<TaskDto>(task);
         }
         public int CountBucketTasks(Guid bucketId)
         {
