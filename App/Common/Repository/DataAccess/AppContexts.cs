@@ -17,9 +17,9 @@ namespace CSharp_intro_1.Common.Repository.DataAccess
     {
        //TODO: Capitalize instance variables
         
-        public DbSet<Person> persons { get; set; }
-        public DbSet<Task> tasks { get; set; }
-        public DbSet<Bucket> buckets { get; set; } 
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Bucket> Buckets { get; set; } 
 
         public AppContexts(DbContextOptions<AppContexts> options):base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

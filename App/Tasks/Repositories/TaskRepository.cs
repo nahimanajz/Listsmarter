@@ -23,13 +23,13 @@ namespace CSharp_intro_1.Repositories
 
         public List<TaskDto> GetAll()
         {
-            var tasks = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).ToList();
+            var tasks = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).ToList();
             return _mapper.Map<List<TaskDto>>(tasks);
         }
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)
         {
-            var tasks = _context.tasks
+            var tasks = _context.Tasks
                 .Include(task => task.Bucket)
                 .Include(task => task.Person)
                 .Where(task => task.Bucket.Id == bucketId && task.Status == status)
@@ -41,7 +41,7 @@ namespace CSharp_intro_1.Repositories
 
         public TaskDto GetById(Guid id)
         {
-            var task = _context.tasks
+            var task = _context.Tasks
                        .Include(task => task.Bucket)
                        .Include(task => task.Person)
                        .FirstOrDefault(task => task.Id == id);
@@ -55,7 +55,7 @@ namespace CSharp_intro_1.Repositories
         {
             var task = _mapper.Map<Task>(newTask);
     
-            _context.tasks.Add(task);
+            _context.Tasks.Add(task);
             _context.SaveChanges();
 
             return _mapper.Map<TaskDto>(task);
@@ -64,11 +64,12 @@ namespace CSharp_intro_1.Repositories
 
         public TaskDto Update(TaskDto task)
         {
-            var updatedTask = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).First(currentTask => currentTask.Id == task.Id);
+            var updatedTask = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).First(currentTask => currentTask.Id == task.Id);
 
             updatedTask.Title = task.Title;
             updatedTask.Description = task.Description;
             updatedTask.Status = (int)task.Status;
+            //TODO: add other properties to be updated and erase UpdateByStatus, and AssignTask in repository
 
             _context.SaveChanges();
 
@@ -76,15 +77,15 @@ namespace CSharp_intro_1.Repositories
         }
 
         public void Delete(Guid taskId) { 
-            var task = _context.tasks.First(task => task.Id == taskId);
-            _context.tasks.Remove(task);
+            var task = _context.Tasks.First(task => task.Id == taskId);
+            _context.Tasks.Remove(task);
             _context.SaveChanges();
 
         }
         public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
            
-            var updatedTask = _context.tasks.Include(task => task.Bucket).Include(task => task.Person).First(task =>task.Id == id);
+            var updatedTask = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).First(task =>task.Id == id);
            
             updatedTask.Status = newStatus;
 
@@ -96,8 +97,8 @@ namespace CSharp_intro_1.Repositories
 
         public TaskDto AssignTask(Guid taskId, Guid personId)
         {
-            var person = _context.persons.FirstOrDefault(person => person.Id == personId);
-            var task = _context.tasks.Include(task=>task.Person).Include(task=>task.Bucket).FirstOrDefault(currentTask => currentTask.Id == taskId);
+            var person = _context.Persons.FirstOrDefault(person => person.Id == personId);
+            var task = _context.Tasks.Include(task=>task.Person).Include(task=>task.Bucket).FirstOrDefault(currentTask => currentTask.Id == taskId);
             if(person == null || task == null){
                 return _mapper.Map<TaskDto>(null);
             }
@@ -109,17 +110,17 @@ namespace CSharp_intro_1.Repositories
         }
         public int CountBucketTasks(Guid bucketId)
         {
-            return _context.tasks.Count(task => task.Bucket.Id == bucketId);
+            return _context.Tasks.Count(task => task.Bucket.Id == bucketId);
         }
         public bool HasBucketTasks(Guid bucketId)
         {
 
-            return _context.tasks.Any(task => task.Bucket.Id == bucketId);
+            return _context.Tasks.Any(task => task.Bucket.Id == bucketId);
         }
 
         public bool HasPersonTasks(Guid personId)
         {
-            return _context.tasks.Any(task => task.Person.Id == personId);
+            return _context.Tasks.Any(task => task.Person.Id == personId);
         }
 
 

@@ -19,24 +19,24 @@ namespace CSharp_intro_1.Repositories
         }
         public List<PersonDto> GetAll()
         {
-            return _mapper.Map<List<PersonDto>>(_context.persons.ToList());
+            return _mapper.Map<List<PersonDto>>(_context.Persons.ToList());
 
         }
         public PersonDto GetById(Guid id)
         {
-            var person = _context.persons.FirstOrDefault(person => person.Id == id);
+            var person = _context.Persons.FirstOrDefault(person => person.Id == id);
             return _mapper.Map<PersonDto>(person);
         }
         public PersonDto Create(PersonDto newPerson)
         {
-            _context.persons.Add(_mapper.Map<Person>(newPerson));
+            _context.Persons.Add(_mapper.Map<Person>(newPerson));
             _context.SaveChanges();
             return _mapper.Map<PersonDto>(newPerson);
 
         }
         public PersonDto Update(PersonDto person)
         {
-            var upatedPerson = _context.persons.First(currentPerson => currentPerson.Id == person.Id);
+            var upatedPerson = _context.Persons.First(currentPerson => currentPerson.Id == person.Id);
             
             upatedPerson.FirstName = person.FirstName;
             upatedPerson.LastName = person.LastName;
@@ -49,8 +49,8 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid personId)
         {
-            var person = _context.persons.First(person => person.Id == personId);
-            _context.persons.Remove(person);
+            var person = _context.Persons.First(person => person.Id == personId);
+            _context.Persons.Remove(person);
             _context.SaveChanges();
         }
     }

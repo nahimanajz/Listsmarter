@@ -19,24 +19,24 @@ namespace CSharp_intro_1.Repositories
         }
         public List<BucketDto> GetAll()
         {
-            return _mapper.Map<List<BucketDto>>(_context.buckets);
+            return _mapper.Map<List<BucketDto>>(_context.Buckets);
         }
 
         public BucketDto GetById(Guid id)
         {
-            return _mapper.Map<BucketDto>(_context.buckets.FirstOrDefault(bucket => bucket.Id == id));
+            return _mapper.Map<BucketDto>(_context.Buckets.FirstOrDefault(bucket => bucket.Id == id));
         }
 
         public BucketDto Create(BucketDto newBucket)
         {
-            _context.buckets.Add(_mapper.Map<Bucket>(newBucket));
+            _context.Buckets.Add(_mapper.Map<Bucket>(newBucket));
             _context.SaveChanges();
             return _mapper.Map<BucketDto>(newBucket);
         }
 
         public BucketDto Update(BucketDto bucket)
         {
-            var updatedBucket = _context.buckets.First(registeredbucket => registeredbucket.Id == bucket.Id);
+            var updatedBucket = _context.Buckets.First(registeredbucket => registeredbucket.Id == bucket.Id);
 
             updatedBucket.Title = bucket.Title;
             _context.SaveChanges();
@@ -45,18 +45,18 @@ namespace CSharp_intro_1.Repositories
 
         public void Delete(Guid bucketId)
         {
-            var bucket = _context.buckets.First(bucket => bucket.Id == bucketId);
-            _context.buckets.Remove(bucket);
+            var bucket = _context.Buckets.First(bucket => bucket.Id == bucketId);
+            _context.Buckets.Remove(bucket);
             _context.SaveChanges();
         }
         public bool CheckTitleExistence(String title)
         {
-            return _context.buckets.Any(bucket => bucket.Title.ToUpper() == title.ToUpper());
+            return _context.Buckets.Any(bucket => bucket.Title.ToUpper() == title.ToUpper());
         }
 
         public bool HasBucketTasks(Guid bucketId)
         {
-            return _context.tasks.Any(task => task.Bucket.Id == bucketId);
+            return _context.Tasks.Any(task => task.Bucket.Id == bucketId);
 
         }
     }
