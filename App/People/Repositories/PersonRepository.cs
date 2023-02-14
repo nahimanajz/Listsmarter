@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Net.Sockets;
+using AutoMapper;
 using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
@@ -29,17 +30,16 @@ namespace CSharp_intro_1.Repositories
         }
         public PersonDto Create(PersonDto newPerson)
         {
-            _context.Persons.Add(_mapper.Map<Person>(newPerson));
+            var person = _mapper.Map<Person>(newPerson);
+            _context.Persons.Add(person);
             _context.SaveChanges();
-            return _mapper.Map<PersonDto>(newPerson);
+            return _mapper.Map<PersonDto>(person);
 
         }
         public PersonDto Update(PersonDto person)
         {
             var upatedPerson = _context.Persons.First(currentPerson => currentPerson.Id == person.Id);
-            
-            upatedPerson.FirstName = person.FirstName;
-            upatedPerson.LastName = person.LastName;
+            _mapper.Map(person, upatedPerson);
 
             _context.SaveChanges();
 

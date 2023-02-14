@@ -113,7 +113,7 @@ Testing whole project
 // add new migration
 dotnet ef migrations add initialCreate --startup-project ./RestApis/RestApis.csproj  --project ./App/App.csproj
 
-dotnet ef migrations add initialCreate --startup-project ./RestApis/RestApis.csproj  --project ./App/App.csproj --output-dir Common\DataAccess\Migrations
+dotnet ef migrations add initialCreate --startup-project ./RestApis/RestApis.csproj  --project ./App/App.csproj --output-dir Common\Repository\DataAccess\Migrations
 
 // Updating migration 
 dotnet ef database update --startup-project ./RestApis/RestApis.csproj --project ./App/App.csproj

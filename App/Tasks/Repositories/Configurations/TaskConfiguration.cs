@@ -8,8 +8,11 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
     {
         public void Configure(EntityTypeBuilder<Task> builder)
         {
-            builder.ToTable("Task");
+            builder.ToTable("Tasks");
             builder.HasKey(x => x.Id);
+             builder.Property(x => x.Id)
+                .HasDefaultValueSql("NewId()");
+                
             builder.Property(x => x.Title)
                 .IsRequired()
                 .HasMaxLength(50);

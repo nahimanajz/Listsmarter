@@ -29,16 +29,17 @@ namespace CSharp_intro_1.Repositories
 
         public BucketDto Create(BucketDto newBucket)
         {
-            _context.Buckets.Add(_mapper.Map<Bucket>(newBucket));
+            var bucket = _mapper.Map<Bucket>(newBucket);
+            _context.Buckets.Add(bucket);
             _context.SaveChanges();
-            return _mapper.Map<BucketDto>(newBucket);
+            return _mapper.Map<BucketDto>(bucket);
         }
 
         public BucketDto Update(BucketDto bucket)
         {
             var updatedBucket = _context.Buckets.First(registeredbucket => registeredbucket.Id == bucket.Id);
 
-            updatedBucket.Title = bucket.Title;
+            _mapper.Map(bucket, updatedBucket);
             _context.SaveChanges();
             return _mapper.Map<BucketDto>(updatedBucket);
         }

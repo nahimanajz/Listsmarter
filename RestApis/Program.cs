@@ -24,7 +24,6 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddDbContext<AppContexts>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
 object value = builder.Services.AddAutoMapper((config) =>

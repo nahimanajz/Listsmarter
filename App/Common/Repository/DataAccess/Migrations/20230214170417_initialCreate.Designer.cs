@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(AppContexts))]
-    [Migration("20230210135547_initialCreate")]
+    [Migration("20230214170417_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,8 @@ namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NewId()");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -40,7 +41,7 @@ namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Person", (string)null);
+                    b.ToTable("Persons", (string)null);
 
                     b.HasData(
                         new
@@ -61,7 +62,8 @@ namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NewId()");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -83,7 +85,8 @@ namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NewId()");
 
                     b.Property<Guid?>("BucketId")
                         .IsRequired()
@@ -112,7 +115,7 @@ namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Task", (string)null);
+                    b.ToTable("Tasks", (string)null);
 
                     b.HasData(
                         new

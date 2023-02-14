@@ -13,8 +13,11 @@ namespace CSharp_intro_1.People.Repositories.Configurations
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("Person");
+            builder.ToTable("Persons");
             builder.HasKey(X => X.Id);
+             builder.Property(x => x.Id)
+                .HasDefaultValueSql("NewId()");
+           
 
             builder.Property(x => x.FirstName).IsRequired();
             builder.Property(x => x.LastName).IsRequired();

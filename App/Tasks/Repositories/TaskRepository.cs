@@ -1,4 +1,5 @@
 
+using System.Net.Sockets;
 using AutoMapper;
 using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.DB;
@@ -65,12 +66,14 @@ namespace CSharp_intro_1.Repositories
         public TaskDto Update(TaskDto task)
         {
             var updatedTask = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).First(currentTask => currentTask.Id == task.Id);
-
+            /*
             updatedTask.Title = task.Title;
             updatedTask.Description = task.Description;
             updatedTask.Status = (int)task.Status;
+            */
             //TODO: add other properties to be updated and erase UpdateByStatus, and AssignTask in repository
-
+            _mapper.Map(task, updatedTask);
+            
             _context.SaveChanges();
 
             return _mapper.Map<TaskDto>(updatedTask);
