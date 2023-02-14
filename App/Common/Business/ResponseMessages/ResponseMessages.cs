@@ -13,8 +13,8 @@ namespace CSharp_intro_1.Common.Business.ResponseMessages
         public static string  PersonNotDeleted="Person cannot be deleted due to some assigned tasks";
 
         public static string  BucketNotFound="Bucket is not Found";
-        public static string  BucketNotDeleted="Bucket can not be deleted due some task(s) assigned to it ";
-        public static string  BucketAlreadyExist="Bucket called  is already exist please try different title";
+        public static string  BucketNotDeleted="Bucket can not be deleted due to some task(s) assigned to it ";
+        public static string  BucketAlreadyExist="Bucket with given title  is already exist please try different title";
         public static string  BucketIsFull = "Bucket is full";
         
         public static string  TaskNotFound="Task is not exist";

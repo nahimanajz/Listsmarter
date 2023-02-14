@@ -97,7 +97,7 @@ namespace CSharp_intro_1.Repositories
         public TaskDto AssignTask(Guid taskId, Guid personId)
         {
             var person = _context.persons.FirstOrDefault(person => person.Id == personId);
-            var task = _context.tasks.FirstOrDefault(currentTask => currentTask.Id == taskId);
+            var task = _context.tasks.Include(task=>task.Person).Include(task=>task.Bucket).FirstOrDefault(currentTask => currentTask.Id == taskId);
             if(person == null || task == null){
                 return _mapper.Map<TaskDto>(null);
             }
