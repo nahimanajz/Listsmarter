@@ -1,90 +1,98 @@
-## Task application
+# Tasks
+This is a project for requalify in dotnet I that covers
+1. Introduction of c#
+2. Console applications 
+3. clean code
+4. dependency injections
+5. Restful apis
+6. Linq to interact with collections
+6. Entity framework 
 
-## Feedback
-As I am suggeste to replace `TempDb.buckets.Last()` with `newBucket`  then the output tends to retrieve with just zeroes like this
- ````
-{
-  "id": "00000000-0000-0000-0000-000000000000",
-  "title": "How abouit new title",
-  "tasks": null
-}
- ````
- Whilst expected output should look like this 
- ``` 
- {
-  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // kind of valid ids
-  "title": "How abouit new title",
-  "tasks": null
-}
- ```
+scope is console application and making sure all parts of project are interconnected
+# Test controllers using  program.cs to see the output  by invoking the method via object of controller
+# Talk about your individual task (project).
+Here you have description, but I will go through it during our meeting!
+Create a project based on sample code (​zip icon ArchitectureExample.zip): (you should have access, if not – let me know)
+Introduce Repository Models and Repositories for:
 
- Changes were made in bucket repository on create method
-```
- public BucketDto Create(BucketDto newBucket)
-        {
-          TempDb.buckets.Add(_mapper.Map<Bucket>(newBucket));
-          return _mapper.Map<BucketDto>(TempDb.buckets.Last());
-        }
-```
-## Solution
-In Model repository ex: `BucketRepository.cs`
-``` 
- public BucketDto Create(BucketDto newBucket)
-        {
-            TempDb.buckets.Add(_mapper.Map<Bucket>(newBucket));
-            return _mapper.Map<BucketDto>(newBucket);
-        }
-```
+**Person:**
+Id
+FirstName
+LastName
+**Bucket:**
+Id
+Title
+**Task:**
+Id
+Title
+Description
+Status (enum with values: Open, InProgress, Closed)
+Person (reference to Person object)
 
+Bucket (reference to Bucket object)
+Repositories should be based on in-memory Array or Collection of objects
 
-**Task completed**
+The repositories should have basic CRUD methods:
+GetAll - returns all objects
+GetById - returns object with specific ID
+Create - creates new instance of the object
+Update - updates an object
+Delete - removes an object
 
-- Rename directories and controller variables
-- Put controllers into plural to reflect pluralization changes to  api endpoints
-- Remove conditional checks from `TasksController, BucketsController and
-PersonsController`
-- Throws exceptions in every service within `GetById` method
-- Return updated record with BucketRepository,PersonRepository and
-  TaskRepository without refecthing that record via `GetById method`
+**Business rules:**
 
-**Remaining tasks**
+Person cannot be removed if there is a task assigned to them ✔
+Bucket cannot be removed if there is a task assigned to it ✔
+Instances in each repository should properly reference instances in other repository (for example all tasks in the same bucket, should reference the same bucket in the BucketRepository) 
 
-- Avoiding Circular dependency
-- Alternatively creating separate service to create task or simply putting every private method below all public methods
-- Using builder call `Mr. Gulis` for complete guidance on this issue
+Services should have methods to:
+assign a user to task `I am using create task to assign task`
+update task status to desired value ✔ [refactor needed] //suggestion using id to update it `Nb: consider updating one task with specified id`
+  ✔ 
+create/update/delete user ✔
+create/update/delete task ✔
+delete bucket (only if it's empty) ✔
 
-**Short notes**
- Due to an exception thrown in `GetById` method in `BucketService` and `PersonService` new task cannot be created
+- Controllers should give the possibility to call relevant service methods to:
+assign a user to task
 
- **What to test**
- - Just test the methods that contains business logic
- -> testing delete person
- -> Testing delete person and delete bucket
- -> testing bucket existence method
- -
+Controllers and Services should operate on DTO entites, Automapper should be used in repositories to map between DTO objects and Repository models
+Use dependency injection for all services and repositories.
+Use LINQ for all operations that filter and retrieve data.
+If anything is not clear please let me know.
 
- ## Suggestion 
- creating one interface to check if bucket and person has task
- and I use this interface in `bucket` and `person` service
- this interface calls taskdto repository
+## Resourceand used packa
+https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration
 
- -> check if bucket exist and assign to task
- -> check whether person  exist and assign to task otherwise set that person to null
+Auto reload: `dotnet watch run`
 
- -> creating services specific for create and update task
+## TDD task
+- Writing unit test to our project [personService, taskService and bucketService]
 
+## database TASK
 
- # Todo:
- -> Exception should be thrown when user doesn't exist while assigning new task
- 
- # 03.02.2023 todo list
+In a finishing company, there are employees described by the following characteristics: name, surname, personal identification number, date of birth.
+Employees are assigned to teams. Each team has its own unique name.
+One employee can only work in one team. In addition, employees work on construction sites.
+One employee can work on many construction sites at the same time.
 
- - Show Gulis implementation of Builder design pattern and ask him whether you can use it in all services or only in `BucketService`
- - Recreate database tables and show `Krystian ` using sequel 
+Each construction is assigned a name, start date, end date and its manager (who is also an employee).
+It is important that the system contains full information about the participation of a given employee on the construction site.
+It is possible that a given employee worked on a construction site for a given period of time, then left the construction site and was involved again. 
 
+It is possible that he performed various functions in it. At a given time, an employee can perform only one function on the construction site: PAINTER, ELECTRICIAN or PLUMINATOR.
+In addition, an employee performing a function on a given construction site is assigned an hourly remuneration for participation in it.
 
+## Entity framework
 
+**packages in App**
+entityframework.sqlserver
+Microsoft.EntityFrameworkCore
 
-Enity framework core 
-entity framework core sqlserver 6th version
-Entity framework core design
+**Packages to put in rest api projectect**
+
+Entity framework design 
+entityframework.sqlserver
+
+**Finally**
+`dotnet ef migrations add InitialCreate --startup-project .\RestApis\RestApis.csproj --project .\App\App.csproj --output-dir Common\DataAccess\Migrations`
