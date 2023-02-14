@@ -49,12 +49,20 @@ namespace CSharp_intro_1.Services
         public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
             GetById(id);
+            CheckStatus(newStatus);
             return _repo.UpdateByStatus(id, newStatus);
         }
         
         public bool HasPersonTasks(Guid personId)
         {
             return _repo.HasPersonTasks(personId);
+        }
+        private void CheckStatus(int newStatus)
+        {
+            if(newStatus > 3 || newStatus<0)
+            {
+                throw new Exception(ResponseMessages.TaskInvalidStatus);
+            } 
         }
 
        

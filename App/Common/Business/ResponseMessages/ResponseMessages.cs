@@ -18,6 +18,8 @@ namespace CSharp_intro_1.Common.Business.ResponseMessages
         public static string  BucketIsFull = "Bucket is full";
         
         public static string  TaskNotFound="Task is not exist";
+        public static string TaskInvalidStatus = "Please make sure new status relies between 0 and 3";
+
         public static string  TaskOrPersonNotFound="Invalid person or task id";
        
        
