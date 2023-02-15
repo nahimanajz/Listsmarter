@@ -96,3 +96,6 @@ entityframework.sqlserver
 
 **Finally**
 `dotnet ef migrations add InitialCreate --startup-project .\RestApis\RestApis.csproj --project .\App\App.csproj --output-dir Common\DataAccess\Migrations`
+
+## Required fixes
+//TODO: add other properties to be updated and erase UpdateByStatus, and AssignTask in repository

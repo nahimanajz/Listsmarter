@@ -15,7 +15,6 @@ namespace CSharp_intro_1.Common.Repository.DataAccess
 {
     public class AppContexts : DbContext
     {
-       //TODO: Capitalize instance variables
         
         public DbSet<Person> Persons { get; set; }
         public DbSet<Task> Tasks { get; set; }

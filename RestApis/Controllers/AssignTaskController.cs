@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace RestApis.Controllers
+namespace RestApis.Controllers 
 {
     [Route("api/[controller]")]
     [ApiController]

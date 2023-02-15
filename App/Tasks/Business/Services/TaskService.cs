@@ -32,8 +32,13 @@ namespace CSharp_intro_1.Services
         }
         public TaskDto Update(TaskDto entity)
         {
-            GetById(entity.Id);
-            return _repo.Update(entity);
+
+            var task = GetById(entity.Id);
+           
+            task.Title = entity.Title;
+            task.Description = entity.Description;
+
+            return _repo.Update(task);
         }
         
         public TaskDto GetById(Guid id)
@@ -48,10 +53,15 @@ namespace CSharp_intro_1.Services
 
         public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
-            GetById(id);
+            
             CheckStatus(newStatus);
-            return _repo.UpdateByStatus(id, newStatus);
+            
+            var task =  GetById(id);
+            task.Status = (Status) newStatus;
+
+            return _repo.Update(task);
         }
+
         
         public bool HasPersonTasks(Guid personId)
         {

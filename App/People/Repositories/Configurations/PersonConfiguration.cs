@@ -17,8 +17,7 @@ namespace CSharp_intro_1.People.Repositories.Configurations
             builder.HasKey(X => X.Id);
              builder.Property(x => x.Id)
                 .HasDefaultValueSql("NewId()");
-           
-
+        
             builder.Property(x => x.FirstName).IsRequired();
             builder.Property(x => x.LastName).IsRequired();
             builder.HasData(
@@ -34,7 +33,6 @@ namespace CSharp_intro_1.People.Repositories.Configurations
                      FirstName = "Will",
                      LastName = "Smith"
                  }
-
                 );
         }
     }

@@ -28,7 +28,7 @@ namespace CSharp_intro_1
             CreateMap<TaskDto, Task>()
                 .ForMember(dest => dest.PersonId, opt => opt.MapFrom(src => src.Person.Id))
                 .ForMember(dest => dest.BucketId, opt => opt.MapFrom(src => src.Bucket.Id))
-               
+                
                 .ForMember(dest => dest.Bucket, opt => opt.Ignore())
                 .ForMember(dest => dest.Person, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());

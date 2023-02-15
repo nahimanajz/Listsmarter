@@ -63,17 +63,11 @@ namespace CSharp_intro_1.Repositories
 
         }
 
-        public TaskDto Update(TaskDto task)
+        public TaskDto Update(TaskDto entity)
         {
-            var updatedTask = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).First(currentTask => currentTask.Id == task.Id);
-            /*
-            updatedTask.Title = task.Title;
-            updatedTask.Description = task.Description;
-            updatedTask.Status = (int)task.Status;
-            */
-            //TODO: add other properties to be updated and erase UpdateByStatus, and AssignTask in repository
-            _mapper.Map(task, updatedTask);
-            
+            var updatedTask = _context.Tasks.First(task => entity.Id == task.Id);
+        
+            _mapper.Map(entity, updatedTask);
             _context.SaveChanges();
 
             return _mapper.Map<TaskDto>(updatedTask);
@@ -85,19 +79,6 @@ namespace CSharp_intro_1.Repositories
             _context.SaveChanges();
 
         }
-        public TaskDto UpdateByStatus(Guid id, int newStatus)
-        {
-           
-            var updatedTask = _context.Tasks.Include(task => task.Bucket).Include(task => task.Person).First(task =>task.Id == id);
-           
-            updatedTask.Status = newStatus;
-
-            _context.SaveChanges();
-
-            return _mapper.Map<TaskDto>(updatedTask);
-
-        }
-
         public TaskDto AssignTask(Guid taskId, Guid personId)
         {
             var person = _context.Persons.FirstOrDefault(person => person.Id == personId);
