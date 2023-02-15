@@ -22,10 +22,7 @@ namespace App.Tests
         public AssignTaskServiceTest()
         {
             _assignTaskService = new AssignTaskService(_taskRepoMock.Object);
-
-            
             _task = fixture.Create<TaskDto>();
-
             _taskRepoMock.Setup(repo => repo.GetById(defaultTaskId)).Returns(new TaskDto { Id = defaultTaskId });
         }
 
@@ -35,13 +32,14 @@ namespace App.Tests
 
             var actualAssignedTask = fixture.Create<TaskDto>();
 
-
             _taskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_task);
-            _taskRepoMock.Setup(repo => repo.AssignTask(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(actualAssignedTask);
+            _taskRepoMock.Setup(repo => repo.IsPersonExist(It.IsAny<Guid>())).Returns(true);
+
+            _taskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns(actualAssignedTask);
 
             var assignedTask = _assignTaskService.AssignTask(actualAssignedTask.Id, actualAssignedTask.Person.Id);
             assignedTask.Should().NotBeNull();
-            assignedTask.Id.Should().Be(actualAssignedTask.Id);
+            assignedTask.Person.Id.Should().Be(actualAssignedTask.Person.Id);
 
 
         }
@@ -50,7 +48,7 @@ namespace App.Tests
         public void AssignTask_GivenInValidTaskIdOrPersonId_ThrowException()
         {
             _personRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns<PersonDto>(null);
-            _taskRepoMock.Setup(repo => repo.AssignTask(defaultTaskId, defaultTaskId)).Returns((TaskDto)  null);
+            _taskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns((TaskDto)  null);
 
             Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
             action.Should().Throw<Exception>().WithMessage(ResponseMessages.TaskOrPersonNotFound);

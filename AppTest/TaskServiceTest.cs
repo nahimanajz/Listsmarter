@@ -25,11 +25,8 @@ namespace App.Tests
         {
             _taskService = new TaskService(_itaskRepoMock.Object);
            fixture = new Fixture();
-           
-         
 
             _taskDto1 = fixture.Create<TaskDto>();
-
 
         }
         [Fact]
@@ -61,7 +58,7 @@ namespace App.Tests
 
 
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(_taskDto1);
-            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(taskDto);
+            _itaskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns(taskDto);
 
             var updatedTask = _taskService.UpdateByStatus(taskId, newStatus);
 
@@ -78,7 +75,7 @@ namespace App.Tests
 
             var taskDto = fixture.Create<TaskDto>();
             _itaskRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((TaskDto)null);
-            _itaskRepoMock.Setup(repo => repo.UpdateByStatus(It.IsAny<Guid>(), It.IsAny<int>())).Returns(taskDto);
+            _itaskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns(taskDto);
 
             Action action = () => _taskService.UpdateByStatus(taskId, newStatus);
             action.Should().Throw<Exception>();

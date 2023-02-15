@@ -3,9 +3,9 @@ using CSharp_intro_1.Repositories;
 
 public interface ITaskRepository : IRepository<TaskDto>
     {
-        TaskDto AssignTask(Guid taskId, Guid personId); 
+        bool IsPersonExist(Guid personId); 
         List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status);
-        TaskDto UpdateByStatus(Guid taskId, int newStatus); 
+       
         int CountBucketTasks(Guid bucketId);
         
         bool HasPersonTasks(Guid personId);

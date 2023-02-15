@@ -79,18 +79,10 @@ namespace CSharp_intro_1.Repositories
             _context.SaveChanges();
 
         }
-        public TaskDto AssignTask(Guid taskId, Guid personId)
+        public bool IsPersonExist(Guid personId)
         {
-            var person = _context.Persons.FirstOrDefault(person => person.Id == personId);
-            var task = _context.Tasks.Include(task=>task.Person).Include(task=>task.Bucket).FirstOrDefault(currentTask => currentTask.Id == taskId);
-            if(person == null || task == null){
-                return _mapper.Map<TaskDto>(null);
-            }
+            return _context.Persons.Any(person => person.Id == personId);
 
-            task.PersonId = personId;
-            _context.SaveChanges();
-
-            return _mapper.Map<TaskDto>(task);
         }
         public int CountBucketTasks(Guid bucketId)
         {

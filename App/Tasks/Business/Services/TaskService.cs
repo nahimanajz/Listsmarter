@@ -61,7 +61,6 @@ namespace CSharp_intro_1.Services
 
             return _repo.Update(task);
         }
-
         
         public bool HasPersonTasks(Guid personId)
         {
