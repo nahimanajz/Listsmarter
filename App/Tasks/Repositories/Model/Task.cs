@@ -1,9 +1,12 @@
-﻿using CSharp_intro_1.People.Repositories.Modal;
+﻿using CSharp_intro_1.Common.Repository.Model;
+using CSharp_intro_1.People.Repositories.Modal;
 using CSharp_intro_1.Repositories.Models;
 
 namespace CSharp_intro_1.Repositories.Models
 {
-    public class Task
+
+
+    public class Task : BaseModel
     {
        public Guid Id { get; set; }
         public string Title { get; set; }

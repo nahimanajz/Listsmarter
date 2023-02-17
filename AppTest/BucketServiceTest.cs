@@ -1,8 +1,10 @@
 ﻿
 using AutoFixture;
 using CSharp_intro_1.Common.Business.ResponseMessages;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using FluentAssertions;
@@ -14,16 +16,17 @@ namespace App.Tests
     {
         private readonly BucketService _bucketService;
         private readonly Mock<IBucketRepository> _bucketRepositoryMock = new Mock<IBucketRepository>();
-       
+        private readonly Mock<IGenericRepository<Bucket, BucketDto>> _genericRepositoryMock;
+
         private  Fixture _fixture ;
         private readonly BucketDto bucketDto;
 
         public BucketServiceTest()
         {
-            _bucketService = new BucketService(_bucketRepositoryMock.Object);
+            _genericRepositoryMock = new Mock<IGenericRepository<Bucket, BucketDto>>();
+            _bucketService = new BucketService(_genericRepositoryMock.Object, _bucketRepositoryMock.Object);
 
             _fixture = new Fixture();
-          
             bucketDto = _fixture.Create<BucketDto>();
            
 
@@ -35,7 +38,7 @@ namespace App.Tests
             //Arrange
 
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(false);
-            _bucketRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(bucketDto);
 
             //Act
             var createdBucket = _bucketService.Create(bucketDto);
@@ -49,7 +52,7 @@ namespace App.Tests
             //ARRANGE
            
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(true);
-            _bucketRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.Create(It.IsAny<BucketDto>())).Returns(bucketDto);
 
             //ASSERT&Act
             Action action = () => _bucketService.Create(bucketDto);
@@ -62,7 +65,7 @@ namespace App.Tests
             //ARRANGE
            
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(true);
-            _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
 
             //ASSERT&Act
              Action action = () => _bucketService.Update(bucketDto);
@@ -74,9 +77,9 @@ namespace App.Tests
         public void Update_VerifyIfBucketIdDoesnotExist_ThrowException()
         {
             //ARRANGE
-           
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
-            _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
+
+            _genericRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
+            _genericRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
             
             //ASSERT&Act
             Action action = () => _bucketService.Update(bucketDto);
@@ -89,9 +92,9 @@ namespace App.Tests
         {
             //ARRANGE
             
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
             _bucketRepositoryMock.Setup(repo => repo.CheckTitleExistence(It.IsAny<string>())).Returns(false);
-            _bucketRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.Update(It.IsAny<BucketDto>())).Returns(bucketDto);
 
             // Act
             var updatedBucket = _bucketService.Update(bucketDto);
@@ -107,8 +110,8 @@ namespace App.Tests
         public void Delete_GivenInvalidBucketId_ThrowException()
         {
             //Arrange
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
-            _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
+            _genericRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns((BucketDto)null);
+            _genericRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
             
@@ -123,9 +126,9 @@ namespace App.Tests
             //Arrange
        
 
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
             _bucketRepositoryMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(true);
-            _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
+            _genericRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
 
             //Act&Assert
             Action action = () => _bucketService.Delete(Guid.NewGuid());
@@ -137,13 +140,13 @@ namespace App.Tests
         {
             //Arrange
          
-            _bucketRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
+            _genericRepositoryMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns(bucketDto);
             _bucketRepositoryMock.Setup(service => service.HasBucketTasks(It.IsAny<Guid>())).Returns(false);
-            _bucketRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
+            _genericRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Guid>()));
             _bucketService.Delete(Guid.NewGuid());
 
             //Assert
-            _bucketRepositoryMock.Verify(person => person.Delete(It.IsAny<Guid>()), Times.Once());
+            _genericRepositoryMock.Verify(person => person.Delete(It.IsAny<Guid>()), Times.Once());
         }
 
     }

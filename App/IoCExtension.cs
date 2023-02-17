@@ -1,8 +1,9 @@
 ﻿
 using System.Runtime.CompilerServices;
-
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
@@ -30,6 +31,9 @@ namespace CSharp_intro_1
             services.AddTransient<IBucketRepository, BucketRepository>();
             services.AddTransient<IRepository<TaskDto>, TaskRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
+
+            services.AddTransient<IGenericRepository<Bucket, BucketDto>, GenericRepository<Bucket, BucketDto>>();
+
 
         }
 

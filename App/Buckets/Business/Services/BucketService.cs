@@ -1,20 +1,24 @@
 
 using CSharp_intro_1.Common.Business.ResponseMessages;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
+using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Services.interfaces;
 
 namespace CSharp_intro_1.Services
 {
     public class BucketService : IBucketService
     {
-        private readonly IBucketRepository _repo;
+        private readonly IGenericRepository<Bucket, BucketDto> _repo;
+        private readonly IBucketRepository _bucketRepo;
         MessageServiceBuilder builder = new MessageServiceBuilder();
 
 
-        public BucketService(IBucketRepository repo)
+        public BucketService(IGenericRepository<Bucket, BucketDto> repo, IBucketRepository bucketRepo)
         {
             _repo = repo;
+            _bucketRepo = bucketRepo;
            
         }
 
@@ -49,7 +53,7 @@ namespace CSharp_intro_1.Services
         {
 
             GetById(id);
-            if (_repo.HasBucketTasks(id))
+            if (_bucketRepo.HasBucketTasks(id))
             {
                 builder.BuildBucketHasTask().Build();
                 var exceptionMessage = new MessageService(builder).BucketNotDeleted;
@@ -60,7 +64,7 @@ namespace CSharp_intro_1.Services
         }
         private bool CheckTitleExistence(string title)
         {
-            if (_repo.CheckTitleExistence(title))
+            if (_bucketRepo.CheckTitleExistence(title))
             {
                
                 builder.BuildBucketAlreadyExist().Build();
