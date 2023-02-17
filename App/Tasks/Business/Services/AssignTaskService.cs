@@ -1,6 +1,7 @@
 ﻿using CSharp_intro_1.Common.Business.ResponseMessages;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
-
+using CSharp_intro_1.Repositories.Models;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
 
 namespace CSharp_intro_1.Tasks.Business.Services

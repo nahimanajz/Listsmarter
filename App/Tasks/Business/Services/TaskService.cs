@@ -1,8 +1,10 @@
 
 using CSharp_intro_1.Common.Business.ResponseMessages;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
+using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Services
 {
@@ -10,9 +12,11 @@ namespace CSharp_intro_1.Services
     {
         private readonly ITaskRepository _repo;
         
+        
         public TaskService(ITaskRepository repo)
         {
             _repo = repo;
+           
         }
 
         public void Delete(Guid id)
@@ -23,7 +27,7 @@ namespace CSharp_intro_1.Services
 
         public List<TaskDto> GetAll()
         {
-            return  _repo.GetAll();
+            return _repo.GetAll();
         }
 
         public List<TaskDto> GetByBucketAndStatus(Guid bucketId, int status)

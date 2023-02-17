@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoFixture;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
+using CSharp_intro_1.People.Repositories.Modal;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
@@ -14,7 +16,7 @@ public class PersonServiceTest
 
 
     private readonly PersonService _personService;
-    private readonly Mock<IRepository<PersonDto>> _personRepositoryMock = new Mock<IRepository<PersonDto>>();
+    private readonly Mock<IGenericRepository<Person, PersonDto>> _personRepositoryMock;
     private readonly Mock<ITaskService> _taskServiceMock = new Mock<ITaskService>();
     private PersonDto _personDto;
     private PersonDto  _newPersonDto;
@@ -22,6 +24,7 @@ public class PersonServiceTest
 
     public PersonServiceTest()
     {
+        _personRepositoryMock = new Mock<IGenericRepository<Person, PersonDto>>();
         _personService = new PersonService(_personRepositoryMock.Object, _taskServiceMock.Object);
         _fixture = new Fixture();
 

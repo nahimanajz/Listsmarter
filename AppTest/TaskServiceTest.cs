@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoFixture;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Repositories.Models;
@@ -11,6 +12,7 @@ using CSharp_intro_1.Services;
 using CSharp_intro_1.Services.interfaces;
 using FluentAssertions;
 using Moq;
+using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace App.Tests
 {
@@ -23,9 +25,9 @@ namespace App.Tests
 
         public TaskServiceTest()
         {
+  
             _taskService = new TaskService(_itaskRepoMock.Object);
            fixture = new Fixture();
-
             _taskDto1 = fixture.Create<TaskDto>();
 
         }
