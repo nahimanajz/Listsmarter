@@ -86,7 +86,7 @@ namespace RestApis.Controllers
         [HttpPut("{id}/{newStatus}")]
         public async Task<ActionResult> UpdateByStatus([FromRoute] Guid id, [FromRoute] int newStatus)
         {
-            
+
             return await Task.FromResult(Ok(_taskService.UpdateByStatus(id, newStatus)));
         }
 

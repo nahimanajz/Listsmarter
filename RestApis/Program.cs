@@ -13,7 +13,7 @@ builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();
 
 builder.Services.AddControllers();
-   
+
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBucketValidator>();
@@ -44,6 +44,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+// EXTEND THE PIPELINE WITH A MIDDLEWARE THAT WILL HANDLE EXCEPTIONS AND RETURN NICE RESPONSES TO THE API CALLER
 app.Run();
 
 

@@ -22,7 +22,7 @@
             BucketIsFull = ResponseMessages.BucketIsFull;
             return this;
         }
-       
+
         public MessageServiceBuilder BuildBucketHasTask()
         {
             BucketNotDeleted = ResponseMessages.BucketNotDeleted;

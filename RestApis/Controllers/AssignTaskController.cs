@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace RestApis.Controllers 
+namespace RestApis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,6 +20,6 @@ namespace RestApis.Controllers
         {
             return await Task.FromResult(Ok(_assignTaskService.AssignTask(taskId, personId)));
         }
-        
+
     }
 }

@@ -1,22 +1,19 @@
 
 using CSharp_intro_1.Common.Business.ResponseMessages;
-using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
-using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Services.interfaces;
-using Task = CSharp_intro_1.Repositories.Models.Task;
 
 namespace CSharp_intro_1.Services
 {
     public class TaskService : ITaskService
     {
         private readonly ITaskRepository _repo;
-        
-        
+
+
         public TaskService(ITaskRepository repo)
         {
             _repo = repo;
-           
+
         }
 
         public void Delete(Guid id)
@@ -38,13 +35,13 @@ namespace CSharp_intro_1.Services
         {
 
             var task = GetById(entity.Id);
-           
+
             task.Title = entity.Title;
             task.Description = entity.Description;
 
             return _repo.Update(task);
         }
-        
+
         public TaskDto GetById(Guid id)
         {
             var task = _repo.GetById(id);
@@ -57,27 +54,27 @@ namespace CSharp_intro_1.Services
 
         public TaskDto UpdateByStatus(Guid id, int newStatus)
         {
-            
+
             CheckStatus(newStatus);
-            
-            var task =  GetById(id);
-            task.Status = (Status) newStatus;
+
+            var task = GetById(id);
+            task.Status = (Status)newStatus;
 
             return _repo.Update(task);
         }
-        
+
         public bool HasPersonTasks(Guid personId)
         {
             return _repo.HasPersonTasks(personId);
         }
         private void CheckStatus(int newStatus)
         {
-            if(newStatus > 3 || newStatus<0)
+            if (newStatus > 3 || newStatus < 0)
             {
                 throw new Exception(ResponseMessages.TaskInvalidStatus);
-            } 
+            }
         }
 
-       
+
     }
 }

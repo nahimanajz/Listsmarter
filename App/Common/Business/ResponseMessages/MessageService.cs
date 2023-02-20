@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharp_intro_1.Common.Business.ResponseMessages
+﻿namespace CSharp_intro_1.Common.Business.ResponseMessages
 {
     public class MessageService
     {

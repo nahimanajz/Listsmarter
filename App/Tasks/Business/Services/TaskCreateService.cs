@@ -1,5 +1,4 @@
 ﻿using CSharp_intro_1.Common.Business.ResponseMessages;
-using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services.Interfaces;
@@ -40,7 +39,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
             {
                 Console.WriteLine(exception.Message);
             }
-            
+
             AssignTaskToBucket(bucket, newTask);
 
             if (bucket != null)
@@ -75,7 +74,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
 
         }
 
-        
+
 
     }
 }

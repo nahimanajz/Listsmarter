@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CSharp_intro_1.Common.Business.Models.Abstractions;
 using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.Common.Repository.Model;
-using CSharp_intro_1.Models;
-using CSharp_intro_1.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CSharp_intro_1.Common.Repository
 {
-    public class GenericRepository<TEntity, Tdto> : IGenericRepository<TEntity, Tdto> 
+    public class GenericRepository<TEntity, Tdto> : IGenericRepository<TEntity, Tdto>
         where Tdto : class, IIdentityDto
         where TEntity : BaseModel
     {
@@ -31,10 +23,10 @@ namespace CSharp_intro_1.Common.Repository
         public List<Tdto> GetAll()
         {
             return _mapper.Map<List<Tdto>>(Table.ToList());
-   
+
         }
 
-        public Tdto Create( Tdto entity)
+        public Tdto Create(Tdto entity)
         {
             var newRecord = _mapper.Map<TEntity>(entity);
             Table.Add(newRecord);
@@ -43,7 +35,7 @@ namespace CSharp_intro_1.Common.Repository
 
             return _mapper.Map<Tdto>(newRecord);
 
-            
+
         }
 
         public void Delete(Guid id)
@@ -57,18 +49,18 @@ namespace CSharp_intro_1.Common.Repository
 
         public Tdto GetById(Guid id)
         {
-           return _mapper.Map<Tdto>(Table.Find(id));
+            return _mapper.Map<Tdto>(Table.Find(id));
         }
 
         public Tdto Update(Tdto entity)
         {
             var updatedRecord = Table.First(x => entity.Id == x.Id);
 
-             _mapper.Map(entity, updatedRecord);
+            _mapper.Map(entity, updatedRecord);
             _contexts.SaveChanges();
 
             return _mapper.Map<Tdto>(updatedRecord);
-           
+
         }
     }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoFixture;
+﻿using AutoFixture;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Services.interfaces;
 using CSharp_intro_1.Tasks.Business.Services;
-using Moq;
-using Xunit.Sdk;
 using FluentAssertions;
+using Moq;
 
 namespace App.Tests
 {
@@ -30,8 +24,8 @@ namespace App.Tests
         public void Create_GivenValidTaskData_ReturnCreatedTask()
         {
             // Arrange
-           var taskDto = fixture.Create<TaskDto>();
-           
+            var taskDto = fixture.Create<TaskDto>();
+
             _taskRepoMock.Setup(repo => repo.CountBucketTasks(It.IsAny<Guid>())).Returns(10);
             _taskRepoMock.Setup(repo => repo.Create(It.IsAny<TaskDto>())).Returns((taskDto));
 

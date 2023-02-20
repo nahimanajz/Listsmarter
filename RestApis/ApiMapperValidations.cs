@@ -3,9 +3,10 @@ using CSharp_intro_1.Models;
 
 namespace RestApis
 {
-    public class ApiMapperValidations:Profile
+    public class ApiMapperValidations : Profile
     {
-        public ApiMapperValidations() {
+        public ApiMapperValidations()
+        {
             CreateMap<CreatePersonDto, PersonDto>()
             .ReverseMap();
             CreateMap<CreateBucketDto, BucketDto>()
@@ -15,7 +16,7 @@ namespace RestApis
             .ForPath(dest => dest.Person.Id, opt => opt.MapFrom(src => src.Person))
             .ReverseMap();
 
-           
+
         }
     }
 }

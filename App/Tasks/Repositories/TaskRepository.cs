@@ -1,11 +1,6 @@
-
-using System.Net.Sockets;
 using AutoMapper;
 using CSharp_intro_1.Common.Repository.DataAccess;
-using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
-using CSharp_intro_1.People.Repositories.Modal;
-using CSharp_intro_1.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Task = CSharp_intro_1.Repositories.Models.Task;
 
@@ -19,7 +14,7 @@ namespace CSharp_intro_1.Repositories
         public TaskRepository(IMapper mapper, AppContexts context)
         {
             _mapper = mapper;
-            _context = context; 
+            _context = context;
         }
 
         public List<TaskDto> GetAll()
@@ -47,15 +42,15 @@ namespace CSharp_intro_1.Repositories
                        .Include(task => task.Person)
                        .FirstOrDefault(task => task.Id == id);
 
-            return _mapper.Map<TaskDto>(task); 
+            return _mapper.Map<TaskDto>(task);
 
         }
 
-      
+
         public TaskDto Create(TaskDto newTask)
         {
             var task = _mapper.Map<Task>(newTask);
-    
+
             _context.Tasks.Add(task);
             _context.SaveChanges();
 
@@ -66,14 +61,15 @@ namespace CSharp_intro_1.Repositories
         public TaskDto Update(TaskDto entity)
         {
             var updatedTask = _context.Tasks.First(task => entity.Id == task.Id);
-        
+
             _mapper.Map(entity, updatedTask);
             _context.SaveChanges();
 
             return _mapper.Map<TaskDto>(updatedTask);
         }
 
-        public void Delete(Guid taskId) { 
+        public void Delete(Guid taskId)
+        {
             var task = _context.Tasks.First(task => task.Id == taskId);
             _context.Tasks.Remove(task);
             _context.SaveChanges();
@@ -90,7 +86,6 @@ namespace CSharp_intro_1.Repositories
         }
         public bool HasBucketTasks(Guid bucketId)
         {
-
             return _context.Tasks.Any(task => task.Bucket.Id == bucketId);
         }
 

@@ -10,9 +10,9 @@ namespace CSharp_intro_1.Tasks.Repositories.Configurations
         {
             builder.ToTable("Tasks");
             builder.HasKey(x => x.Id);
-             builder.Property(x => x.Id)
-                .HasDefaultValueSql("NewId()");
-                
+            builder.Property(x => x.Id)
+               .HasDefaultValueSql("NewId()");
+
             builder.Property(x => x.Title)
                 .IsRequired()
                 .HasMaxLength(50);

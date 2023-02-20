@@ -1,8 +1,8 @@
 ﻿
 
-    public enum Status
-    {
-        Open,
-        InProgress,
-        Closed
-    }
+public enum Status
+{
+    Open,
+    InProgress,
+    Closed
+}

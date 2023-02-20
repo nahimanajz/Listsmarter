@@ -10,16 +10,16 @@ namespace CSharp_intro_1.Services
 {
     public class BucketService : IBucketService
     {
-        private readonly IGenericRepository<Bucket, BucketDto> _repo;
-        private readonly IBucketRepository _bucketRepo;
+        
+        private readonly IBucketRepository _repo;
         MessageServiceBuilder builder = new MessageServiceBuilder();
 
 
-        public BucketService(IGenericRepository<Bucket, BucketDto> repo, IBucketRepository bucketRepo)
+        public BucketService( IBucketRepository repo)
         {
-            _repo = repo;
-            _bucketRepo = bucketRepo;
            
+            _repo = repo;
+
         }
 
         public BucketDto Create(BucketDto entity)
@@ -39,6 +39,7 @@ namespace CSharp_intro_1.Services
                 builder.BuildBucketNotFound().Build();
                 var exceptionMessage = new MessageService(builder).BucketNotFound;
                 throw new Exception(exceptionMessage);
+                // TODO RE
             }
             return bucket;
         }
@@ -53,7 +54,7 @@ namespace CSharp_intro_1.Services
         {
 
             GetById(id);
-            if (_bucketRepo.HasBucketTasks(id))
+            if (_repo.HasBucketTasks(id))
             {
                 builder.BuildBucketHasTask().Build();
                 var exceptionMessage = new MessageService(builder).BucketNotDeleted;
@@ -64,9 +65,9 @@ namespace CSharp_intro_1.Services
         }
         private bool CheckTitleExistence(string title)
         {
-            if (_bucketRepo.CheckTitleExistence(title))
+            if (_repo.CheckTitleExistence(title))
             {
-               
+
                 builder.BuildBucketAlreadyExist().Build();
                 var exceptionMessage = new MessageService(builder).BucketAlreadyExist;
                 throw new Exception(exceptionMessage);

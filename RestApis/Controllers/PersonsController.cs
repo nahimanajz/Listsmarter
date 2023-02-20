@@ -14,10 +14,10 @@ namespace RestApis.Controllers
         private readonly IPersonService _service;
         private readonly IMapper _mapper;
         private CreatePersonValidator _createPersonValidator;
-        public PersonsController(IPersonService service, IMapper mapper,CreatePersonValidator createPersonValidator )
+        public PersonsController(IPersonService service, IMapper mapper, CreatePersonValidator createPersonValidator)
         {
             _service = service;
-            _mapper= mapper;
+            _mapper = mapper;
             _createPersonValidator = createPersonValidator;
         }
 
@@ -41,14 +41,14 @@ namespace RestApis.Controllers
         {
 
             var result = _createPersonValidator.Validate(person);
-            if(result.IsValid)
+            if (result.IsValid)
             {
                 var personDto = _mapper.Map<PersonDto>(person);
                 return await Task.FromResult(Ok(_service.Create(personDto)));
             }
             throw new Exception($"Validations errors: {string.Join(",", result.Errors)}");
 
-        
+
 
         }
 
@@ -56,7 +56,7 @@ namespace RestApis.Controllers
         [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-        
+
             _service.Delete(id);
             return await Task.FromResult(Ok("Person is deleted"));
 

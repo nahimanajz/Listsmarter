@@ -68,7 +68,7 @@ namespace RestApis.Controllers
             };
             return await Task.FromResult(Ok(_service.Update(updatedBucket)));
         }
-        
+
     }
 
 }

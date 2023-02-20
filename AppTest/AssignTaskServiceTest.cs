@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
+using CSharp_intro_1.Common.Business.ResponseMessages;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories;
 using CSharp_intro_1.Tasks.Business.Services;
-using Moq;
 using FluentAssertions;
-using CSharp_intro_1.Common.Business.ResponseMessages;
+using Moq;
 
 namespace App.Tests
 {
@@ -48,11 +48,11 @@ namespace App.Tests
         public void AssignTask_GivenInValidTaskIdOrPersonId_ThrowException()
         {
             _personRepoMock.Setup(repo => repo.GetById(It.IsAny<Guid>())).Returns<PersonDto>(null);
-            _taskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns((TaskDto)  null);
+            _taskRepoMock.Setup(repo => repo.Update(It.IsAny<TaskDto>())).Returns((TaskDto)null);
 
             Action action = () => _assignTaskService.AssignTask(Guid.NewGuid(), Guid.NewGuid());
             action.Should().Throw<Exception>().WithMessage(ResponseMessages.TaskOrPersonNotFound);
-           
+
         }
 
 

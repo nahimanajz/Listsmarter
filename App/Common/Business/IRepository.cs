@@ -1,9 +1,6 @@
-﻿
-using CSharp_intro_1.Models;
-
-namespace CSharp_intro_1.Repositories
+﻿namespace CSharp_intro_1.Repositories
 {
-    public interface IRepository<T> 
+    public interface IRepository<T>
     {
 
         List<T> GetAll();

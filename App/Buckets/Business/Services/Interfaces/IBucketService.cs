@@ -10,7 +10,7 @@ namespace CSharp_intro_1.Services.interfaces
         BucketDto Create(BucketDto record);
         void Delete(Guid id);
         BucketDto Update(BucketDto record);
-        
-       
+
+
     }
 }

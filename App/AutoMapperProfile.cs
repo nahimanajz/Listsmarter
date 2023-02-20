@@ -1,5 +1,3 @@
-
-using System.Runtime.InteropServices;
 using AutoMapper;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.People.Repositories.Modal;
@@ -24,11 +22,11 @@ namespace CSharp_intro_1
 
             CreateMap<Task, TaskDto>()
                 .ForMember(taskDto => taskDto.Title, opt => opt.MapFrom(task => task.Title));
-                
+
             CreateMap<TaskDto, Task>()
                 .ForMember(dest => dest.PersonId, opt => opt.MapFrom(src => src.Person.Id))
                 .ForMember(dest => dest.BucketId, opt => opt.MapFrom(src => src.Bucket.Id))
-                
+
                 .ForMember(dest => dest.Bucket, opt => opt.Ignore())
                 .ForMember(dest => dest.Person, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CSharp_intro_1.Models.Validators
 {
-    public class CreatePersonValidator: AbstractValidator<CreatePersonDto>
+    public class CreatePersonValidator : AbstractValidator<CreatePersonDto>
     {
         public CreatePersonValidator()
         {
