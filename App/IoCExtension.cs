@@ -1,4 +1,5 @@
-﻿using CSharp_intro_1.Common.Repository;
+﻿using CSharp_intro_1.Common.Business.Middleware;
+using CSharp_intro_1.Common.Repository;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.People.Repositories.Modal;
 using CSharp_intro_1.Repositories;
@@ -33,6 +34,10 @@ namespace CSharp_intro_1
             services.AddTransient<IGenericRepository<Person, PersonDto>, GenericRepository<Person, PersonDto>>();
 
 
+        }
+        public static void RegisterMiddlewares(this IServiceCollection service)
+        {
+            service.AddTransient<ExceptionHandlingMiddleware>();
         }
 
     }

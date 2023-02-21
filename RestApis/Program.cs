@@ -1,4 +1,5 @@
 using CSharp_intro_1;
+using CSharp_intro_1.Common.Business.Middleware;
 using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.Models.Validators;
 using FluentValidation;
@@ -13,6 +14,8 @@ builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();
 
 builder.Services.AddControllers();
+builder.Services.RegisterMiddlewares();
+
 
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskValidator>();
@@ -20,6 +23,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateBucketValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePersonValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
+
 
 builder.Services.AddDbContext<AppContexts>(options =>
 {
@@ -45,6 +49,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 // EXTEND THE PIPELINE WITH A MIDDLEWARE THAT WILL HANDLE EXCEPTIONS AND RETURN NICE RESPONSES TO THE API CALLER
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.Run();
 
 
