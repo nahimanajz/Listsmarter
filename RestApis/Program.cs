@@ -30,6 +30,13 @@ builder.Services.AddDbContext<AppContexts>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
+builder.Services.AddCors(options=>
+{
+    options.AddPolicy("http://localhost:4200/", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200/");
+    });
+});
 object value = builder.Services.AddAutoMapper((config) =>
 {
 }, AppDomain.CurrentDomain.GetAssemblies());
@@ -48,7 +55,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-// EXTEND THE PIPELINE WITH A MIDDLEWARE THAT WILL HANDLE EXCEPTIONS AND RETURN NICE RESPONSES TO THE API CALLER
+app.UseCors("http://localhost:4200/");
+// EXTEND THE PIPELINE WITH A MIDDLEWARE THAT WILL HANDLE EXCEPTIONS  AND RETURN NICE RESPONSES TO THE API CALLER
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
