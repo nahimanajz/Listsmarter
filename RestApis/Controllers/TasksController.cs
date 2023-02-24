@@ -29,7 +29,6 @@ namespace RestApis.Controllers
         [HttpGet(Name = "GetTasks")]
         public async Task<ActionResult<List<TaskDto>>> GetAll()
         {
-
             return await Task.FromResult(_taskService.GetAll());
         }
 
@@ -38,6 +37,13 @@ namespace RestApis.Controllers
         public async Task<ActionResult<TaskDto>> GetById([FromRoute] Guid id)
         {
             return await Task.FromResult(Ok(_taskService.GetById(id)));
+
+        }
+        
+        [HttpGet("buckets/{bucketId:Guid}")]
+        public async Task<ActionResult<TaskDto>> GetBucketTasks([FromRoute] Guid bucketId)
+        {
+            return await Task.FromResult(Ok(_taskService.GetBucketTasks(bucketId)));
 
         }
 

@@ -39,6 +39,16 @@ namespace CSharp_intro_1.Repositories
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }
+         public List<TaskDto> GetBucketTasks(Guid bucketId)
+        {
+            var tasks = _context.Tasks
+            .Include(task=>task.Bucket)
+            .Include(task=>task.Person)
+            .Where(task=> task.Bucket.Id ==bucketId)
+            .Select(task => task);
+            
+            return _mapper.Map<List<TaskDto>>(tasks);
+        }
 
         public TaskDto GetById(Guid id)
         {
@@ -99,7 +109,7 @@ namespace CSharp_intro_1.Repositories
             return _context.Tasks.Any(task => task.Person.Id == personId);
         }
 
-
+       
     }
 
 }

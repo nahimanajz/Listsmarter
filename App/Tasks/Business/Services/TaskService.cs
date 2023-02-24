@@ -74,6 +74,9 @@ namespace CSharp_intro_1.Services
             } 
         }
 
-       
+        public List<TaskDto> GetBucketTasks(Guid bucketId)
+        {
+           return _repo.GetBucketTasks(bucketId);
+        }
     }
 }
