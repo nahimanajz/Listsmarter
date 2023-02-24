@@ -3,7 +3,7 @@ using CSharp_intro_1.Common.Repository.DataAccess;
 using CSharp_intro_1.DB;
 using CSharp_intro_1.Models;
 using CSharp_intro_1.Repositories.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CSharp_intro_1.Repositories
 {

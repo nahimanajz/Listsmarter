@@ -41,7 +41,6 @@ namespace CSharp_intro_1.Services
         public BucketDto Update(BucketDto entity)
         {
             GetById(entity.Id);
-            CheckTitleExistence(entity.Title);
             return _repo.Update(entity);
         }
 
@@ -58,7 +57,7 @@ namespace CSharp_intro_1.Services
             _repo.Delete(id);
 
         }
-        private bool CheckTitleExistence(string title)
+        private void CheckTitleExistence(string title)
         {
             if (_repo.CheckTitleExistence(title))
             {
@@ -67,7 +66,7 @@ namespace CSharp_intro_1.Services
                 var exceptionMessage = new MessageService(builder).BucketAlreadyExist;
                 throw new Exception(exceptionMessage);
             }
-            return false;
+        
         }
     }
 }

@@ -61,12 +61,9 @@ namespace RestApis.Controllers
         [HttpPut("{id:Guid}")]
         public async Task<ActionResult<BucketDto>> Update([FromRoute] Guid id, [FromBody] CreateBucketDto bucket)
         {
-            var updatedBucket = new BucketDto
-            {
-                Id = id,
-                Title = bucket.Title
-            };
-            return await Task.FromResult(Ok(_service.Update(updatedBucket)));
+           var updatableBucket = _mapper.Map<BucketDto>(bucket);
+           updatableBucket.Id = id;
+           return await Task.FromResult(Ok(_service.Update(updatableBucket)));
         }
         
     }
