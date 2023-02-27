@@ -40,7 +40,7 @@ namespace RestApis.Controllers
 
         }
         
-        [HttpGet("buckets/{bucketId:Guid}")]
+        [HttpGet("bucket/{bucketId:Guid}")]
         public async Task<ActionResult<TaskDto>> GetBucketTasks([FromRoute] Guid bucketId)
         {
             return await Task.FromResult(Ok(_taskService.GetBucketTasks(bucketId)));
