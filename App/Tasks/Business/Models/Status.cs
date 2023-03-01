@@ -4,5 +4,6 @@
     {
         Open,
         InProgress,
-        Closed
+        Closed,
+        Cancelled
     }

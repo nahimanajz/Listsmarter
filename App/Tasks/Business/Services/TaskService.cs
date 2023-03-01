@@ -68,7 +68,7 @@ namespace CSharp_intro_1.Services
         }
         private void CheckStatus(int newStatus)
         {
-            if(newStatus > 3 || newStatus<0)
+            if(newStatus > (int)Status.Cancelled || newStatus< (int) Status.Open)
             {
                 throw new Exception(ResponseMessages.TaskInvalidStatus);
             } 
