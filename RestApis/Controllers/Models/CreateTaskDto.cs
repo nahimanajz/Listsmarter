@@ -7,6 +7,7 @@ namespace CSharp_intro_1.Models
         public Status Status { get; set; } 
         public Guid Person { get; set; }
         public Guid Bucket { get; set; }
+        public int Priority { get; set; }
 
     }
 }

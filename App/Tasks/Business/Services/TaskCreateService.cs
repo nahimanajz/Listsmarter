@@ -10,7 +10,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         private readonly ITaskRepository _repo;
         private readonly IBucketService _bucketService;
         private readonly IPersonService _personService;
-        private const int ALLOWED_TASKS = 9;
+        private const int ALLOWED_TASKS = 15;
 
         public TaskCreateService(ITaskRepository repo, IBucketService bucketService, IPersonService personService)
         {
@@ -26,6 +26,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
+                Priority= task.Priority,
                 Person = _personService.GetById(task.Person.Id)
             };
             var bucket = (BucketDto)null;
@@ -62,7 +63,7 @@ namespace CSharp_intro_1.Tasks.Business.Services
         {
             if (bucket == null)
             {
-                bucket = new BucketDto { Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2) };
+                bucket = new BucketDto { Title = "Bucket" + Guid.NewGuid().ToString("n").Substring(0, 2), Color= "#964B00" };
                 bucket = _bucketService.Create(bucket);
                 newTask.Bucket = bucket;
             }

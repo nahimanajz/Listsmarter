@@ -13,5 +13,6 @@ namespace CSharp_intro_1.Repositories.Models
         public Guid? PersonId { get; set; }
         public Bucket Bucket { get; set; }
         public Guid? BucketId { get; set; }
+        public int Priority { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace CSharp_intro_1.Services
            
             task.Title = entity.Title;
             task.Description = entity.Description;
+            task.Priority = entity.Priority;
 
             return _repo.Update(task);
         }

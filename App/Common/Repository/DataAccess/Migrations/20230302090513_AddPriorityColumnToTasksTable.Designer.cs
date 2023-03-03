@@ -4,6 +4,7 @@ using CSharp_intro_1.Common.Repository.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharp_intro_1.Common.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(AppContexts))]
-    partial class AppContextsModelSnapshot : ModelSnapshot
+    [Migration("20230302090513_AddPriorityColumnToTasksTable")]
+    partial class AddPriorityColumnToTasksTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

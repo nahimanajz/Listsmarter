@@ -8,5 +8,6 @@
         public Status Status {get; set;} 
         public PersonDto Person { get; set; }  
         public BucketDto Bucket { get; set; }
+        public int Priority { get; set; }
     }
 }
