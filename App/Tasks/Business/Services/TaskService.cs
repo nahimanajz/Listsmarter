@@ -67,17 +67,17 @@ namespace CSharp_intro_1.Services
         {
             return _repo.HasPersonTasks(personId);
         }
-        private void CheckStatus(int newStatus)
-        {
-            if(newStatus > (int)Status.Cancelled || newStatus< (int) Status.Open)
-            {
-                throw new Exception(ResponseMessages.TaskInvalidStatus);
-            } 
-        }
 
         public List<TaskDto> GetBucketTasks(Guid bucketId)
         {
            return _repo.GetBucketTasks(bucketId);
+        }
+        private void CheckStatus(int newStatus)
+        {
+            if (newStatus > (int)Status.Cancelled || newStatus < (int)Status.Open)
+            {
+                throw new Exception(ResponseMessages.TaskInvalidStatus);
+            }
         }
     }
 }
