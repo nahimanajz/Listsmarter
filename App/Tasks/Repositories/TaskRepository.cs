@@ -34,6 +34,8 @@ namespace CSharp_intro_1.Repositories
                 .Include(task => task.Bucket)
                 .Include(task => task.Person)
                 .Where(task => task.Bucket.Id == bucketId && task.Status == status)
+                .OrderByDescending(task=> task.Priority)
+                .ThenBy(task=>task.Title)
                 .Select(task => task);
 
             return _mapper.Map<List<TaskDto>>(tasks);
