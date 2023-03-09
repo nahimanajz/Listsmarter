@@ -8,6 +8,7 @@ namespace CSharp_intro_1.Repositories.Models
         public string?Color { get; set; }
         public string?Description { get; set; }
         public int?TotalTasks { get; set; }
+        public string?PhotoName { get; set; }
         public List<Task> Tasks { get; set; } = new();
 
     }
